@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Sukela</string>
+
+    <string name="eksi">Ekşi</string>
+    <string name="inci">İnci</string>
+    <string name="uludag">Uludağ</string>
+    <string name="instela">Instela</string>
+    <string name="arsiv">Arşiv</string>
+    <string name="save">Sakla</string>
+
+    <string name="a2016">2016</string>
+    <string name="a2015">2015</string>
+    <string name="a2014">2014</string>
+    <string name="a2013">2013</string>
+    <string name="a2012">2012</string>
+    <string name="a2011">2011</string>
+    <string name="a2010">2010</string>
+    <string name="a2009">2009</string>
+    <string name="a2008">2008</string>
+    <string name="a2007">2007</string>
+    <string name="a2006">2006</string>
+    <string name="a2005">2005</string>
+    <string name="a2004">2004</string>
+
+    <string name="best_of_year">Yılların efsane entrileri</string>
+    <string name="best_of_2016">2016\'nın en beğenilenleri</string>
+    <string name="best_of_2015">2015\'in en beğenilenleri</string>
+    <string name="best_of_2014">2014\'ün en beğenilenleri</string>
+    <string name="best_of_2013">2013\'ün en beğenilenleri</string>
+    <string name="best_of_2012">2012\'nin en beğenilenleri</string>
+    <string name="best_of_2011">2011\'in en beğenilenleri</string>
+    <string name="best_of_2010">2010\'un en beğenilenleri</string>
+    <string name="best_of_2009">2009\'un en beğenilenleri</string>
+    <string name="best_of_2008">2008\'in en beğenilenleri</string>
+    <string name="best_of_2007">2007\'nin en beğenilenleri</string>
+    <string name="best_of_2006">2006\'nın en beğenilenleri</string>
+    <string name="best_of_2005">2005\'in en beğenilenleri</string>
+    <string name="best_of_2004">2004\'ün en beğenilenleri</string>
+
+    <string name="eksi_gundem">Ekşi Gündem</string>
+    <string name="best_of_yesterday">Dünün en beğenilenleri</string>
+    <string name="best_of_week">Haftanın en beğenilenleri</string>
+    <string name="best_of_month">Ayın en beğenilenleri</string>
+    <string name="inci_yesterday">Dünün beğenilen başlıkları</string>
+    <string name="inci_popular">Dünün en popüler başlıkları</string>
+    <string name="ulu_yesterday">Dünün iyileri</string>
+    <string name="ulu_week">Geçen hafta</string>
+    <string name="top20">Top 20</string>
+    <string name="yazarlar">Yazarlar</string>
+    <string name="save_for_later">Çok uzun sonra okurum</string>
+    <string name="save_for_good">Çok güzel kenarda dursun</string>
+    <string name="best_of_user">Yazarın en beğenilenleri</string>
+
+    <string name="saved">Entry Saklandı</string>
+
+    <string name="title_save_for_later">Uzun entriler</string>
+    <string name="title_save_for_good">Sevdiğim entriler</string>
+    <string name="delete_user">%1$s isimli yazarı sileyim mi?</string>
+    <string name="delete_entry">Entryi silmek istediğinize emin misiniz?</string>
+    <string name="find">Bul</string>
+    <string name="backup">Entrileri yedekle</string>
+    <string name="restore">Yedekten geri yükle</string>
+    <string name="search_hint">Ara: Sakla</string>
+    <string name="title_activity_search_results">Arama Sonuçları</string>
+</resources>

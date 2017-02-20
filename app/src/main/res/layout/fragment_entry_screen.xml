@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/content_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.entryscreen.EntryScreenActivity">
+
+    <RelativeLayout
+        android:id="@+id/text_title_box_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/border_bottom"
+        android:paddingBottom="10dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="3dp"
+        android:paddingTop="10dp"
+        android:minHeight="55dp">
+
+        <TextView
+            android:includeFontPadding="false"
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:text="Android"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/text_title_box_container"
+        android:background="?android:colorBackground"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp">
+
+        <TextView
+            android:id="@+id/text_body"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="5dp"
+            android:paddingStart="3dp"
+            android:text="Ankara"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textColorLink="@color/navy_blue"
+            android:textSize="18sp"/>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/side_bar"
+        android:background="@color/eksi"/>
+
+    <TextView
+        android:id="@+id/side_bar"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/black"/>
+
+
+</RelativeLayout>

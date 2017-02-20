@@ -1,0 +1,122 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="label">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="sozuk_label" parent="label">
+        <item name="android:layout_marginLeft">-52dp</item>
+    </style>
+
+    <style name="box_left_side">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+    </style>
+
+    <style name="box_right_side">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+    </style>
+
+    <style name="list_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="list_item">
+        <!--<item name="android:layout_marginLeft">6dp</item>-->
+        <!--<item name="android:gravity">center_vertical|left</item>-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="list_item_separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!-- Themes -->
+    <style name="EksiTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#43A047</item>
+        <item name="colorPrimaryDark">#1B5E20</item>
+    </style>
+
+    <style name="SaveTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="NightModeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/grey_900</item>
+        <item name="colorPrimaryDark">@color/grey_700</item>
+        <item name="colorAccent">@color/blue_grey_400</item>
+    </style>
+
+    <style name="UserListTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorPrimary">@color/bacground1_light</item>
+        <item name="colorPrimaryDark">@color/bacground1</item>
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="Eksi_Year_Theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/green_600</item>
+    </style>
+
+    <style name="InstelaTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/instela</item>
+        <item name="colorPrimaryDark">@color/instela_dark</item>
+    </style>
+
+    <style name="UludagTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/uludag</item>
+        <item name="colorPrimaryDark">@color/uludag_dark</item>
+    </style>
+
+    <style name="InciTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/inci</item>
+        <item name="colorPrimaryDark">@color/inci_dark</item>
+    </style>
+
+    <style name="DeleteAllTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/red_500</item>
+        <item name="colorPrimaryDark">@color/red_900</item>
+    </style>
+
+</resources>
