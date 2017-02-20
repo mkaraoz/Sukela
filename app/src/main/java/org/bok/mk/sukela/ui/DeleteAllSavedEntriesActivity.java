@@ -18,7 +18,7 @@ public class DeleteAllSavedEntriesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setTheme(R.style.DeleteAllTheme);
         setContentView(R.layout.activity_delete_all_saved_entries);
-        setTitle("Sakladığın tüm entriler silinsin mi?");
+        setTitle("Sakladığım tüm entriler silinsin mi?");
 
         Button delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener()
