@@ -54,7 +54,6 @@ public class EntryScreenFragment extends Fragment {
             entry_body = entry_body.replaceAll("&lt;", "<");
             entry_body = entry_body.replaceAll("&gt;", ">");
             entry_body = entry_body.replaceAll("&amp;", "&");
-            entry_body = entry_body.replace("www.eksisozluk.com", "eksisozluk.com");
             entry_body = entry_body.replace("<iframe", "<!--iframe");
             entry_body = entry_body.replace("iframe>", "iframe-->");
 

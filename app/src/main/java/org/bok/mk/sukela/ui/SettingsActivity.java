@@ -73,6 +73,8 @@ public class SettingsActivity extends PreferenceActivity
         setTheme(R.style.Eksi_Year_Theme);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //addPreferencesFromResource(R.xml.pref_general);
+
+        setTitle(getString(R.string.settings_title));
     }
 
     /**

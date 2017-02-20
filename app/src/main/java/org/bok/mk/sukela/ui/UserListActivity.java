@@ -31,7 +31,6 @@ import org.bok.mk.sukela.source.UserManager;
 import org.bok.mk.sukela.ui.entryscreen.asyncdownloader.MultiplePageDownloadTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserListActivity extends AppCompatActivity implements UserListFragment.UserDeleteListener

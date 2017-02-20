@@ -1,7 +1,6 @@
 package org.bok.mk.sukela.ui.entryscreen.asyncdownloader;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 
@@ -10,10 +9,10 @@ import org.bok.mk.sukela.helper.Contract;
 import org.bok.mk.sukela.helper.Meta;
 import org.bok.mk.sukela.helper.ReturnCodes;
 import org.bok.mk.sukela.helper.T;
+import org.bok.mk.sukela.helper.callbacks.SingleFileDownloadCallback;
 import org.bok.mk.sukela.helper.exception.JerichoFileReadException;
 import org.bok.mk.sukela.helper.network.DownloadPack;
 import org.bok.mk.sukela.helper.network.NetworkManager;
-import org.bok.mk.sukela.helper.callbacks.SingleFileDownloadCallback;
 import org.bok.mk.sukela.source.SinglePageSource;
 
 import java.io.File;

@@ -66,4 +66,5 @@
     <string name="shall_delete_all_saved_entries">Sakladığın tüm entriler silinsin mi?</string>
     <string name="all_saved_entries_deleted">Saklanılan tüm entriler silindi</string>
     <string name="title_search">Arama</string>
+    <string name="settings_title">Ayarlar</string>
 </resources>

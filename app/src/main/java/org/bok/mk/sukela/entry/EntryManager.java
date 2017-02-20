@@ -8,7 +8,6 @@ import org.bok.mk.sukela.data.LocalDbManager;
 import org.bok.mk.sukela.helper.Contract;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
