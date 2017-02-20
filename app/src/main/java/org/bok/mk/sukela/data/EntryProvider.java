@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import org.bok.mk.sukela.entry.EntryDbHelper;
 import org.bok.mk.sukela.helper.Contract;
 
+import java.util.List;
+
 import static org.bok.mk.sukela.data.DatabaseContract.COLUMN_ENTRY_BODY;
 import static org.bok.mk.sukela.data.DatabaseContract.COLUMN_ENTRY_NO;
 import static org.bok.mk.sukela.data.DatabaseContract.COLUMN_TAG;
@@ -40,7 +42,7 @@ public class EntryProvider extends ContentProvider
     static
     {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_SEARCH + "/*", URI_SEARCH);
+        uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_SEARCH + "/*/*", URI_SEARCH);
         uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_DELETE_SINGLE_LONG + "/#", URI_SINGLE_SAVED_LONG);
         uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_DELETE_SINGLE_GOOD + "/#", URI_SINGLE_SAVED_GOOD);
         uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_DELETE_ALL_SAVED, URI_ALL_SAVED_ENTRIES);
@@ -125,11 +127,46 @@ public class EntryProvider extends ContentProvider
             }
             case URI_SEARCH:
             {
-                String query = uri.getLastPathSegment();
+                List<String> paths = uri.getPathSegments();
+                int size = paths.size();
+                String query = paths.get(size - 2);
+                String scope = paths.get(size - 1);
+
                 boolean distinct = true;
                 projection = DatabaseContract.ENTRY_PROJECTION;
-                selection = COLUMN_TAG + " = ? and (" + COLUMN_TITLE + " LIKE ? OR " + COLUMN_ENTRY_BODY + " LIKE ? OR " + COLUMN_USER + " LIKE ?)";
-                selectionArgs = new String[]{Contract.TAG_SAVE_FOR_GOOD, "%" + query + "%", "%" + query + "%", "%" + query + "%"};
+                StringBuilder sb = new StringBuilder();
+                sb.append(COLUMN_TAG + " = ? and ( 0 ");
+                char[] c = scope.toCharArray();
+                char title = c[0];
+                char body = c[1];
+                char user = c[2];
+                int count = 0;
+                if (title == '1')
+                {
+                    sb.append("OR " + COLUMN_TITLE + " LIKE ? ");
+                    count++;
+                }
+                if (body == '1')
+                {
+                    sb.append("OR " + COLUMN_ENTRY_BODY + " LIKE ? ");
+                    count++;
+                }
+                if (user == '1')
+                {
+                    sb.append("OR " + COLUMN_USER + " LIKE ? ");
+                    count++;
+                }
+                sb.append(")");
+
+                selection = sb.toString();
+                //selection = COLUMN_TAG + " = ? and ( 0 OR " + COLUMN_TITLE + " LIKE ? OR " + COLUMN_ENTRY_BODY + " LIKE ? OR " + COLUMN_USER + " LIKE ?)";
+                selectionArgs = new String[1 + count];
+                selectionArgs[0] = Contract.TAG_SAVE_FOR_GOOD;
+                for (int i = 1; i < selectionArgs.length; i++)
+                    selectionArgs[i] = "%" + query + "%";
+
+                //selectionArgs = new String[]{Contract.TAG_SAVE_FOR_GOOD, "%" + query + "%", "%" + query + "%", "%" + query + "%"};
+
                 String groupBy = null;
                 String having = null;
                 sortOrder = null;

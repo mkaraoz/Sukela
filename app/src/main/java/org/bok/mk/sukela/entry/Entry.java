@@ -9,17 +9,16 @@ import java.io.Serializable;
  */
 public class Entry implements Serializable
 {
-    int entryNo; // bu string olursa başında # var mı yok mu hep karışıyor
-    String title;
-    int titleID;
-    String body;
-    String user;
-    String dateTime;
-    SozlukEnum sozluk;
-    String tag;
+    private int entryNo; // bu string olursa başında # var mı yok mu hep karışıyor
+    private String title;
+    private int titleID;
+    private String body;
+    private String user;
+    private String dateTime;
+    private SozlukEnum sozluk;
+    private String tag;
 
-
-    Entry()
+    private Entry()
     {
     }
 

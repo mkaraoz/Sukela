@@ -36,17 +36,16 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="blue">#FF4285F4</color>
-    <color name="default_bacground">#FAFAFA</color>
+    <color name="default_background">#FAFAFA</color>
 
 
+    <color name="colorSingleEntryShareNormal">#125688</color>
+    <color name="colorSingleEntrySharePressed">#0E456E</color>
+    <color name="colorSingleEntryShareRipple">#07253B</color>
 
 
-
-
-
-
-
-
+    <color name="colorPrimarySearch">#125688</color>
+    <color name="colorPrimaryDarkSearch">#125688</color>
 
 
     <color name="red_50">#FFEBEE</color>
@@ -323,7 +322,6 @@
     <color name="blue_grey_700">#455A64</color>
     <color name="blue_grey_800">#37474F</color>
     <color name="blue_grey_900">#263238</color>
-
 
 
 </resources>

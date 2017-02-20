@@ -10,35 +10,29 @@ import org.bok.mk.sukela.R;
 import org.bok.mk.sukela.data.LocalDbManager;
 import org.bok.mk.sukela.helper.T;
 
-public class DeleteAllSavedEntriesActivity extends AppCompatActivity
-{
+public class DeleteAllSavedEntriesActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.DeleteAllTheme);
         setContentView(R.layout.activity_delete_all_saved_entries);
-        setTitle("Sakladığım tüm entriler silinsin mi?");
+        setTitle(getString(R.string.shall_delete_all_saved_entries));
 
         Button delete = (Button) findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener()
-        {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 LocalDbManager manager = new LocalDbManager(DeleteAllSavedEntriesActivity.this);
                 manager.deleteAllUserEntries();
-                T.toast(DeleteAllSavedEntriesActivity.this, "Saklanılan tüm entriler silindi");
+                T.toast(DeleteAllSavedEntriesActivity.this, getString(R.string.all_saved_entries_deleted));
                 finish();
             }
         });
 
         Button cancel = (Button) findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener()
-        {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 finish();
             }
         });

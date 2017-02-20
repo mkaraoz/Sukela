@@ -135,13 +135,6 @@ public class SettingsActivity extends PreferenceActivity
             // guidelines.
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_color)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_text_size)));
-
-//            Preference myPref = findPreference("myKey");
-//            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//                public boolean onPreferenceClick(Preference preference) {
-//                    return true;
-//                }
-//            });
         }
 
         @Override

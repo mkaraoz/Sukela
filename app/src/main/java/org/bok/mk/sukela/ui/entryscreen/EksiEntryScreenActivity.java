@@ -27,7 +27,6 @@ public class EksiEntryScreenActivity extends EntryScreenActivity
             debeTask.execute();
         }
         else
-
         {
             EksiEntryFiller asyncTask = new EksiEntryFiller(this);
             asyncTask.execute();

@@ -34,4 +34,5 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
     compile 'com.amitshekhar.android:android-networking:0.3.0'
     compile project(':jericho-html-3.4')
+    compile 'org.jetbrains:annotations-java5:15.0'
 }

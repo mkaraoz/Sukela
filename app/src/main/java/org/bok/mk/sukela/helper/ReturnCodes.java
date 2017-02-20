@@ -22,8 +22,4 @@ public class ReturnCodes
     public static final int DOWNLOAD_CANCELLED = 13;
     public static final int UNPOPULAR_USER = 14;
     public static final int PAGE_DOWNLOAD_FAILED = 15;
-
-
-
-
 }

@@ -10,6 +10,7 @@ import net.htmlparser.jericho.Source;
 import org.bok.mk.sukela.entry.Entry;
 import org.bok.mk.sukela.entry.EntryList;
 import org.bok.mk.sukela.entry.EntryManager;
+import org.bok.mk.sukela.helper.TextOperations;
 import org.bok.mk.sukela.helper.callbacks.MultiFileDownloadCallback;
 import org.bok.mk.sukela.helper.Meta;
 import org.bok.mk.sukela.helper.SozlukEnum;
@@ -121,9 +122,10 @@ public class UludagSozluk extends Sozluk implements MultiPageSource
             body = body.replaceAll("href=\"/k/", "href=\"http://www.uludagsozluk.com/k/");
             body = body.replaceAll("href=\"/e/", "href=\"http://www.uludagsozluk.com/e/");
         }
+        body = body.replace("src=\"//", "src=\"http://");
         body = body.replaceAll("(?s)<style>.*?</style>", "");
         body = body.replaceAll("(?s)<script>.*?</script>", "");
-        //body = TextOperations.restoreTurkishChars(body);
+        body = TextOperations.restoreTurkishChars(body);
 
         String title = source.getAllElements(HTMLElementName.H1).get(0).getRenderer().toString().trim();
         String user = source.getAllElementsByClass("kuladi").get(0).getRenderer().toString().trim();

@@ -210,7 +210,7 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
             for (Element sup : sups)
             {
                 String supTitle = sup.getFirstElement(HTMLElementName.A).getAttributeValue("title").trim();
-                supTitle = "(" + supTitle.substring(supTitle.indexOf(":")+1);
+                supTitle = "(" + supTitle.substring(supTitle.indexOf(":") + 1);
                 body = body.replaceFirst(">\\*<", ">*" + supTitle + "<");
             }
         }

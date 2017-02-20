@@ -43,8 +43,8 @@ public class Contract
     public static final String TAG_INSTELA_HAFTA = "TAG_INSTELA_HAFTA";
     public static final String TAG_INSTELA_AY = "TAG_INSTELA_AY";
 
-    public static final String TAG_ULUDAG_YESTERDAY = "TAG_INSTELA_YESTERDAY";
-    public static final String TAG_ULUDAG_HAFTA = "TAG_INSTELA_HAFTA";
+    public static final String TAG_ULUDAG_YESTERDAY = "TAG_ULUDAG_YESTERDAY";
+    public static final String TAG_ULUDAG_HAFTA = "TAG_ULUDAG_HAFTA";
 
     public static final String TAG_INCI_YESTERDAY = "TAG_INCI_YESTERDAY";
     public static final String TAG_INCI_HAFTA = "TAG_INCI_HAFTA";
@@ -59,7 +59,7 @@ public class Contract
     public static final String TAG_DELETE_ALL_SAVED = "TAG_DELETE_ALL_SAVED";
     public static final String TAG_DELETE_SINGLE_GOOD = "TAG_DELETE_SINGLE_GOOD";
     public static final String TAG_DELETE_SINGLE_LONG = "TAG_DELETE_SINGLE_LONG";
+    public static final String TAG_SEARCHED_ENTRY = "TAG_SEARCHED_ENTRY";
 
     public static final String TAG_SEARCH = "TAG_SEARCH";
-
 }

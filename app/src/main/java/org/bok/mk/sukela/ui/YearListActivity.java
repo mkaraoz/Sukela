@@ -91,17 +91,6 @@ public class YearListActivity extends AppCompatActivity
         setAnimation(a2015);
         setAnimation(a2016);
         */
-
-
-        isTablet = Screen.isXLScreen(this);
-        if (isTablet)
-        {
-
-        }
-        else
-        {
-
-        }
     }
 
     private void setAnimation(View viewToAnimate)

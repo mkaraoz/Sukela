@@ -81,8 +81,8 @@ public final class EntryManager
         return entryCount;
     }
 
-    public EntryList searchSavedEntries(final String query)
+    public EntryList searchSavedEntries(final String query, final String searchConfig)
     {
-        return dbManager.searchSavedEntries(query);
+        return dbManager.searchSavedEntries(query, searchConfig);
     }
 }

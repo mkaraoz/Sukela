@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="org.bok.mk.sukela.ui.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.bok.mk.sukela.ui.MainActivity">
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -32,13 +32,13 @@
                     android:layout_height="56dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/eksi_logo"/>
+                    android:src="@drawable/eksi_logo" />
 
                 <TextView
                     android:id="@+id/eksi_label"
                     style="@style/sozuk_label"
                     android:tag="E"
-                    android:text="@string/eksi"/>
+                    android:text="@string/eksi" />
             </LinearLayout> <!--Eksi Button-->
 
             <!--Eksi Item List-->
@@ -52,47 +52,46 @@
                     android:id="@+id/eksi_left_side"
                     style="@style/box_left_side"
                     android:layout_above="@+id/eksi_bottom_line"
-                    android:background="@color/eksi"/>
+                    android:background="@color/eksi" />
 
                 <TextView
                     android:id="@+id/eksi_right_side"
                     style="@style/box_right_side"
                     android:layout_alignBottom="@+id/eksi_left_side"
-                    android:background="@color/eksi"/>
+                    android:background="@color/eksi" />
 
                 <TextView
                     android:id="@+id/eksi_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_alignBottom="@+id/eksi_list_container"
-                    android:background="@color/eksi"/>
+                    android:background="@color/eksi" />
 
                 <LinearLayout
                     android:id="@+id/eksi_list_container"
                     style="@style/list_container"
-                    android:layout_toLeftOf="@+id/eksi_right_side"
                     android:layout_toStartOf="@+id/eksi_right_side">
 
                     <TextView
                         android:id="@+id/eksi_year"
                         style="@style/list_item"
-                        android:text="@string/best_of_year"/>
+                        android:text="@string/best_of_year" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/eksi_yesterday"
                         style="@style/list_item"
-                        android:text="@string/best_of_yesterday"/>
+                        android:text="@string/best_of_yesterday" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/eksi_week"
                         style="@style/list_item"
-                        android:text="@string/best_of_week"/>
+                        android:text="@string/best_of_week" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -104,18 +103,19 @@
                             android:id="@+id/eksi_yazar"
                             style="@style/list_item"
                             android:layout_weight="1"
-                            android:text="@string/yazarlar"/>
+                            android:text="@string/yazarlar" />
 
                         <TextView
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/white"/>
+                            android:layout_marginBottom="2dp"
+                            android:background="@color/white" />
 
                         <TextView
                             android:id="@+id/eksi_gundem"
                             style="@style/list_item"
                             android:layout_weight="1"
-                            android:text="@string/eksi_gundem"/>
+                            android:text="@string/eksi_gundem" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout> <!--Eksi Item List-->
@@ -134,13 +134,13 @@
                     android:layout_height="56dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/instela_logo"/>
+                    android:src="@drawable/instela_logo" />
 
                 <TextView
                     android:id="@+id/instela_label"
                     style="@style/sozuk_label"
                     android:tag="I"
-                    android:text="@string/instela"/>
+                    android:text="@string/instela" />
             </LinearLayout> <!--Instela Button-->
 
             <!--Instela Item List-->
@@ -154,20 +154,20 @@
                     android:id="@+id/instela_left_side"
                     style="@style/box_left_side"
                     android:layout_above="@+id/instela_bottom_line"
-                    android:background="@color/instela"/>
+                    android:background="@color/instela" />
 
                 <TextView
                     android:id="@+id/instela_right_side"
                     style="@style/box_right_side"
                     android:layout_alignBottom="@+id/instela_left_side"
-                    android:background="@color/instela"/>
+                    android:background="@color/instela" />
 
                 <TextView
                     android:id="@+id/instela_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_alignBottom="@+id/instela_list_container"
-                    android:background="@color/instela"/>
+                    android:background="@color/instela" />
 
                 <LinearLayout
                     android:id="@+id/instela_list_container"
@@ -178,28 +178,28 @@
                     <TextView
                         android:id="@+id/instela_month"
                         style="@style/list_item"
-                        android:text="@string/best_of_month"/>
+                        android:text="@string/best_of_month" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/instela_week"
                         style="@style/list_item"
-                        android:text="@string/best_of_week"/>
+                        android:text="@string/best_of_week" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/instela_yesterday"
                         style="@style/list_item"
-                        android:text="@string/best_of_yesterday"/>
+                        android:text="@string/best_of_yesterday" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/instela_t20"
                         style="@style/list_item"
-                        android:text="@string/top20"/>
+                        android:text="@string/top20" />
                 </LinearLayout>
             </RelativeLayout> <!--Instela Item List-->
 
@@ -217,13 +217,13 @@
                     android:layout_height="56dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/inci_logo"/>
+                    android:src="@drawable/inci_logo" />
 
                 <TextView
                     android:id="@+id/inci_label"
                     style="@style/sozuk_label"
                     android:tag="C"
-                    android:text="@string/inci"/>
+                    android:text="@string/inci" />
             </LinearLayout> <!--İnci Button-->
 
             <!--İnci Item List-->
@@ -237,20 +237,20 @@
                     android:id="@+id/inci_left_side"
                     style="@style/box_left_side"
                     android:layout_above="@+id/inci_bottom_line"
-                    android:background="@color/inci"/>
+                    android:background="@color/inci" />
 
                 <TextView
                     android:id="@+id/inci_right_side"
                     style="@style/box_right_side"
                     android:layout_alignBottom="@+id/inci_left_side"
-                    android:background="@color/inci"/>
+                    android:background="@color/inci" />
 
                 <TextView
                     android:id="@+id/inci_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_alignBottom="@+id/inci_list_container"
-                    android:background="@color/inci"/>
+                    android:background="@color/inci" />
 
                 <LinearLayout
                     android:id="@+id/inci_list_container"
@@ -261,14 +261,14 @@
                     <TextView
                         android:id="@+id/inci_yesterday"
                         style="@style/list_item"
-                        android:text="@string/inci_yesterday"/>
+                        android:text="@string/inci_yesterday" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/inci_week"
                         style="@style/list_item"
-                        android:text="@string/best_of_week"/>
+                        android:text="@string/best_of_week" />
                 </LinearLayout>
             </RelativeLayout> <!--İnci Item List-->
 
@@ -286,13 +286,13 @@
                     android:layout_height="56dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/ulu_logo2"/>
+                    android:src="@drawable/ulu_logo2" />
 
                 <TextView
                     android:id="@+id/uludag_label"
                     style="@style/sozuk_label"
                     android:tag="U"
-                    android:text="@string/uludag"/>
+                    android:text="@string/uludag" />
             </LinearLayout> <!--Uludağ-->
 
             <!--Uludağ Item List-->
@@ -306,20 +306,20 @@
                     android:id="@+id/uludag_left_side"
                     style="@style/box_left_side"
                     android:layout_above="@+id/uludag_bottom_line"
-                    android:background="@color/uludag"/>
+                    android:background="@color/uludag" />
 
                 <TextView
                     android:id="@+id/uludag_right_side"
                     style="@style/box_right_side"
                     android:layout_alignBottom="@+id/uludag_left_side"
-                    android:background="@color/uludag"/>
+                    android:background="@color/uludag" />
 
                 <TextView
                     android:id="@+id/uludag_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_alignBottom="@+id/uludag_list_container"
-                    android:background="@color/uludag"/>
+                    android:background="@color/uludag" />
 
                 <LinearLayout
                     android:id="@+id/uludag_list_container"
@@ -331,14 +331,14 @@
                     <TextView
                         android:id="@+id/uludag_week"
                         style="@style/list_item"
-                        android:text="@string/best_of_week"/>
+                        android:text="@string/best_of_week" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/uludag_yesterday"
                         style="@style/list_item"
-                        android:text="@string/best_of_yesterday"/>
+                        android:text="@string/best_of_yesterday" />
                 </LinearLayout>
             </RelativeLayout>
             <!--Uludağ Item List-->
@@ -358,13 +358,13 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
-                    android:src="@drawable/sakla_logo"/>
+                    android:src="@drawable/sakla_logo" />
 
                 <TextView
                     android:id="@+id/save_label"
                     style="@style/sozuk_label"
                     android:tag="S"
-                    android:text="@string/save"/>
+                    android:text="@string/save" />
             </LinearLayout> <!--Uludağ-->
 
             <!--Uludağ Item List-->
@@ -378,20 +378,20 @@
                     android:id="@+id/save_left_side"
                     style="@style/box_left_side"
                     android:layout_above="@+id/save_bottom_line"
-                    android:background="@color/save"/>
+                    android:background="@color/save" />
 
                 <TextView
                     android:id="@+id/save_right_side"
                     style="@style/box_right_side"
                     android:layout_alignBottom="@+id/save_left_side"
-                    android:background="@color/save"/>
+                    android:background="@color/save" />
 
                 <TextView
                     android:id="@+id/save_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_alignBottom="@+id/save_list_container"
-                    android:background="@color/save"/>
+                    android:background="@color/save" />
 
                 <LinearLayout
                     android:id="@+id/save_list_container"
@@ -403,14 +403,14 @@
                     <TextView
                         android:id="@+id/save_good"
                         style="@style/list_item"
-                        android:text="@string/save_for_good"/>
+                        android:text="@string/save_for_good" />
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView style="@style/list_item_separator" />
 
                     <TextView
                         android:id="@+id/save_long"
                         style="@style/list_item"
-                        android:text="@string/save_for_later"/>
+                        android:text="@string/save_for_later" />
                 </LinearLayout>
             </RelativeLayout>
             <!--Uludağ Item List-->

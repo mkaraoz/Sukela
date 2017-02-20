@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -15,7 +14,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -91,9 +89,14 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         Bundle b = getIntent().getExtras();
         this.META = (Meta) b.getSerializable(Contract.META);
         setTitle(META.getTitle());
+
         sukelaPrefs = SukelaPrefs.instance(this);
+
+        //set UI
         setEntryScreenTheme(); // this must be called before contentview
         setContentView(R.layout.activity_entry_screen);
+        createFabMenu();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,14 +110,11 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.addOnPageChangeListener(new DefaultViewPagerListener());
 
-        createFabMenu();
-
         mEntryManager = EntryManager.getManager(this);
         mMessageView = (TextView) findViewById(R.id.message);
-
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         requestAds();
 
+        // load entries
         fillEntryList();
     }
 
@@ -268,7 +268,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
                 }
                 else
                 {
-                    T.toast(EntryScreenActivity.this, "Entry kadedilemedi :(");
+                    T.toast(EntryScreenActivity.this, "Entry kaydedilemedi :(");
                 }
 
             }
@@ -301,7 +301,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         dialog.show();
     }
 
-    private void shareEntry(Entry e)
+    protected void shareEntry(Entry e)
     {
         StringBuilder sb = new StringBuilder();
         sb.append(e.getTitle());
@@ -439,9 +439,6 @@ public abstract class EntryScreenActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -464,7 +461,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
     {
         if (mEntryList.isEmpty())
         {
-            mMessageView.setText("Burada hiç entry yok.");
+            mMessageView.setText(getString(R.string.no_entry_here));
             mMessageView.setVisibility(View.VISIBLE);
         }
         else
@@ -534,7 +531,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         dialog.getWindow().setAttributes(lp);
     }
 
-    private AlertDialog.Builder createAlertBuilder(@NonNull String title, String message)
+    private AlertDialog.Builder createAlertBuilder(String title, String message)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -603,7 +600,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         private final EntryManager mEntryManager;
         private ProgressDialog mSpinner;
 
-        public LocalEntryFiller(EntryManager manager)
+        LocalEntryFiller(EntryManager manager)
         {
             this.mEntryManager = manager;
         }
@@ -636,6 +633,19 @@ public abstract class EntryScreenActivity extends AppCompatActivity
             super.onPostExecute(lastIndex);
             updateViewPager();
             mSpinner.dismiss();
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (mFabMenu.isOpened())
+        {
+            mFabMenu.close(true);
+        }
+        else
+        {
+            super.onBackPressed();
         }
     }
 

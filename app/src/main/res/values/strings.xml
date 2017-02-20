@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Sukela</string>
-
     <string name="eksi">Ekşi</string>
     <string name="inci">İnci</string>
     <string name="uludag">Uludağ</string>
@@ -62,4 +61,9 @@
     <string name="restore">Yedekten geri yükle</string>
     <string name="search_hint">Ara: Sakla</string>
     <string name="title_activity_search_results">Arama Sonuçları</string>
+
+    <string name="no_entry_here">Burada hiç entry yok.</string>
+    <string name="shall_delete_all_saved_entries">Sakladığın tüm entriler silinsin mi?</string>
+    <string name="all_saved_entries_deleted">Saklanılan tüm entriler silindi</string>
+    <string name="title_search">Arama</string>
 </resources>

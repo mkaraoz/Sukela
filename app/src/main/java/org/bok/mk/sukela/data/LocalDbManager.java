@@ -180,12 +180,13 @@ public final class LocalDbManager
         resolver.delete(uri, null, null);
     }
 
-    public EntryList searchSavedEntries(String query)
+    public EntryList searchSavedEntries(String query, String searchConfig)
     {
         ContentResolver resolver = mContext.getContentResolver();
         Uri uri = Uri.withAppendedPath(DatabaseContract.EntryTable.CONTENT_URI, Contract.TAG_SEARCH);
         uri = Uri.withAppendedPath(uri, query);
-        Cursor c = resolver.query(uri, null, null,null,null);
+        uri = Uri.withAppendedPath(uri, searchConfig);
+        Cursor c = resolver.query(uri, null, null, null, null);
         return getEntriesFromCursor(c);
     }
 }

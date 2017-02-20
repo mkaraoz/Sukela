@@ -149,7 +149,7 @@ public class UserListActivity extends AppCompatActivity implements UserListFragm
         final String mUserName;
         private EksiSozluk sozluk = new EksiSozluk(UserListActivity.this, META);
 
-        public UserDownloader(String userName, Activity a)
+        UserDownloader(String userName, Activity a)
         {
             super(a);
             super.init(sozluk, META);
@@ -233,16 +233,4 @@ public class UserListActivity extends AppCompatActivity implements UserListFragm
             mHorizontalProgressDialog.dismiss();
         }
     }
-
-    //    protected void hideSoftKeyboard(View v)
-    //    {
-    //        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    //        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    //    }
-    //
-    //    protected void showSoftKeyboard()
-    //    {
-    //        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    //        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    //    }
 }

@@ -2,16 +2,12 @@ package org.bok.mk.sukela.ui.entryscreen;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,8 +40,7 @@ import org.bok.mk.sukela.helper.callbacks.SingleFileDownloadCallback;
 import org.bok.mk.sukela.helper.network.DownloadPack;
 import org.bok.mk.sukela.helper.network.NetworkManager;
 import org.bok.mk.sukela.source.Sozluk;
-import org.bok.mk.sukela.ui.MainActivity;
-import org.bok.mk.sukela.ui.SearchResultsActivity;
+import org.bok.mk.sukela.ui.SearchActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,47 +49,36 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SavedEntryScreenActivity extends EntryScreenActivity {
-    private FloatingActionButton mFabGetEntryFromWeb, mFabBackupRestore, mFabDelete;
-    private boolean mDisconnectedFromSearch = true;
-
+public class SavedEntryScreenActivity extends EntryScreenActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setupSavedEntryScreenMenu();
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent)
+    {
         super.onNewIntent(intent);
         setIntent(intent);
     }
 
-    private void showSearchedEntry() {
-        int jump = getIntent().getIntExtra(SearchResultsActivity.JUMP_ENTRY_ID, -1);
-        if (jump != -1) {
-            for (int i = 0; i < mEntryList.size(); i++) {
-                Entry e = mEntryList.get(i);
-                if (e.getEntryNo() == jump) {
-                    mCurrentIndex = i;
-                    break;
-                }
-            }
-            updateViewPager();
-        }
-    }
-
-    private void setupSavedEntryScreenMenu() {
+    private void setupSavedEntryScreenMenu()
+    {
         mFabMenu.removeMenuButton(mFabRefresh);
         mFabMenu.removeMenuButton(mFabSave);
 
-        mFabGetEntryFromWeb = new FloatingActionButton(this);
+        FloatingActionButton mFabGetEntryFromWeb = new FloatingActionButton(this);
         mFabGetEntryFromWeb.setButtonSize(FloatingActionButton.SIZE_MINI);
         mFabGetEntryFromWeb.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_cloud_download_white_24dp));
         mFabGetEntryFromWeb.setLabelText("Sözlükten al");
-        mFabGetEntryFromWeb.setOnClickListener(new View.OnClickListener() {
+        mFabGetEntryFromWeb.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 final String[] sozluk_names = new String[4];
                 sozluk_names[0] = SozlukEnum.EKSI.getName();
                 sozluk_names[1] = SozlukEnum.INSTELA.getName();
@@ -102,8 +86,10 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
                 sozluk_names[3] = SozlukEnum.INCI.getName();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SavedEntryScreenActivity.this);
-                builder.setItems(sozluk_names, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                builder.setItems(sozluk_names, new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         showEntryNumberPopup(SozlukEnum.getSozlukEnum(sozluk_names[which]));
                     }
                 });
@@ -115,24 +101,30 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
             }
         });
 
-        mFabBackupRestore = new FloatingActionButton(this);
+        FloatingActionButton mFabBackupRestore = new FloatingActionButton(this);
         mFabBackupRestore.setButtonSize(FloatingActionButton.SIZE_MINI);
         mFabBackupRestore.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_import_export_white_24dp));
         mFabBackupRestore.setLabelText("Yedek");
-        mFabBackupRestore.setOnClickListener(new View.OnClickListener() {
+        mFabBackupRestore.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 mFabMenu.close(false);
                 CharSequence options[] = new CharSequence[]{getString(R.string.backup), getString(R.string.restore)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SavedEntryScreenActivity.this);
-                builder.setItems(options, new DialogInterface.OnClickListener() {
+                builder.setItems(options, new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         if (which == 0) //saveEntryForGood();
                         {
                             backupSavedEntries();
-                        } else {
+                        }
+                        else
+                        {
                             displayRestorePopup();
                         }
                     }
@@ -141,14 +133,17 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
             }
         });
 
-        mFabDelete = new FloatingActionButton(this);
+        FloatingActionButton mFabDelete = new FloatingActionButton(this);
         mFabDelete.setButtonSize(FloatingActionButton.SIZE_MINI);
         mFabDelete.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_white_24dp));
         mFabDelete.setLabelText("Sil");
-        mFabDelete.setOnClickListener(new View.OnClickListener() {
+        mFabDelete.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                if (mEntryList.isEmpty()) {
+            public void onClick(View view)
+            {
+                if (mEntryList.isEmpty())
+                {
                     T.toast(SavedEntryScreenActivity.this, "Neyi sileyim şimdi ben?");
                     mFabMenu.close(false);
                     return;
@@ -158,8 +153,10 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
                 builder.setTitle("Sil");
                 builder.setMessage(getString(R.string.delete_entry));
 
-                builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                builder.setPositiveButton("Evet", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
                         Entry e = mEntryList.get(mCurrentIndex);
                         int entryNumber = e.getEntryNo();
                         LocalDbManager manager = new LocalDbManager(SavedEntryScreenActivity.this);
@@ -174,8 +171,10 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
                     }
                 });
 
-                builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
                         dialog.cancel();
                     }
                 });
@@ -191,22 +190,26 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         fabItemList.add(mFabDelete);
         setFabMenuItemColors(fabItemList);
 
-        if (META.getTag().equals(Contract.TAG_SAVE_FOR_GOOD)) {
+        if (META.getTag().equals(Contract.TAG_SAVE_FOR_GOOD))
+        {
             mFabMenu.addMenuButton(mFabGetEntryFromWeb);
             mFabMenu.addMenuButton(mFabBackupRestore);
         }
         mFabMenu.addMenuButton(mFabDelete);
     }
 
-    private void displayRestorePopup() {
+    private void displayRestorePopup()
+    {
         String title = "Uyarı";
         String message = "Aldığınız yedekleri geri yüklemek için, ilgili xml dosyasını sdcard altında " +
                 getExternalFilesDir(null).getPath() + " klasörü altına koymalısınız.";
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+        builder.setPositiveButton("Tamam", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
                 selectBackUpFile();
             }
         });
@@ -214,7 +217,8 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         dialog.show();
     }
 
-    private void selectBackUpFile() {
+    private void selectBackUpFile()
+    {
         final List<String> backupFileNames = getBackupFileNames();
         LayoutInflater inflater = getLayoutInflater();
         View customView = inflater.inflate(R.layout.orta_liste, null, false);
@@ -224,8 +228,10 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         ListView list = (ListView) customView.findViewById(R.id.listView1);
         list.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, backupFileNames));
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 String selectedBackUpFileName = backupFileNames.get(position);
                 restoreEntriesFromBackUpFile(selectedBackUpFileName);
                 dialog.dismiss();
@@ -236,13 +242,16 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         dialog.show();
     }
 
-    private void restoreEntriesFromBackUpFile(final String selectedBackUpFileName) {
-        AsyncTask<Void, Void, Integer> asyncTask = new AsyncTask<Void, Void, Integer>() {
+    private void restoreEntriesFromBackUpFile(final String selectedBackUpFileName)
+    {
+        AsyncTask<Void, Void, Integer> asyncTask = new AsyncTask<Void, Void, Integer>()
+        {
             private ProgressDialog progressBar;
             private EntryManager manager = EntryManager.getManager(SavedEntryScreenActivity.this);
 
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
                 progressBar = new ProgressDialog(SavedEntryScreenActivity.this);
                 progressBar.setCancelable(false);
@@ -254,12 +263,15 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
             }
 
             @Override
-            protected Integer doInBackground(Void... params) {
+            protected Integer doInBackground(Void... params)
+            {
                 EntryList restoredEntryList = BackupManager.restoreEntriesFromBackUpFile(new File(getExternalFilesDir(null) + File.separator + selectedBackUpFileName));
                 int counter = 0;
-                for (Entry e : restoredEntryList) {
+                for (Entry e : restoredEntryList)
+                {
                     boolean isSaved = manager.saveEntry(e.createCopyWithAnotherTag(META.getTag()));
-                    if (isSaved) {
+                    if (isSaved)
+                    {
                         counter++;
                     }
                 }
@@ -267,7 +279,8 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
             }
 
             @Override
-            protected void onPostExecute(Integer result) {
+            protected void onPostExecute(Integer result)
+            {
                 super.onPostExecute(result);
                 mEntryList = manager.getStoredEntries(META.getDataUri());
                 String message = result + " adet entry geri getirildi.";
@@ -281,14 +294,17 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         asyncTask.execute();
     }
 
-    private void backupSavedEntries() {
+    private void backupSavedEntries()
+    {
         if (mEntryList.size() > 0) // Saklayacak entry yoksa yolun başından dönüyoruz
         {
-            AsyncTask<Void, Void, Boolean> asyncTask = new AsyncTask<Void, Void, Boolean>() {
+            AsyncTask<Void, Void, Boolean> asyncTask = new AsyncTask<Void, Void, Boolean>()
+            {
                 private ProgressDialog progressBar;
 
                 @Override
-                protected void onPreExecute() {
+                protected void onPreExecute()
+                {
                     super.onPreExecute();
                     progressBar = new ProgressDialog(SavedEntryScreenActivity.this);
                     progressBar.setCancelable(false);
@@ -300,8 +316,10 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
                 }
 
                 @Override
-                protected Boolean doInBackground(Void... params) {
-                    for (Entry e : mEntryList) {
+                protected Boolean doInBackground(Void... params)
+                {
+                    for (Entry e : mEntryList)
+                    {
                         String entryBody = e.getBody();
                         entryBody = entryBody.replaceAll("&lt;", "<");
                         entryBody = entryBody.replaceAll("&gt;", ">");
@@ -315,12 +333,16 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
                 }
 
                 @Override
-                protected void onPostExecute(Boolean entriesBackedUp) {
+                protected void onPostExecute(Boolean entriesBackedUp)
+                {
                     super.onPostExecute(entriesBackedUp);
                     progressBar.dismiss();
-                    if (entriesBackedUp) {
+                    if (entriesBackedUp)
+                    {
                         T.toastLong(SavedEntryScreenActivity.this, "Entriler " + getExternalFilesDir(null).getPath() + " altında yedeklendi.");
-                    } else {
+                    }
+                    else
+                    {
                         T.toast(SavedEntryScreenActivity.this, "HATA: Entrilerin yedeği alınamadı. Lütfen tekrar deneyin.");
                     }
                 }
@@ -329,7 +351,8 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         }
     }
 
-    private void showEntryNumberPopup(final SozlukEnum sozlukEnum) {
+    private void showEntryNumberPopup(final SozlukEnum sozlukEnum)
+    {
         META.setSozluk(sozlukEnum);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Saklamak istediğiniz entry'nin numarasını girin:");
@@ -339,16 +362,20 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(input);
 
-        builder.setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+        builder.setPositiveButton("Tamam", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
                 CommonOps.hideSoftKeyboard(input, SavedEntryScreenActivity.this);
                 String entryNumber = input.getText().toString();
                 SingleEntryGetter seg = new SingleEntryGetter(entryNumber);
                 seg.execute();
             }
         });
-        builder.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+        builder.setNegativeButton("İptal", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
                 dialog.dismiss();
             }
         });
@@ -360,48 +387,59 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
     }
 
     @Override
-    protected void fillEntryList() {
+    protected void fillEntryList()
+    {
         EntryManager manager = EntryManager.getManager(this);
         int entryCount = manager.countEntries(META.getDataUri());
 
         // if (mEntryList!=null && mEntryList.size() != entryCount)
 
-        if (entryCount > 0) {
+        if (entryCount > 0)
+        {
             LocalEntryFiller filler = new LocalEntryFiller(manager);
             filler.execute();
-        } else {
+        }
+        else
+        {
             mEntryList.clear();
             updateViewPager();
         }
     }
 
-    public List<String> getBackupFileNames() {
+    public List<String> getBackupFileNames()
+    {
         File appExtDirectory = getExternalFilesDir(null);
         File[] backupFiles = appExtDirectory.listFiles();
         List<String> backupFileNames = new ArrayList<>();
-        for (File backUp : backupFiles) {
+        for (File backUp : backupFiles)
+        {
             String extension = "";
             int i = backUp.getName().lastIndexOf('.');
-            if (i > 0) {
+            if (i > 0)
+            {
                 extension = backUp.getName().substring(i + 1);
             }
-            if (extension.equalsIgnoreCase("xml")) {
+            if (extension.equalsIgnoreCase("xml"))
+            {
                 backupFileNames.add(backUp.getName());
             }
         }
         return backupFileNames;
     }
 
-    protected class LocalEntryFiller extends AsyncTask<Void, Void, Integer> {
+    protected class LocalEntryFiller extends AsyncTask<Void, Void, Integer>
+    {
         private final EntryManager mEntryManager;
         private ProgressDialog mSpinner;
 
-        LocalEntryFiller(EntryManager manager) {
+        LocalEntryFiller(EntryManager manager)
+        {
             this.mEntryManager = manager;
         }
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
 
             mSpinner = new ProgressDialog(SavedEntryScreenActivity.this);
@@ -414,14 +452,16 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         }
 
         @Override
-        protected Integer doInBackground(Void... voids) {
+        protected Integer doInBackground(Void... voids)
+        {
             mEntryList = mEntryManager.getStoredEntries(META.getDataUri());
             mCurrentIndex = getLastIndex();
             return mCurrentIndex;
         }
 
         @Override
-        protected void onPostExecute(Integer lastIndex) {
+        protected void onPostExecute(Integer lastIndex)
+        {
             super.onPostExecute(lastIndex);
             updateViewPager();
             mSpinner.dismiss();
@@ -429,102 +469,90 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
     }
 
     @Override
-    protected void getEntriesFromInternet() {
+    protected void getEntriesFromInternet()
+    {
         // burası sadece database'den entry gösteriyor
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_saved_entry_screen, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        // arama işlemini ben tetikliyorum. aranacak text ile birlikte aramaya nereden başladığımı da söylüyorum
-        // kullanıcı arama sonuçlarından geriye gelirse bana aramaya nereden başladığımıda söylüyor.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                startSearch(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(final String s) {
-                return false;
-            }
-
-            private void startSearch(final String query) {
-                // Doesn't call through onSearchRequest
-                Intent intent = new Intent(SavedEntryScreenActivity.this, SearchResultsActivity.class);
-                intent.putExtra(Intent.ACTION_SEARCH, query);
-                intent.putExtra(SearchResultsActivity.INITIAL_INDEX, mCurrentIndex);
-                startActivity(intent);
-            }
-        });
-
-        ComponentName cn = new ComponentName(this, SearchResultsActivity.class);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(cn));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        if (META.getTag().equals(Contract.TAG_SAVE_FOR_GOOD))
+        {
+            getMenuInflater().inflate(R.menu.menu_saved_entry_screen, menu);
+        }
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        if (META.getTag().equals(Contract.TAG_SAVE_FOR_GOOD))
+        {
+            menu.findItem(R.id.action_page_number).setTitle(String.valueOf(mCurrentIndex + 1));
+            return super.onPrepareOptionsMenu(menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.search) {
-            // TODO: find
+        if (id == R.id.find)
+        {
+            Intent i = new Intent(this, SearchActivity.class);
+            startActivity(i);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         // Menuden tüm entriler silindi mi diye bakıyor
         checkIfStillHaveEntries();
+    }
 
-        // arama işlemi bitti mi diye bakıyorum. eğer bittiyse aramadan önce gösterdiğim entrynin indeksine bakıp tekrar onu gösteriyorum
-        mDisconnectedFromSearch = getIntent().getBooleanExtra(SearchResultsActivity.END_OF_SEARCH, true);
-        if (mDisconnectedFromSearch) {
-            mCurrentIndex = getIntent().getIntExtra(SearchResultsActivity.INITIAL_INDEX, 0);
-            updateViewPager();
+    private void checkIfStillHaveEntries()
+    {
+        EntryManager manager = EntryManager.getManager(this);
+        int entryCount = manager.countEntries(META.getDataUri());
+        if (entryCount == 0)
+        {
+            fillEntryList();
         }
     }
 
-    private void checkIfStillHaveEntries() {
-        EntryManager manager = EntryManager.getManager(this);
-        int entryCount = manager.countEntries(META.getDataUri());
-        if (entryCount == 0) {
-            fillEntryList();
-        } else showSearchedEntry();
-    }
-
     //@SuppressLint("SimpleDateFormat")
-    private static String generateNameForBackUpFile() {
+    private static String generateNameForBackUpFile()
+    {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
         return dateFormat.format(date) + ".xml";
     }
 
-    protected class SingleEntryGetter extends AsyncTask<Void, Integer, Integer> implements SingleFileDownloadCallback, ProgressDialogCancelButtonListener {
+    protected class SingleEntryGetter extends AsyncTask<Void, Integer, Integer> implements SingleFileDownloadCallback, ProgressDialogCancelButtonListener
+    {
         private boolean mDownloadComplete = false;
         private boolean mErrorOccurred = false;
         private Sozluk mSozluk = SozlukFactory.getSozluk(META, SavedEntryScreenActivity.this);
         private String mEntryNumber;
         private ProgressDialog mHorizontalProgressDialog;
-        protected boolean mIsAsyncTaskCancelled = false;
+        boolean mIsAsyncTaskCancelled = false;
 
-        public SingleEntryGetter(String entryNumber) {
+        SingleEntryGetter(String entryNumber)
+        {
             mEntryNumber = entryNumber;
         }
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             super.onPreExecute();
             mHorizontalProgressDialog = new ProgressDialog(SavedEntryScreenActivity.this);
@@ -534,9 +562,11 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
             mHorizontalProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             mHorizontalProgressDialog.setIndeterminate(false);
             mHorizontalProgressDialog.setMax(100);
-            mHorizontalProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            mHorizontalProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener()
+            {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(DialogInterface dialog, int which)
+                {
                     cancelButtonClicked();
                     dialog.dismiss();
                 }
@@ -545,25 +575,32 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         }
 
         @Override
-        protected Integer doInBackground(Void... args) {
+        protected Integer doInBackground(Void... args)
+        {
             // önce indirilecek entilerin numalarını bul
             updateProgressBarMessage("Entry indiriliyor.");
             String directory = SavedEntryScreenActivity.this.getFilesDir().getAbsolutePath();
             String fileName = "sakla.html";
 
-            try {
+            try
+            {
                 DownloadPack pack = DownloadPack.create(mSozluk.getBaseEntryPath() + mEntryNumber, directory, fileName);
                 NetworkManager.downloadPage(pack, META.getTag(), this);
-                while (!mIsAsyncTaskCancelled && !mDownloadComplete) {
-                    if (mErrorOccurred) {
+                while (!mIsAsyncTaskCancelled && !mDownloadComplete)
+                {
+                    if (mErrorOccurred)
+                    {
                         throw new IOException();
                     }
                 }
 
-                if (mIsAsyncTaskCancelled) {
+                if (mIsAsyncTaskCancelled)
+                {
                     return ReturnCodes.DOWNLOAD_CANCELLED;
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 return ReturnCodes.PAGE_DOWNLOAD_FAILED;
             }
 
@@ -571,37 +608,53 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
             updateProgressBarMessage("Entriler okunuyor...");
 
             File tempFile = new File(directory + File.separator + fileName);
-            if (tempFile.exists()) {
-                try {
+            if (tempFile.exists())
+            {
+                try
+                {
                     Entry entry = mSozluk.getEntryFromUrl("file:///" + tempFile.getAbsolutePath(), mEntryNumber);
                     FileUtils.deleteQuietly(tempFile);
                     EntryManager manager = EntryManager.getManager(SavedEntryScreenActivity.this);
                     manager.saveEntry(entry);
                     mEntryList.add(entry);
                     return ReturnCodes.SUCCESS_DOWNLOAD;
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     return ReturnCodes.FILE_READ_ERROR;
                 }
-            } else {
+            }
+            else
+            {
                 return ReturnCodes.MISSING_FILE;
             }
         }
 
         @Override
-        protected void onPostExecute(Integer result) {
+        protected void onPostExecute(Integer result)
+        {
             super.onPostExecute(result);
 
-            if (result == ReturnCodes.SUCCESS_DOWNLOAD) {
+            if (result == ReturnCodes.SUCCESS_DOWNLOAD)
+            {
                 mCurrentIndex = mEntryList.size() - 1;
                 updateViewPager();
                 T.toast(SavedEntryScreenActivity.this, mEntryNumber + " numaralı entry kaydedildi.");
-            } else if (result == ReturnCodes.PAGE_DOWNLOAD_FAILED) {
+            }
+            else if (result == ReturnCodes.PAGE_DOWNLOAD_FAILED)
+            {
                 T.toastLong(SavedEntryScreenActivity.this, mEntryNumber + " numaralı entry bulunamadı.");
-            } else if (result == ReturnCodes.FILE_READ_ERROR) {
+            }
+            else if (result == ReturnCodes.FILE_READ_ERROR)
+            {
                 T.toastLong(SavedEntryScreenActivity.this, "İndirilen dosya okunamadı. Lütfen tekrar deneyin.");
-            } else if (result == ReturnCodes.MISSING_FILE) {
+            }
+            else if (result == ReturnCodes.MISSING_FILE)
+            {
                 T.toastLong(SavedEntryScreenActivity.this, "İnsan gerçekten hayret ediyor. İndirdiğim dosyayı bulamıyorum.");
-            } else if (result == ReturnCodes.DOWNLOAD_CANCELLED) {
+            }
+            else if (result == ReturnCodes.DOWNLOAD_CANCELLED)
+            {
                 T.toastLong(SavedEntryScreenActivity.this, "İşlem iptal edildi");
             }
 
@@ -609,46 +662,44 @@ public class SavedEntryScreenActivity extends EntryScreenActivity {
         }
 
         @Override
-        public void cancelButtonClicked() {
+        public void cancelButtonClicked()
+        {
             mIsAsyncTaskCancelled = true;
         }
 
         @Override
-        public void onDownloadComplete() {
+        public void onDownloadComplete()
+        {
             mDownloadComplete = true;
         }
 
         @Override
-        public void onError(ANError anError) {
+        public void onError(ANError anError)
+        {
             mErrorOccurred = true;
         }
 
         @Override
-        public void onProgress(long bytesDownloaded, long lengthOfFile) {
-            if (lengthOfFile <= 0) {
+        public void onProgress(long bytesDownloaded, long lengthOfFile)
+        {
+            if (lengthOfFile <= 0)
+            {
                 lengthOfFile = 200000; // average estimate
             }
             long progress = (bytesDownloaded * 100) / lengthOfFile;
             this.publishProgress((int) Math.floor(progress));
         }
 
-        protected void updateProgressBarMessage(final String message) {
-            SavedEntryScreenActivity.this.runOnUiThread(new Runnable() {
+        protected void updateProgressBarMessage(final String message)
+        {
+            SavedEntryScreenActivity.this.runOnUiThread(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     mHorizontalProgressDialog.setMessage(message);
                 }
             });
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (mDisconnectedFromSearch) {
-            Intent i = new Intent(this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
         }
     }
 }

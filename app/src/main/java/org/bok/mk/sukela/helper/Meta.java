@@ -34,6 +34,7 @@ import static org.bok.mk.sukela.helper.Contract.TAG_INSTELA_TOP_20;
 import static org.bok.mk.sukela.helper.Contract.TAG_INSTELA_YESTERDAY;
 import static org.bok.mk.sukela.helper.Contract.TAG_SAVE_FOR_GOOD;
 import static org.bok.mk.sukela.helper.Contract.TAG_SAVE_FOR_LATER;
+import static org.bok.mk.sukela.helper.Contract.TAG_SEARCHED_ENTRY;
 import static org.bok.mk.sukela.helper.Contract.TAG_ULUDAG_HAFTA;
 import static org.bok.mk.sukela.helper.Contract.TAG_ULUDAG_YESTERDAY;
 import static org.bok.mk.sukela.helper.Contract.TAG_USER;
@@ -42,8 +43,7 @@ import static org.bok.mk.sukela.helper.Contract.TAG_USER;
  * Created by mk on 18.12.2016.
  */
 
-public final class Meta implements Serializable
-{
+public final class Meta implements Serializable {
     private String title;
     private String dataUri;
     private Map<String, Integer> floatingColors;
@@ -53,52 +53,42 @@ public final class Meta implements Serializable
     private SozlukEnum sozluk;
     private String listUrl;
 
-    private Meta()
-    {
+    private Meta() {
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public Uri getDataUri()
-    {
+    public Uri getDataUri() {
         return Uri.parse(dataUri);
     }
 
-    public Map<String, Integer> getFloatingColors()
-    {
+    public Map<String, Integer> getFloatingColors() {
         return floatingColors;
     }
 
-    public String getTag()
-    {
+    public String getTag() {
         return tag;
     }
 
-    public int getThemeId()
-    {
+    public int getThemeId() {
         return themeId;
     }
 
-    public int getBottomBarColorId()
-    {
+    public int getBottomBarColorId() {
         return bottomBarColorId;
     }
 
-    public SozlukEnum getSozluk()
-    {
+    public SozlukEnum getSozluk() {
         return sozluk;
     }
 
-    public String getListUrl()
-    {
+    public String getListUrl() {
         return listUrl;
     }
 
-    public static Meta savedForGoodMeta(final Context ctx)
-    {
+    public static Meta savedForGoodMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = null; // can be any one of them
         meta.title = ctx.getResources().getString(R.string.title_save_for_good);
@@ -112,8 +102,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta savedForLaterMeta(final Context ctx)
-    {
+    public static Meta savedForLaterMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = null; // can be any one of them
         meta.title = ctx.getResources().getString(R.string.title_save_for_later);
@@ -127,8 +116,19 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta userMeta(final Context ctx)
-    {
+    public static Meta singleEntryMeta(final Context ctx) {
+        Meta meta = new Meta();
+        meta.sozluk = null; // can be any one of them
+        meta.title = "Aranan Entry";
+        meta.tag = TAG_SEARCHED_ENTRY;
+        meta.themeId = R.style.SearchActivityTheme;
+        meta.listUrl = null;
+        meta.bottomBarColorId = R.color.colorPrimaryDarkSearch;
+        meta.floatingColors = getSaklaLongFloatingColors(ctx);
+        return meta;
+    }
+
+    public static Meta userMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.EKSI;
         meta.title = ctx.getResources().getString(R.string.best_of_user);
@@ -142,8 +142,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta eksiGundemMeta(final Context ctx)
-    {
+    public static Meta eksiGundemMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.EKSI;
         meta.title = ctx.getResources().getString(R.string.eksi_gundem);
@@ -157,8 +156,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta eksiDebeMeta(final Context ctx)
-    {
+    public static Meta eksiDebeMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.EKSI;
         meta.title = ctx.getResources().getString(R.string.best_of_yesterday);
@@ -173,8 +171,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta eksiHebeMeta(final Context ctx)
-    {
+    public static Meta eksiHebeMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.EKSI;
         meta.title = ctx.getResources().getString(R.string.best_of_week);
@@ -188,8 +185,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta instelaTop20Meta(final Context ctx)
-    {
+    public static Meta instelaTop20Meta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.INSTELA;
         meta.title = ctx.getResources().getString(R.string.top20);
@@ -202,8 +198,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta instelaYesterdayMeta(final Context ctx)
-    {
+    public static Meta instelaYesterdayMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.INSTELA;
         meta.title = ctx.getResources().getString(R.string.best_of_yesterday);
@@ -216,8 +211,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta instelaWeekMeta(final Context ctx)
-    {
+    public static Meta instelaWeekMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.INSTELA;
         meta.title = ctx.getResources().getString(R.string.best_of_week);
@@ -230,8 +224,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta instelaMonthMeta(final Context ctx)
-    {
+    public static Meta instelaMonthMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.INSTELA;
         meta.title = ctx.getResources().getString(R.string.best_of_month);
@@ -244,8 +237,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta uludagYesterdayMeta(final Context ctx)
-    {
+    public static Meta uludagYesterdayMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.ULUDAG;
         meta.title = ctx.getResources().getString(R.string.best_of_yesterday);
@@ -259,8 +251,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta uludagWeekMeta(final Context ctx)
-    {
+    public static Meta uludagWeekMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.ULUDAG;
         meta.title = ctx.getResources().getString(R.string.best_of_week);
@@ -274,8 +265,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta inciYesterdayMeta(final Context ctx)
-    {
+    public static Meta inciYesterdayMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.INCI;
         meta.title = ctx.getResources().getString(R.string.best_of_yesterday);
@@ -289,8 +279,7 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta inciWeekMeta(final Context ctx)
-    {
+    public static Meta inciWeekMeta(final Context ctx) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.INCI;
         meta.title = ctx.getResources().getString(R.string.best_of_week);
@@ -304,108 +293,71 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    public static Meta eksiYearMeta(final Context ctx, final int year)
-    {
+    public static Meta eksiYearMeta(final Context ctx, final int year) {
         Meta meta = new Meta();
         meta.sozluk = SozlukEnum.EKSI;
 
-        if (year == 2016)
-        {
+        if (year == 2016) {
             meta.title = ctx.getResources().getString(R.string.best_of_2016);
             meta.tag = TAG_EKSI_2016;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/gfzplirk0krb8gv/2016.xml?dl=1";
-        }
-        else if (year == 2015)
-        {
+        } else if (year == 2015) {
             meta.title = ctx.getResources().getString(R.string.best_of_2015);
             meta.tag = TAG_EKSI_2015;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/7e5qgoilcvkaicm/2015.xml?dl=1";
-        }
-
-        else if (year == 2014)
-        {
+        } else if (year == 2014) {
             meta.title = ctx.getResources().getString(R.string.best_of_2014);
             meta.tag = TAG_EKSI_2014;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/98woolcbmlxe2cd/2014.xml?dl=1";
-        }
-
-        else if (year == 2013)
-        {
+        } else if (year == 2013) {
             meta.title = ctx.getResources().getString(R.string.best_of_2013);
             meta.tag = TAG_EKSI_2013;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/xvyrj87ug7jsqyb/2013.xml?dl=1";
-        }
-
-        else if (year == 2012)
-        {
+        } else if (year == 2012) {
             meta.title = ctx.getResources().getString(R.string.best_of_2012);
             meta.tag = TAG_EKSI_2012;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/06ayw5umzo1m3p6/2012.xml?dl=1";
-        }
-
-        else if (year == 2011)
-        {
+        } else if (year == 2011) {
             meta.title = ctx.getResources().getString(R.string.best_of_2011);
             meta.tag = TAG_EKSI_2011;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/q0bi0aked6kickp/2011.xml?dl=1";
-        }
-
-        else if (year == 2010)
-        {
+        } else if (year == 2010) {
             meta.title = ctx.getResources().getString(R.string.best_of_2010);
             meta.tag = TAG_EKSI_2010;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/fg747yot5033ope/2010.xml?dl=1";
-        }
-
-        else if (year == 2009)
-        {
+        } else if (year == 2009) {
             meta.title = ctx.getResources().getString(R.string.best_of_2009);
             meta.tag = TAG_EKSI_2009;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/n1dz64ypllevvdp/2009.xml?dl=1";
-        }
-
-        else if (year == 2008)
-        {
+        } else if (year == 2008) {
             meta.title = ctx.getResources().getString(R.string.best_of_2008);
             meta.tag = TAG_EKSI_2008;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/b5o5bj1fczm3d8i/2008.xml?dl=1";
-        }
-
-        else if (year == 2007)
-        {
+        } else if (year == 2007) {
             meta.title = ctx.getResources().getString(R.string.best_of_2007);
             meta.tag = TAG_EKSI_2007;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/uhp10tinim2je7k/2007.xml?dl=1";
-        }
-
-        else if (year == 2006)
-        {
+        } else if (year == 2006) {
             meta.title = ctx.getResources().getString(R.string.best_of_2006);
             meta.tag = TAG_EKSI_2006;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/xxh73s75296y8bf/2006.xml?dl=1";
-        }
-
-        else if (year == 2005)
-        {
+        } else if (year == 2005) {
             meta.title = ctx.getResources().getString(R.string.best_of_2005);
             meta.tag = TAG_EKSI_2005;
             meta.themeId = R.style.Eksi_Year_Theme;
             meta.listUrl = "https://www.dropbox.com/s/dc075z2wq24gu19/2005.xml?dl=1";
-        }
-
-        else if (year == 2004)
-        {
+        } else if (year == 2004) {
             meta.title = ctx.getResources().getString(R.string.best_of_2004);
             meta.tag = TAG_EKSI_2004;
             meta.themeId = R.style.Eksi_Year_Theme;
@@ -419,52 +371,31 @@ public final class Meta implements Serializable
         return meta;
     }
 
-    private static Map<String, Integer> getEksiFloatingColors(Context ctx)
-    {
-        return createFloatingColorsMap(ctx,
-                R.color.green_600, R.color.green_800, R.color.green_900,
-                R.color.eksi, R.color.green_C100, R.color.green_C200);
+    private static Map<String, Integer> getEksiFloatingColors(Context ctx) {
+        return createFloatingColorsMap(ctx, R.color.green_600, R.color.green_800, R.color.green_900, R.color.eksi, R.color.green_C100, R.color.green_C200);
     }
 
-    private static Map<String, Integer> getSaklaFloatingColors(Context ctx)
-    {
-        return createFloatingColorsMap(ctx,
-                R.color.colorPrimary, R.color.blue_700, R.color.colorPrimaryDark,
-                R.color.blue_500, R.color.blue_600, R.color.blue_800);
+    private static Map<String, Integer> getSaklaFloatingColors(Context ctx) {
+        return createFloatingColorsMap(ctx, R.color.colorPrimary, R.color.blue_700, R.color.colorPrimaryDark, R.color.blue_500, R.color.blue_600, R.color.blue_800);
     }
 
-    private static Map<String, Integer> getSaklaLongFloatingColors(Context ctx)
-    {
-        return createFloatingColorsMap(ctx,
-                R.color.pink_500, R.color.pink_600, R.color.pink_800,
-                R.color.pink_400, R.color.pink_500, R.color.pink_600);
+    private static Map<String, Integer> getSaklaLongFloatingColors(Context ctx) {
+        return createFloatingColorsMap(ctx, R.color.pink_500, R.color.pink_600, R.color.pink_800, R.color.pink_400, R.color.pink_500, R.color.pink_600);
     }
 
-    private static Map<String, Integer> getInstelaFloatingColors(Context ctx)
-    {
-        return createFloatingColorsMap(ctx,
-                R.color.instela, R.color.cyan_800, R.color.cyan_900,
-                R.color.cyan_500, R.color.cyan_600, R.color.cyan_800);
+    private static Map<String, Integer> getInstelaFloatingColors(Context ctx) {
+        return createFloatingColorsMap(ctx, R.color.instela, R.color.cyan_800, R.color.cyan_900, R.color.cyan_500, R.color.cyan_600, R.color.cyan_800);
     }
 
-    private static Map<String, Integer> getInciFloatingColors(Context ctx)
-    {
-        return createFloatingColorsMap(ctx,
-                R.color.inci, R.color.amber_700, R.color.amber_900,
-                R.color.amber_400, R.color.amber_500, R.color.amber_800);
+    private static Map<String, Integer> getInciFloatingColors(Context ctx) {
+        return createFloatingColorsMap(ctx, R.color.inci, R.color.amber_700, R.color.amber_900, R.color.amber_400, R.color.amber_500, R.color.amber_800);
     }
 
-    private static Map<String, Integer> getUludagFloatingColors(Context ctx)
-    {
-        return createFloatingColorsMap(ctx,
-                R.color.uludag, R.color.dark_purple_700, R.color.dark_purple_900,
-                R.color.dark_purple_400, R.color.dark_purple_500, R.color.dark_purple_700);
+    private static Map<String, Integer> getUludagFloatingColors(Context ctx) {
+        return createFloatingColorsMap(ctx, R.color.uludag, R.color.dark_purple_700, R.color.dark_purple_900, R.color.dark_purple_400, R.color.dark_purple_500, R.color.dark_purple_700);
     }
 
-    private static Map<String, Integer> createFloatingColorsMap(Context ctx,
-                                                                int menuColorNormal, int menuColorPressed, int menuColorRipple,
-                                                                int itemColorNormal, int itemColorPressed, int itemColorRipple)
-    {
+    private static Map<String, Integer> createFloatingColorsMap(Context ctx, int menuColorNormal, int menuColorPressed, int menuColorRipple, int itemColorNormal, int itemColorPressed, int itemColorRipple) {
         Map<String, Integer> floatingColors = new HashMap<>();
         floatingColors.put(Contract.FAB_MENU_COLOR_NORMAL, ContextCompat.getColor(ctx, menuColorNormal));
         floatingColors.put(Contract.FAB_MENU_COLOR_PRESSED, ContextCompat.getColor(ctx, menuColorPressed));
@@ -475,8 +406,7 @@ public final class Meta implements Serializable
         return floatingColors;
     }
 
-    public void setSozluk(SozlukEnum sozluk)
-    {
+    public void setSozluk(SozlukEnum sozluk) {
         this.sozluk = sozluk;
     }
 }
