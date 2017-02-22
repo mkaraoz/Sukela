@@ -137,6 +137,7 @@ public class SettingsActivity extends PreferenceActivity
             // guidelines.
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_color)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_text_size)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_debe)));
         }
 
         @Override

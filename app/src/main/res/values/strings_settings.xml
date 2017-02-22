@@ -6,6 +6,7 @@
     <string name="key_night_mode">key_night_mode_pref</string>
     <string name="key_pavyon_mode">key_pavyon_mode</string>
     <string name="key_delete_all_saved_entries">delete_all_saved_entries</string>
+    <string name="key_debe">key_debe</string>
 
     <!--Delete Saved Entries-->
     <string name="pref_delete_all_saved_entries">Sakladığım tüm entrileri sil</string>
@@ -52,6 +53,17 @@
         <item>20</item>
         <item>30</item>
         <item>40</item>
+    </string-array>
+
+    <!--Debe-->
+    <string name="pref_debe">Debe Kaynağı</string>
+    <string-array name="pref_debe_sources">
+        <item>debeoku.com</item>
+        <item>sozlock.com</item>
+    </string-array>
+    <string-array name="pref_debe_values">
+        <item>http://debeoku.com</item>
+        <item>http://sozlock.com/</item>
     </string-array>
 
 </resources>

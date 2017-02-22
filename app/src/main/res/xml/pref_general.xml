@@ -32,4 +32,13 @@
             android:targetPackage="org.bok.mk.sukela" />
     </Preference>
 
+    <ListPreference
+        android:defaultValue="http://debeoku.com"
+        android:entries="@array/pref_debe_sources"
+        android:entryValues="@array/pref_debe_values"
+        android:key="@string/key_debe"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_debe" />
+
 </PreferenceScreen>
