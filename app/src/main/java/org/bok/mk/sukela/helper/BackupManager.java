@@ -27,26 +27,19 @@ import javax.xml.transform.stream.StreamResult;
  * Created by mk on 15.01.2017.
  */
 
-public class BackupManager
-{
-    public static EntryList restoreLegacyBackUpFile(final Source source)
-    {
+public class BackupManager {
+    public static EntryList restoreLegacyBackUpFile(final Source source) {
         EntryList restoredEntries = new EntryList();
-        try
-        {
+        try {
             List<Element> list = source.getAllElements("Entry");
-            for (Element e : list)
-            {
+            for (Element e : list) {
                 Entry entry = Entry.createEntryWithTag(Contract.TAG_SAVE_FOR_GOOD);
                 String entryNo = e.getAllElements("entryNo").get(0).getContent().toString().substring(1);
                 String title = e.getAllElements("baslik").get(0).getContent().toString();
                 String title_id;
-                try
-                {
+                try {
                     title_id = e.getAllElements("title_id").get(0).getContent().toString();
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     title_id = "0";
                 }
 
@@ -55,11 +48,9 @@ public class BackupManager
                 String date = e.getAllElements("date").get(0).getContent().toString();
 
                 String sozluk;
-                try
-                {
+                try {
                     sozluk = e.getAllElements("sozluk").get(0).getContent().toString();
-                    switch (sozluk)
-                    {
+                    switch (sozluk) {
                         case "0":
                             sozluk = SozlukEnum.EKSI.getName();
                             break;
@@ -72,9 +63,7 @@ public class BackupManager
                         default:
                             throw new IllegalStateException();
                     }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     // eski yedek bu
                     sozluk = SozlukEnum.EKSI.getName();
                 }
@@ -88,30 +77,23 @@ public class BackupManager
                 entry.setTitleID(Integer.parseInt(title_id));
                 restoredEntries.add(entry);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.e("_MK", "Xml okunamadı", ex);
         }
         return restoredEntries;
     }
 
-    public static EntryList restoreEntriesFromBackUpFile(File backupFile)
-    {
+    public static EntryList restoreEntriesFromBackUpFile(File backupFile) {
         Source source = null;
-        try
-        {
+        try {
             String sourceUrlString = "file:///" + backupFile.getAbsolutePath();
             source = new Source(new URL(null, sourceUrlString));
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.e("_MK", "Xml okunamadı", ex);
         }
 
         Element version = source.getFirstElement("version");
-        if (version == null)
-        {
+        if (version == null) {
             // this means we have an old backup file
             return restoreLegacyBackUpFile(source);
         }
@@ -119,19 +101,15 @@ public class BackupManager
         EntryList restoredEntries = new EntryList();
 
         List<Element> list = source.getAllElements("Entry");
-        for (Element e : list)
-        {
+        for (Element e : list) {
             String tag = e.getAllElements("tag").get(0).getContent().toString();
             Entry entry = Entry.createEntryWithTag(tag);
             String entryNo = e.getAllElements("entryNo").get(0).getContent().toString();
             String title = e.getAllElements("title").get(0).getContent().toString();
             String title_id;
-            try
-            {
+            try {
                 title_id = e.getAllElements("title_id").get(0).getContent().toString();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 title_id = "0";
             }
 
@@ -154,10 +132,8 @@ public class BackupManager
         return restoredEntries;
     }
 
-    public static boolean saveEntriesToSdCard(EntryList entryList, File file)
-    {
-        try
-        {
+    public static boolean saveEntriesToSdCard(EntryList entryList, File file) {
+        try {
             DocumentBuilderFactory dbFac = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = dbFac.newDocumentBuilder();
             org.w3c.dom.Document doc = docBuilder.newDocument();
@@ -174,8 +150,7 @@ public class BackupManager
             org.w3c.dom.Element ele = null;
             org.w3c.dom.Element entryElement = null;
 
-            for (Entry e : entryList)
-            {
+            for (Entry e : entryList) {
                 entryElement = doc.createElement("Entry");
 
                 ele = doc.createElement("entryNo");
@@ -221,38 +196,30 @@ public class BackupManager
             transformer.transform(source, result);
 
             return true;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.e("_MK", "XML oluşturma başarısız", ex);
             return false;
         }
     }
 
-    public static boolean saveEntriesToSdCard(EntryList entryList, String fileName)
-    {
+    public static boolean saveEntriesToSdCard(EntryList entryList, String fileName) {
         return saveEntriesToSdCard(entryList, new File(fileName));
     }
 
-    public static EntryList readEntriesFromXmlFile(File xmlFile) throws JerichoFileReadException
-    {
+    public static EntryList readEntriesFromXmlFile(File xmlFile) throws JerichoFileReadException {
         EntryList entryList = new EntryList();
         String sourceUrlString = "file:" + xmlFile;
         net.htmlparser.jericho.Source entrySource = null;
-        try
-        {
+        try {
             entrySource = new net.htmlparser.jericho.Source(new URL(null, sourceUrlString));
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             Log.e("_MK", "Jericho could not read file: " + xmlFile, e);
             throw new JerichoFileReadException("İndirilen XML dosyası okunamadı. Tekrar indirmeyi deneyin.");
         }
 
         List<Element> list = entrySource.getAllElements("Entry");
 
-        for (Element e : list)
-        {
+        for (Element e : list) {
             String entryNo = e.getAllElements("entryNo").get(0).getContent().toString();
             String title = e.getAllElements("title").get(0).getContent().toString();
             String titleId = e.getAllElements("title_id").get(0).getContent().toString();
@@ -275,8 +242,7 @@ public class BackupManager
         return entryList;
     }
 
-    public static EntryList readEntriesFromXmlFile(String xmlFile) throws JerichoFileReadException
-    {
+    public static EntryList readEntriesFromXmlFile(String xmlFile) throws JerichoFileReadException {
         return readEntriesFromXmlFile(new File(xmlFile));
     }
 }

@@ -12,16 +12,12 @@ import org.bok.mk.sukela.source.UludagSozluk;
  * Created by mk on 20.12.2016.
  */
 
-public final class SozlukFactory
-{
-    private SozlukFactory()
-    {
+public final class SozlukFactory {
+    private SozlukFactory() {
     }
 
-    public static Sozluk getSozluk(Meta meta, final Context c)
-    {
-        switch (meta.getSozluk())
-        {
+    public static Sozluk getSozluk(Meta meta, final Context c) {
+        switch (meta.getSozluk()) {
             case EKSI:
                 return new EksiSozluk(c, meta);
             case INSTELA:

@@ -22,21 +22,18 @@ import java.util.List;
  * Created by mk on 25.12.2016.
  */
 
-public class Instela extends Sozluk implements SinglePageSource
-{
+public class Instela extends Sozluk implements SinglePageSource {
     public static final String BASE_ENTRY_PATH = "https://www.itusozluk.com/goster.php/%40";
 
     private Meta META;
 
-    public Instela(Context c, Meta META)
-    {
+    public Instela(Context c, Meta META) {
         this.mContext = c;
         this.entryManager = EntryManager.getManager(mContext);
         this.META = META;
     }
 
-    public static String getTitleLink(Entry entry)
-    {
+    public static String getTitleLink(Entry entry) {
         String title = entry.getTitle().replaceAll("&amp;", "&");
         String url = "https://tr.instela.com/";
         title = TextOperations.removeTurkishChars(title);
@@ -47,23 +44,19 @@ public class Instela extends Sozluk implements SinglePageSource
     }
 
     @Override
-    public String getBaseEntryPath()
-    {
+    public String getBaseEntryPath() {
         return BASE_ENTRY_PATH;
     }
 
     @Override
-    public Entry getEntryFromUrl(String url, String id) throws IOException
-    {
+    public Entry getEntryFromUrl(String url, String id) throws IOException {
         net.htmlparser.jericho.Source entrySource = null;
-        try
-        {
+        try {
             entrySource = new net.htmlparser.jericho.Source(new URL(url));
             Element article = entrySource.getAllElements(HTMLElementName.ARTICLE).get(0);
 
             String body = article.getAllElementsByClass("entry_text edit-placeholder").get(0).getContent().toString().trim();
-            if (!body.startsWith("http"))
-            {
+            if (!body.startsWith("http")) {
                 body = body.replaceAll("href=\"/", "href=\"https://tr.instela.com/");
             }
             String user = article.getAllElementsByClass("hop").get(1).getRenderer().toString().trim();
@@ -73,8 +66,7 @@ public class Instela extends Sozluk implements SinglePageSource
             String title = h1.getRenderer().toString().trim();
             String titleUri = h1.getURIAttributes().get(0).toString();
             String titleID = titleUri.substring(titleUri.indexOf("--") + 2, titleUri.length() - 1);
-            if (titleID.contains("-"))
-            {
+            if (titleID.contains("-")) {
                 titleID = titleID.substring(0, titleID.indexOf("-"));
             }
 
@@ -88,28 +80,22 @@ public class Instela extends Sozluk implements SinglePageSource
             e.setSozluk(SozlukEnum.INSTELA);
 
             return e;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new JerichoFileReadException("İndirilen HTML dosyası okunamadı. Lütfen tekrar deneyin.");
         }
     }
 
     @Override
-    public EntryList readEntriesFromHtmlFile(File htmlFile) throws JerichoFileReadException
-    {
+    public EntryList readEntriesFromHtmlFile(File htmlFile) throws JerichoFileReadException {
         EntryList entryList = new EntryList();
         String sourceUrlString = "file:" + htmlFile;
         net.htmlparser.jericho.Source entrySource = null;
-        try
-        {
+        try {
             entrySource = new net.htmlparser.jericho.Source(new URL(null, sourceUrlString));
             List<Element> articles = entrySource.getAllElements(HTMLElementName.ARTICLE);
-            for (Element article : articles)
-            {
+            for (Element article : articles) {
                 String body = article.getAllElementsByClass("entry_text edit-placeholder").get(0).getContent().toString().trim();
-                if (!body.startsWith("http"))
-                {
+                if (!body.startsWith("http")) {
                     body = body.replaceAll("href=\"/", "href=\"https://tr.instela.com/");
                 }
                 String user = article.getAllElementsByClass("hop").get(1).getRenderer().toString().trim();
@@ -119,8 +105,7 @@ public class Instela extends Sozluk implements SinglePageSource
                 String title = h2.getRenderer().toString().trim();
                 String titleUri = h2.getURIAttributes().get(0).toString();
                 String titleID = titleUri.substring(titleUri.indexOf("--") + 2, titleUri.length() - 1);
-                if (titleID.contains("-"))
-                {
+                if (titleID.contains("-")) {
                     titleID = titleID.substring(0, titleID.indexOf("-"));
                 }
 
@@ -136,9 +121,7 @@ public class Instela extends Sozluk implements SinglePageSource
                 entryList.add(e);
             }
             return entryList;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             Log.e("_MK", "Jericho could not read file: " + htmlFile, e);
             throw new JerichoFileReadException("İndirilen HTML dosyası okunamadı. Lütfen tekrar deneyin.");
         }

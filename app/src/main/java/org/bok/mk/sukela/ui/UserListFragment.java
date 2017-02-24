@@ -35,8 +35,7 @@ import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 /**
  * Created by mk on 04.09.2016.
  */
-public class UserListFragment extends Fragment implements CircularRowClickCallback
-{
+public class UserListFragment extends Fragment implements CircularRowClickCallback {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<CircularRowData> mCircularRowData;
@@ -44,34 +43,28 @@ public class UserListFragment extends Fragment implements CircularRowClickCallba
     List<String> mCurrentUsers;
     private Meta META;
 
-    public UserListFragment()
-    {
+    public UserListFragment() {
     }
 
-    public int getCurrentUserCount()
-    {
+    public int getCurrentUserCount() {
         return mCurrentUsers.size();
     }
 
-    private void initDataset()
-    {
+    private void initDataset() {
         mCurrentUsers = UserManager.getSavedUsers(getActivity(), META.getDataUri());
         mCircularRowData = new ArrayList<>();
         String color = CommonOps.getColorString(R.color.blue, getActivity());
-        for (String userName : mCurrentUsers)
-        {
+        for (String userName : mCurrentUsers) {
             CircularRowData row = CircularRowData.createSameColor(color, userName.substring(0, 1).toUpperCase(), userName, Contract.TAG_USER);
             mCircularRowData.add(row);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.user_list_fragment, container, false);
         Bundle args = getActivity().getIntent().getExtras();
-        if (args != null)
-        {
+        if (args != null) {
             this.META = (Meta) args.getSerializable(Contract.META);
             initDataset();
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
@@ -84,13 +77,11 @@ public class UserListFragment extends Fragment implements CircularRowClickCallba
         return rootView;
     }
 
-    public void setRecyclerViewLayoutManager()
-    {
+    public void setRecyclerViewLayoutManager() {
         int scrollPosition = 0;
 
         // If a layout manager has already been set, get current scroll position.
-        if (mRecyclerView.getLayoutManager() != null)
-        {
+        if (mRecyclerView.getLayoutManager() != null) {
             scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         }
 
@@ -100,32 +91,26 @@ public class UserListFragment extends Fragment implements CircularRowClickCallba
     }
 
     @Override
-    public void rowClicked(String tag, String user)
-    {
+    public void rowClicked(String tag, String user) {
         Intent intent = IntentHelper.createIntentWithType(UserEntryScreenActivity.class, META, getActivity());
         intent.putExtra(Contract.TAG_USER, user);
         startActivity(intent);
     }
 
     @Override
-    public void rowLongClicked(String tag, final String userName)
-    {
+    public void rowLongClicked(String tag, final String userName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Sil");
         builder.setMessage(getString(R.string.delete_user, userName));
 
-        builder.setPositiveButton("Sil", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
+        builder.setPositiveButton("Sil", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 deleteUser(userName);
             }
         });
 
-        builder.setNegativeButton("Yok", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
+        builder.setNegativeButton("Yok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 T.toast(getActivity(), "Peki.");
                 dialog.cancel();
             }
@@ -135,13 +120,11 @@ public class UserListFragment extends Fragment implements CircularRowClickCallba
         dialog.show();
     }
 
-    private void deleteUser(String userName)
-    {
+    private void deleteUser(String userName) {
         LocalDbManager manager = new LocalDbManager(getActivity());
 
         Uri uri = META.getDataUri();
-        if (META.getTag().equals(Contract.TAG_USER))
-        {
+        if (META.getTag().equals(Contract.TAG_USER)) {
             uri = Uri.withAppendedPath(uri, userName);
         }
 
@@ -154,13 +137,11 @@ public class UserListFragment extends Fragment implements CircularRowClickCallba
         mUserDeleteListener.userDeleted(userName, mCurrentUsers.size());
     }
 
-    public boolean checkIfUserExists(String name)
-    {
+    public boolean checkIfUserExists(String name) {
         return mCurrentUsers.contains(name);
     }
 
-    public void updateUiForUser(String userName)
-    {
+    public void updateUiForUser(String userName) {
         mCurrentUsers.add(userName);
         Collections.sort(mCurrentUsers);
         int index = mCurrentUsers.indexOf(userName);
@@ -171,36 +152,28 @@ public class UserListFragment extends Fragment implements CircularRowClickCallba
         mRecyclerView.getLayoutManager().scrollToPosition(index);
     }
 
-    public interface UserDeleteListener
-    {
+    public interface UserDeleteListener {
         void userDeleted(String deleteUserName, int remainingUserCount);
     }
 
-    private static final UserDeleteListener sDummyCallbacks = new UserDeleteListener()
-    {
+    private static final UserDeleteListener sDummyCallbacks = new UserDeleteListener() {
         @Override
-        public void userDeleted(String deleteUserName, int remainingUserCount)
-        {
+        public void userDeleted(String deleteUserName, int remainingUserCount) {
         }
     };
 
     @Override
-    public void onAttach(Context activity)
-    {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
-        try
-        {
+        try {
             mUserDeleteListener = (UserDeleteListener) activity;
-        }
-        catch (ClassCastException e)
-        {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement EntryListFragmentListener");
         }
     }
 
     @Override
-    public void onDetach()
-    {
+    public void onDetach() {
         super.onDetach();
         mUserDeleteListener = sDummyCallbacks;
     }

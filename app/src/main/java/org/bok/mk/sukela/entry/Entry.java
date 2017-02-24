@@ -7,8 +7,7 @@ import java.io.Serializable;
 /**
  * Created by mk on 18.09.2016.
  */
-public class Entry implements Serializable
-{
+public class Entry implements Serializable {
     private int entryNo; // bu string olursa başında # var mı yok mu hep karışıyor
     private String title;
     private int titleID;
@@ -18,19 +17,16 @@ public class Entry implements Serializable
     private SozlukEnum sozluk;
     private String tag;
 
-    private Entry()
-    {
+    private Entry() {
     }
 
-    public static Entry createEntryWithTag(final String tag)
-    {
+    public static Entry createEntryWithTag(final String tag) {
         Entry e = new Entry();
         e.tag = tag;
         return e;
     }
 
-    public Entry createCopyWithAnotherTag(String newTag)
-    {
+    public Entry createCopyWithAnotherTag(String newTag) {
         Entry e = new Entry();
         e.entryNo = this.entryNo;
         e.title = this.title;
@@ -43,78 +39,63 @@ public class Entry implements Serializable
         return e;
     }
 
-    public String getTag()
-    {
+    public String getTag() {
         return tag;
     }
 
-    public int getEntryNo()
-    {
+    public int getEntryNo() {
         return entryNo;
     }
 
-    public void setEntryNo(int entryNo)
-    {
+    public void setEntryNo(int entryNo) {
         this.entryNo = entryNo;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public int getTitleID()
-    {
+    public int getTitleID() {
         return titleID;
     }
 
-    public void setTitleID(int titleID)
-    {
+    public void setTitleID(int titleID) {
         this.titleID = titleID;
     }
 
-    public String getBody()
-    {
+    public String getBody() {
         return body;
     }
 
-    public void setBody(String body)
-    {
+    public void setBody(String body) {
         this.body = body;
     }
 
-    public String getUser()
-    {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(String user)
-    {
+    public void setUser(String user) {
         this.user = user;
     }
 
-    public String getDateTime()
-    {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime)
-    {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
-    public SozlukEnum getSozluk()
-    {
+    public SozlukEnum getSozluk() {
         return sozluk;
     }
 
-    public void setSozluk(SozlukEnum sozluk)
-    {
+    public void setSozluk(SozlukEnum sozluk) {
         this.sozluk = sozluk;
     }
 }

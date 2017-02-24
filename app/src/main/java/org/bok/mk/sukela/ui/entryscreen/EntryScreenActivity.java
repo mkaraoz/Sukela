@@ -57,8 +57,7 @@ import org.bok.mk.sukela.ui.SettingsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EntryScreenActivity extends AppCompatActivity
-{
+public abstract class EntryScreenActivity extends AppCompatActivity {
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
     private boolean isAdmobBannerLoaded = false;
@@ -81,8 +80,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
     private boolean mIsNightModeEnabled;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // get META-data
@@ -118,36 +116,27 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         fillEntryList();
     }
 
-    private void createFabMenu()
-    {
+    private void createFabMenu() {
         mFabMenu = (FloatingActionMenu) findViewById(R.id.menu);
         createCustomAnimation();
         mFabMenu.setClosedOnTouchOutside(true);
 
-        if (!mIsNightModeEnabled)
-        {
+        if (!mIsNightModeEnabled) {
             mFabMenu.setMenuButtonColorNormal(META.getFloatingColors().get(Contract.FAB_MENU_COLOR_NORMAL));
             mFabMenu.setMenuButtonColorPressed(META.getFloatingColors().get(Contract.FAB_MENU_COLOR_PRESSED));
             mFabMenu.setMenuButtonColorRipple(META.getFloatingColors().get(Contract.FAB_MENU_COLOR_RIPPLE));
-        }
-        else
-        {
+        } else {
             mFabMenu.setMenuButtonColorNormal(ContextCompat.getColor(this, R.color.grey_800));
             mFabMenu.setMenuButtonColorPressed(ContextCompat.getColor(this, R.color.grey_600));
             mFabMenu.setMenuButtonColorRipple(ContextCompat.getColor(this, R.color.grey_900));
         }
 
-        mFabMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener()
-        {
+        mFabMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
-            public void onMenuToggle(boolean opened)
-            {
-                if (opened)
-                {
+            public void onMenuToggle(boolean opened) {
+                if (opened) {
                     mFabSettings.setVisibility(View.VISIBLE);
-                }
-                else
-                {
+                } else {
                     mFabSettings.setVisibility(View.GONE);
                 }
             }
@@ -168,96 +157,78 @@ public abstract class EntryScreenActivity extends AppCompatActivity
 
         setFabMenuItemColors(fabItemList);
 
-        mFabSettings.setOnClickListener(new View.OnClickListener()
-        {
+        mFabSettings.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Intent i = new Intent(EntryScreenActivity.this, SettingsActivity.class);
                 startActivity(i);
                 closeFabMenu(false);
             }
         });
 
-        mFabRefresh.setOnClickListener(new View.OnClickListener()
-        {
+        mFabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 closeFabMenu(false);
                 displayRefreshEntryListWarning();
             }
         });
 
-        mFabShare.setOnClickListener(new View.OnClickListener()
-        {
+        mFabShare.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 closeFabMenu(false);
-                if (mEntryList.size() > 0)
-                {
+                if (mEntryList.size() > 0) {
                     Entry e = mEntryList.get(mCurrentIndex);
                     shareEntry(e);
                 }
             }
         });
 
-        mFabSave.setOnClickListener(new View.OnClickListener()
-        {
+        mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 closeFabMenu(false);
                 displaySaveEntryDialog();
             }
         });
     }
 
-    protected void setFabMenuItemColors(List<FloatingActionButton> fabItemList)
-    {
+    protected void setFabMenuItemColors(List<FloatingActionButton> fabItemList) {
         int normalColorResID = META.getFloatingColors().get(Contract.FAB_ITEM_COLOR_NORMAL);
         int pressedColorResID = META.getFloatingColors().get(Contract.FAB_ITEM_COLOR_PRESSED);
         int rippleColorResID = META.getFloatingColors().get(Contract.FAB_ITEM_COLOR_RIPPLE);
 
-        if (mIsNightModeEnabled)
-        {
+        if (mIsNightModeEnabled) {
             normalColorResID = ContextCompat.getColor(this, R.color.grey_600);
             pressedColorResID = ContextCompat.getColor(this, R.color.grey_700);
             rippleColorResID = ContextCompat.getColor(this, R.color.grey_900);
         }
 
-        for (FloatingActionButton fabItem : fabItemList)
-        {
+        for (FloatingActionButton fabItem : fabItemList) {
             fabItem.setColorNormal(normalColorResID);
             fabItem.setColorPressed(pressedColorResID);
             fabItem.setColorRipple(rippleColorResID);
         }
     }
 
-    private void displaySaveEntryDialog()
-    {
+    private void displaySaveEntryDialog() {
         CharSequence options[] = new CharSequence[]{getString(R.string.save_for_good), getString(R.string.save_for_later)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setItems(options, new DialogInterface.OnClickListener()
-        {
+        builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 Entry currentEntry = mEntryList.get(mCurrentIndex);
                 Entry entryToSave;
                 if (which == 0) //saveEntryForGood();
                 {
                     entryToSave = currentEntry.createCopyWithAnotherTag(Contract.TAG_SAVE_FOR_GOOD);
-                }
-                else
-                {
+                } else {
                     entryToSave = currentEntry.createCopyWithAnotherTag(Contract.TAG_SAVE_FOR_LATER);
                 }
                 boolean isEntrySaved = mEntryManager.saveEntry(entryToSave);
-                if (isEntrySaved)
-                {
+                if (isEntrySaved) {
                     LayoutInflater inflater = EntryScreenActivity.this.getLayoutInflater();
                     View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) EntryScreenActivity.this.findViewById(R.id.toast_layout_root));
 
@@ -265,9 +236,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
                     toast.setDuration(Toast.LENGTH_SHORT);
                     toast.setView(layout);
                     toast.show();
-                }
-                else
-                {
+                } else {
                     T.toast(EntryScreenActivity.this, "Entry kaydedilemedi :(");
                 }
 
@@ -276,24 +245,19 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         builder.show();
     }
 
-    private void displayRefreshEntryListWarning()
-    {
+    private void displayRefreshEntryListWarning() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EntryScreenActivity.this);
         builder.setTitle("Yenile");
         builder.setMessage("Mevcut entriler silinip, yeni liste indirilsin mi?");
 
-        builder.setPositiveButton("Evet", new DialogInterface.OnClickListener()
-        {
-            public void onClick(final DialogInterface dialog, int which)
-            {
+        builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, int which) {
                 refreshEntries();
             }
         });
 
-        builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
-            {
+        builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
@@ -301,8 +265,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         dialog.show();
     }
 
-    protected void shareEntry(Entry e)
-    {
+    protected void shareEntry(Entry e) {
         StringBuilder sb = new StringBuilder();
         sb.append(e.getTitle());
         sb.append("/@");
@@ -317,8 +280,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         startActivity(share);
     }
 
-    protected void refreshEntries()
-    {
+    protected void refreshEntries() {
         ProgressDialog progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);
         progressBar.setCanceledOnTouchOutside(false);
@@ -329,8 +291,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         LocalDbManager manager = new LocalDbManager(this);
 
         Uri uri = META.getDataUri();
-        if (META.getTag().equals(Contract.TAG_USER))
-        {
+        if (META.getTag().equals(Contract.TAG_USER)) {
             uri = Uri.withAppendedPath(uri, mEntryList.get(0).getUser());
         }
 
@@ -342,8 +303,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         fillEntryList();
     }
 
-    private void createCustomAnimation()
-    {
+    private void createCustomAnimation() {
         AnimatorSet set = new AnimatorSet();
 
         ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mFabMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
@@ -358,11 +318,9 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         scaleInX.setDuration(150);
         scaleInY.setDuration(150);
 
-        scaleInX.addListener(new AnimatorListenerAdapter()
-        {
+        scaleInX.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationStart(Animator animation)
-            {
+            public void onAnimationStart(Animator animation) {
                 mFabMenu.getMenuIconView().setImageResource(mFabMenu.isOpened() ? R.drawable.ic_menu_white_24dp : R.drawable.ic_close_white_24dp);
             }
         });
@@ -374,81 +332,66 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         mFabMenu.setIconToggleAnimatorSet(set);
     }
 
-    private void setEntryScreenTheme()
-    {
+    private void setEntryScreenTheme() {
         mIsNightModeEnabled = sukelaPrefs.getBoolean(getString(R.string.key_night_mode), false);
-        if (mIsNightModeEnabled)
-        {
+        if (mIsNightModeEnabled) {
             setTheme(R.style.NightModeTheme);
-        }
-        else
-        {
+        } else {
             setTheme(META.getThemeId());
         }
 
         // Status bar is painted to black
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.BLACK);
         }
     }
 
-    protected class DefaultViewPagerListener extends ViewPager.SimpleOnPageChangeListener
-    {
+    protected class DefaultViewPagerListener extends ViewPager.SimpleOnPageChangeListener {
         @Override
-        public void onPageSelected(int position)
-        {
+        public void onPageSelected(int position) {
             super.onPageSelected(position);
             handleViewPagerPageSelection(position);
             mFabMenu.close(false);
         }
     }
 
-    protected void handleViewPagerPageSelection(int position)
-    {
-        if (!META.getTag().equals(Contract.TAG_SAVE_FOR_GOOD))
-        {
+    protected void handleViewPagerPageSelection(int position) {
+        if (!META.getTag().equals(Contract.TAG_SAVE_FOR_GOOD)) {
             showAd(position);
         }
         mCurrentIndex = position;
         updatePageNumberMenu();
     }
 
-    private void updatePageNumberMenu()
-    {
+    private void updatePageNumberMenu() {
         invalidateOptionsMenu();
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu)
-    {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_page_number).setTitle(String.valueOf(mCurrentIndex + 1));
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_entry_screen, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_page_number)
-        {
+        if (id == R.id.action_page_number) {
             displayTitleList();
             return true;
         }
-        if (id == android.R.id.home)
-        {
+        if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -457,15 +400,11 @@ public abstract class EntryScreenActivity extends AppCompatActivity
     }
 
 
-    protected void updateViewPager()
-    {
-        if (mEntryList.isEmpty())
-        {
+    protected void updateViewPager() {
+        if (mEntryList.isEmpty()) {
             mMessageView.setText(getString(R.string.no_entry_here));
             mMessageView.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             mMessageView.setVisibility(View.GONE);
         }
 
@@ -474,29 +413,24 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         mViewPager.setCurrentItem(mCurrentIndex);
     }
 
-    protected int getLastIndex()
-    {
+    protected int getLastIndex() {
         String key = META.getTag();
 
         int lastIndex = sukelaPrefs.getInt(key, 0);
 
-        if (lastIndex > mEntryList.size() - 1)
-        {
+        if (lastIndex > mEntryList.size() - 1) {
             lastIndex = mEntryList.size() - 1;
         }
-        if (lastIndex < 0)
-        {
+        if (lastIndex < 0) {
             lastIndex = 0;
         }
 
         return lastIndex;
     }
 
-    private void displayTitleList()
-    {
+    private void displayTitleList() {
         List<String> titleList = mEntryList.getTitles();
-        for (int i = 0; i < mEntryList.size(); i++)
-        {
+        for (int i = 0; i < mEntryList.size(); i++) {
             titleList.set(i, Integer.toString(i + 1) + "-  " + titleList.get(i));
         }
 
@@ -509,10 +443,8 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         // entryleri gösteren list view
         ListView list = (ListView) customView.findViewById(R.id.listView1);
         list.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, titleList));
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mCurrentIndex = position;
                 mViewPager.setCurrentItem(position);
                 dialog.dismiss();
@@ -531,52 +463,43 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         dialog.getWindow().setAttributes(lp);
     }
 
-    private AlertDialog.Builder createAlertBuilder(String title, String message)
-    {
+    private AlertDialog.Builder createAlertBuilder(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
-        if (message != null)
-        {
+        if (message != null) {
             builder.setMessage(message);
         }
         return builder;
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         saveLastPosition();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         closeFabMenu(false);
     }
 
-    protected void closeFabMenu(boolean animated)
-    {
-        if (mFabMenu != null && mFabMenu.isOpened())
-        {
+    protected void closeFabMenu(boolean animated) {
+        if (mFabMenu != null && mFabMenu.isOpened()) {
             mFabMenu.close(animated);
         }
     }
 
-    protected void saveLastPosition()
-    {
+    protected void saveLastPosition() {
         sukelaPrefs.putInt(META.getTag(), mCurrentIndex);
     }
 
-    protected void fillEntryList()
-    {
+    protected void fillEntryList() {
         // Eğer database de kayıtlı ise ordan oku
         EntryManager manager = EntryManager.getManager(this);
         Uri entryUri = META.getDataUri();
         int entryCount = manager.countEntries(entryUri);
-        if (entryCount > 0)
-        {
+        if (entryCount > 0) {
             LocalEntryFiller filler = new LocalEntryFiller(manager);
             filler.execute();
             return;
@@ -584,8 +507,7 @@ public abstract class EntryScreenActivity extends AppCompatActivity
 
         // Database içinde bulamadık. İnternete çıkacağız
         boolean isOnline = NetworkManager.isOnline(this);
-        if (!isOnline)
-        {
+        if (!isOnline) {
             T.toast(this, "İnternet bağlantısı yok.");
             return;
         }
@@ -595,19 +517,16 @@ public abstract class EntryScreenActivity extends AppCompatActivity
 
     protected abstract void getEntriesFromInternet();
 
-    protected class LocalEntryFiller extends AsyncTask<Void, Void, Integer>
-    {
+    protected class LocalEntryFiller extends AsyncTask<Void, Void, Integer> {
         private final EntryManager mEntryManager;
         private ProgressDialog mSpinner;
 
-        LocalEntryFiller(EntryManager manager)
-        {
+        LocalEntryFiller(EntryManager manager) {
             this.mEntryManager = manager;
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
 
             mSpinner = new ProgressDialog(EntryScreenActivity.this);
@@ -620,16 +539,14 @@ public abstract class EntryScreenActivity extends AppCompatActivity
         }
 
         @Override
-        protected Integer doInBackground(Void... voids)
-        {
+        protected Integer doInBackground(Void... voids) {
             mEntryList = mEntryManager.getStoredEntries(META.getDataUri());
             mCurrentIndex = getLastIndex();
             return mCurrentIndex;
         }
 
         @Override
-        protected void onPostExecute(Integer lastIndex)
-        {
+        protected void onPostExecute(Integer lastIndex) {
             super.onPostExecute(lastIndex);
             updateViewPager();
             mSpinner.dismiss();
@@ -637,21 +554,16 @@ public abstract class EntryScreenActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed()
-    {
-        if (mFabMenu.isOpened())
-        {
+    public void onBackPressed() {
+        if (mFabMenu.isOpened()) {
             mFabMenu.close(true);
-        }
-        else
-        {
+        } else {
             super.onBackPressed();
         }
     }
 
     // This method should be a interface call from fragment
-    public void nightModeChanged()
-    {
+    public void nightModeChanged() {
         this.recreate();
     }
 
@@ -659,46 +571,37 @@ public abstract class EntryScreenActivity extends AppCompatActivity
     //
     // Reklamlar
     //
-    protected void requestAds()
-    {
+    protected void requestAds() {
         requestNewInterstitial();
         requestNewBanner();
     }
 
-    private void requestNewInterstitial()
-    {
+    private void requestNewInterstitial() {
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.ad_entry_screen_interstitial));
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
     }
 
-    private void requestNewBanner()
-    {
+    private void requestNewBanner() {
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mAdView.setVisibility(View.GONE);
-        mAdView.setAdListener(new AdListener()
-        {
+        mAdView.setAdListener(new AdListener() {
             @Override
-            public void onAdLoaded()
-            {
+            public void onAdLoaded() {
                 super.onAdLoaded();
                 isAdmobBannerLoaded = true;
             }
         });
     }
 
-    protected void showAd(int position)
-    {
+    protected void showAd(int position) {
         mAdView.setVisibility(View.GONE);
-        if (position == mPagerAdapter.getCount() - 1 && mInterstitialAd.isLoaded())
-        {
+        if (position == mPagerAdapter.getCount() - 1 && mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        }
-        else if (position == 9 && isAdmobBannerLoaded)
-        {
+        } else if (position == 9 && isAdmobBannerLoaded) {
             mAdView.setVisibility(View.VISIBLE);
         }
     }

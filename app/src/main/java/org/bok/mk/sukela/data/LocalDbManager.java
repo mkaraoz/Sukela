@@ -29,31 +29,25 @@ import static org.bok.mk.sukela.data.DatabaseContract.COLUMN_USER;
  * Created by mk on 20.12.2016.
  */
 
-public final class LocalDbManager
-{
+public final class LocalDbManager {
     private final Context mContext;
 
-    public LocalDbManager(final Context c)
-    {
+    public LocalDbManager(final Context c) {
         mContext = c;
     }
 
-    public EntryList getEntriesFromDb(final Uri uri)
-    {
+    public EntryList getEntriesFromDb(final Uri uri) {
         Cursor c = query(uri, DatabaseContract.ENTRY_PROJECTION);
         EntryList list = getEntriesFromCursor(c);
         c.close();
         return list;
     }
 
-    public List<String> getSavedUsers(Uri uri)
-    {
+    public List<String> getSavedUsers(Uri uri) {
         Cursor c = query(uri, new String[]{COLUMN_USER});
         Set<String> users = new HashSet<>();
-        if (c.moveToFirst())
-        {
-            do
-            {
+        if (c.moveToFirst()) {
+            do {
                 String user = c.getString(c.getColumnIndexOrThrow(DatabaseContract.COLUMN_USER));
                 users.add(user);
             } while (c.moveToNext());
@@ -62,36 +56,30 @@ public final class LocalDbManager
         return new ArrayList<>(users);
     }
 
-    public int deleteEntries(final Uri uri)
-    {
+    public int deleteEntries(final Uri uri) {
         return delete(uri);
     }
 
-    public int insertEntriesToDb(List<Entry> entryList)
-    {
+    public int insertEntriesToDb(List<Entry> entryList) {
         ContentResolver resolver = mContext.getContentResolver();
         int numberOfSavedEntries = 0;
 
-        for (Entry e : entryList)
-        {
+        for (Entry e : entryList) {
             ContentValues cv = entry2Cv(e);
             Uri contentUri = DatabaseContract.EntryTable.CONTENT_URI;
             Uri uri = resolver.insert(contentUri, cv);
-            if (uri != null)
-            {
+            if (uri != null) {
                 numberOfSavedEntries++;
             }
         }
         return numberOfSavedEntries;
     }
 
-    public int insertEntriesToDb(EntryList entryList)
-    {
+    public int insertEntriesToDb(EntryList entryList) {
         return insertEntriesToDb(entryList.unmodifiableList());
     }
 
-    public int countEntries(final Uri uri)
-    {
+    public int countEntries(final Uri uri) {
         String[] projection = new String[]{"count(*) AS count"};
         ContentResolver resolver = mContext.getContentResolver();
         Cursor countCursor = resolver.query(uri, projection, null, null, null);
@@ -101,14 +89,11 @@ public final class LocalDbManager
         return count;
     }
 
-    private static EntryList getEntriesFromCursor(final Cursor c)
-    {
+    private static EntryList getEntriesFromCursor(final Cursor c) {
         EntryList list = new EntryList();
 
-        if (c.moveToFirst())
-        {
-            do
-            {
+        if (c.moveToFirst()) {
+            do {
                 int entryNo = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(COLUMN_ENTRY_NO)));
                 String title = c.getString(c.getColumnIndexOrThrow(DatabaseContract.COLUMN_TITLE));
                 int title_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(COLUMN_TITLE_ID)));
@@ -135,8 +120,7 @@ public final class LocalDbManager
         return list;
     }
 
-    private ContentValues entry2Cv(final Entry e)
-    {
+    private ContentValues entry2Cv(final Entry e) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.COLUMN_USER, e.getUser());
         cv.put(DatabaseContract.COLUMN_DATE_TIME, e.getDateTime());
@@ -150,38 +134,32 @@ public final class LocalDbManager
         return cv;
     }
 
-    private Cursor query(Uri uri, String[] projection)
-    {
+    private Cursor query(Uri uri, String[] projection) {
         return query(uri, projection, null, null, null);
     }
 
-    private Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
-    {
+    private Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         ContentResolver resolver = mContext.getContentResolver();
         return resolver.query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
-    private int delete(Uri uri)
-    {
+    private int delete(Uri uri) {
         ContentResolver resolver = mContext.getContentResolver();
         return resolver.delete(uri, null, null);
     }
 
-    public Cursor runRawQuery(String query, String[] selectionArgs)
-    {
+    public Cursor runRawQuery(String query, String[] selectionArgs) {
         EntryDbHelper helper = new EntryDbHelper(mContext);
         return helper.rawQuery(query, selectionArgs);
     }
 
-    public void deleteAllUserEntries()
-    {
+    public void deleteAllUserEntries() {
         ContentResolver resolver = mContext.getContentResolver();
         Uri uri = Uri.withAppendedPath(DatabaseContract.EntryTable.CONTENT_URI, Contract.TAG_DELETE_ALL_SAVED);
         resolver.delete(uri, null, null);
     }
 
-    public EntryList searchSavedEntries(String query, String searchConfig)
-    {
+    public EntryList searchSavedEntries(String query, String searchConfig) {
         ContentResolver resolver = mContext.getContentResolver();
         Uri uri = Uri.withAppendedPath(DatabaseContract.EntryTable.CONTENT_URI, Contract.TAG_SEARCH);
         uri = Uri.withAppendedPath(uri, query);

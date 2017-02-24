@@ -6,8 +6,7 @@ import android.provider.BaseColumns;
 /**
  * Created by mk on 13.06.2015.
  */
-public class DatabaseContract
-{
+public class DatabaseContract {
     // Android-internal name of the Content Provider
     static final String CONTENT_AUTHORITY = "org.bok.mk.sukela.provider";
 
@@ -41,8 +40,7 @@ public class DatabaseContract
     //
     // Entry Table
     //
-    public static class EntryTable implements BaseColumns
-    {
+    public static class EntryTable implements BaseColumns {
         // Table name
         public static final String TABLE_NAME = "entry";
 

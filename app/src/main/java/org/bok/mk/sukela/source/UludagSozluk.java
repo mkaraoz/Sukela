@@ -24,42 +24,36 @@ import java.util.List;
  * Created by mk on 25.12.2016.
  */
 
-public class UludagSozluk extends Sozluk implements MultiPageSource
-{
+public class UludagSozluk extends Sozluk implements MultiPageSource {
     public static final String BASE_ENTRY_PATH = "https://m.uludagsozluk.com/e/";
 
     private Meta META;
 
-    public UludagSozluk(Context c, Meta META)
-    {
+    public UludagSozluk(Context c, Meta META) {
         this.mContext = c;
         this.entryManager = EntryManager.getManager(mContext);
         this.META = META;
     }
 
-    public static String getTitleLink(Entry entry)
-    {
+    public static String getTitleLink(Entry entry) {
         String entryTitle = entry.getTitle();
         entryTitle = entryTitle.replaceAll(" ", "-");
         return "https://m.uludagsozluk.com/k/" + entryTitle;
     }
 
     @Override
-    public String getBaseEntryPath()
-    {
+    public String getBaseEntryPath() {
         return BASE_ENTRY_PATH;
     }
 
     @Override
-    public List<String> getEntryNumbersFromUrl(String url) throws IOException
-    {
+    public List<String> getEntryNumbersFromUrl(String url) throws IOException {
         List<String> entryIds = new ArrayList<>();
         Source source = new Source(new URL(url));
 
         Element table = source.getAllElements(HTMLElementName.TABLE).get(0);
         List<Element> trElements = table.getAllElements(HTMLElementName.TR);
-        for (Element tr : trElements)
-        {
+        for (Element tr : trElements) {
             String row = tr.getAllElements(HTMLElementName.A).get(0).getContent().toString().trim();
             String number = row.substring(row.lastIndexOf('#') + 1);
             entryIds.add(number);
@@ -69,56 +63,45 @@ public class UludagSozluk extends Sozluk implements MultiPageSource
     }
 
     @Override
-    public EntryList downloadEntries(List<String> entryIds, MultiFileDownloadCallback feedback) throws IOException
-    {
+    public EntryList downloadEntries(List<String> entryIds, MultiFileDownloadCallback feedback) throws IOException {
         EntryList entryList = new EntryList();
-        for (int i = 0; i < entryIds.size(); i++)
-        {
-            if (feedback.isTaskCancelled())
-            {
+        for (int i = 0; i < entryIds.size(); i++) {
+            if (feedback.isTaskCancelled()) {
                 break;
             }
 
             String id = entryIds.get(i);
             feedback.updateProgress(i);
             String url = BASE_ENTRY_PATH + id;
-            try
-            {
+            try {
                 Entry entry = getEntryFromUrl(url, id);
-                if (entry != null)
-                {
+                if (entry != null) {
                     entryList.add(entry);
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 Log.d("_MK", e.getMessage(), e);
             }
         }
 
-        if (entryList.size() == 0)
-        {
+        if (entryList.size() == 0) {
             throw new IOException("Uludağ sözlüğe bağlanılamadı.");
         }
         return entryList;
     }
 
     @Override
-    public Entry getEntryFromUrl(String url, String id) throws IOException
-    {
+    public Entry getEntryFromUrl(String url, String id) throws IOException {
         Entry e = Entry.createEntryWithTag(META.getTag());
         e.setSozluk(SozlukEnum.ULUDAG);
 
         Source source = new Source(new URL(url));
         Element bodyDiv = source.getElementById("li" + id);
-        if (bodyDiv == null)
-        {
+        if (bodyDiv == null) {
             return null;
         }
 
         String body = bodyDiv.getAllElementsByClass("ent").get(0).getContent().toString().trim();
-        if (!body.startsWith("http"))
-        {
+        if (!body.startsWith("http")) {
             body = body.replaceAll("href=\"/k/", "href=\"http://www.uludagsozluk.com/k/");
             body = body.replaceAll("href=\"/e/", "href=\"http://www.uludagsozluk.com/e/");
         }
@@ -130,8 +113,7 @@ public class UludagSozluk extends Sozluk implements MultiPageSource
         String title = source.getAllElements(HTMLElementName.H1).get(0).getRenderer().toString().trim();
         String user = source.getAllElementsByClass("kuladi").get(0).getRenderer().toString().trim();
         String date = source.getAllElementsByClass("tarih").get(0).getRenderer().toString().trim();
-        if (date.contains("-"))
-        {
+        if (date.contains("-")) {
             date = date.substring(date.indexOf('-') + 1);
         }
         int titleID = 0;

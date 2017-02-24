@@ -3,14 +3,11 @@ package org.bok.mk.sukela.helper;
 /**
  * Created by mk on 24.08.2015.
  */
-public class TextOperations
-{
-    private TextOperations()
-    {
+public class TextOperations {
+    private TextOperations() {
     }
 
-    public static String removeTurkishChars(String text)
-    {
+    public static String removeTurkishChars(String text) {
         String result = text.replaceAll("ı", "i");
         result = result.replaceAll("ü", "u");
         result = result.replaceAll("ğ", "g");
@@ -21,8 +18,7 @@ public class TextOperations
         return result;
     }
 
-    public static String restoreTurkishChars(String entryBody)
-    {
+    public static String restoreTurkishChars(String entryBody) {
         entryBody = entryBody.replaceAll("ð", "ğ");
         entryBody = entryBody.replaceAll("ý", "ı");
         entryBody = entryBody.replaceAll("þ", "ş");

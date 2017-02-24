@@ -14,14 +14,12 @@ import org.bok.mk.sukela.helper.Meta;
 import org.bok.mk.sukela.ui.entryscreen.YearEntryScreenActivity;
 import org.bok.mk.sukela.helper.Screen;
 
-public class YearListActivity extends AppCompatActivity
-{
+public class YearListActivity extends AppCompatActivity {
     private static final double GOLDEN_RATIO = 1.618;
     private boolean isTablet = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_year_list);
         setTitle("Yılların efsane entryleri");
@@ -30,8 +28,7 @@ public class YearListActivity extends AppCompatActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    private void init()
-    {
+    private void init() {
         TextView a2016 = (TextView) findViewById(R.id.a2016);
         TextView a2015 = (TextView) findViewById(R.id.a2015);
         TextView a2014 = (TextView) findViewById(R.id.a2014);
@@ -93,29 +90,24 @@ public class YearListActivity extends AppCompatActivity
         */
     }
 
-    private void setAnimation(View viewToAnimate)
-    {
+    private void setAnimation(View viewToAnimate) {
         //Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(500);
         viewToAnimate.startAnimation(anim);
     }
 
-    private void addOnClickListener(final TextView button, final int year)
-    {
-        button.setOnClickListener(new View.OnClickListener()
-        {
+    private void addOnClickListener(final TextView button, final int year) {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 displayBestEntriesOf(year);
                 // Toast.makeText(YearListActivity.this, year + "", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void displayBestEntriesOf(final int year)
-    {
+    private void displayBestEntriesOf(final int year) {
         Meta meta = Meta.eksiYearMeta(this, year);
         Intent intent = IntentHelper.createIntentWithType(YearEntryScreenActivity.class, meta, this);
         startActivity(intent);

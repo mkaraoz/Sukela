@@ -8,13 +8,11 @@ import android.os.Bundle;
 import org.bok.mk.sukela.helper.Contract;
 import org.bok.mk.sukela.source.EksiSozluk;
 
-public class UserEntryScreenActivity extends EntryScreenActivity
-{
+public class UserEntryScreenActivity extends EntryScreenActivity {
     private String mUserName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         mUserName = getIntent().getExtras().getString(Contract.TAG_USER);
         super.onCreate(savedInstanceState);
         setTitle(mUserName);
@@ -22,24 +20,20 @@ public class UserEntryScreenActivity extends EntryScreenActivity
     }
 
     @Override
-    protected void saveLastPosition()
-    {
+    protected void saveLastPosition() {
         sukelaPrefs.putInt(META.getTag() + " " + mUserName, mCurrentIndex);
     }
 
     @Override
-    protected int getLastIndex()
-    {
+    protected int getLastIndex() {
         String key = META.getTag() + "+" + mUserName;
 
         int lastIndex = sukelaPrefs.getInt(key, 0);
 
-        if (lastIndex > mEntryList.size() - 1)
-        {
+        if (lastIndex > mEntryList.size() - 1) {
             lastIndex = mEntryList.size() - 1;
         }
-        if (lastIndex < 0)
-        {
+        if (lastIndex < 0) {
             lastIndex = 0;
         }
 
@@ -47,31 +41,26 @@ public class UserEntryScreenActivity extends EntryScreenActivity
     }
 
     @Override
-    protected void fillEntryList()
-    {
+    protected void fillEntryList() {
         EksiSozluk sozluk = new EksiSozluk(this, META);
         int entryCount = sozluk.countUserEntries(mUserName);
 
-        if (entryCount > 0)
-        {
+        if (entryCount > 0) {
             LocalEntryFiller filler = new LocalEntryFiller(sozluk);
             filler.execute();
         }
     }
 
-    protected class LocalEntryFiller extends AsyncTask<Void, Void, Integer>
-    {
+    protected class LocalEntryFiller extends AsyncTask<Void, Void, Integer> {
         private final EksiSozluk mSozluk;
         private ProgressDialog mSpinner;
 
-        LocalEntryFiller(EksiSozluk sozluk)
-        {
+        LocalEntryFiller(EksiSozluk sozluk) {
             this.mSozluk = sozluk;
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
 
             mSpinner = new ProgressDialog(UserEntryScreenActivity.this);
@@ -84,16 +73,14 @@ public class UserEntryScreenActivity extends EntryScreenActivity
         }
 
         @Override
-        protected Integer doInBackground(Void... voids)
-        {
+        protected Integer doInBackground(Void... voids) {
             Uri uri = Uri.withAppendedPath(META.getDataUri(), mUserName);
             mEntryList = mSozluk.getEntriesFromDb(uri);
             return mCurrentIndex;
         }
 
         @Override
-        protected void onPostExecute(Integer lastIndex)
-        {
+        protected void onPostExecute(Integer lastIndex) {
             super.onPostExecute(lastIndex);
             updateViewPager();
             mSpinner.dismiss();
@@ -101,8 +88,7 @@ public class UserEntryScreenActivity extends EntryScreenActivity
     }
 
     @Override
-    protected void getEntriesFromInternet()
-    {
+    protected void getEntriesFromInternet() {
         // yenile butonu belki buraya yönlenir bir gün
     }
 }

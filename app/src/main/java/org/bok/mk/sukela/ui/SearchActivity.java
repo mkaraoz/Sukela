@@ -26,8 +26,7 @@ import org.bok.mk.sukela.helper.IntentHelper;
 import org.bok.mk.sukela.helper.Meta;
 import org.bok.mk.sukela.ui.entryscreen.SingleEntryActivity;
 
-public class SearchActivity extends AppCompatActivity
-{
+public class SearchActivity extends AppCompatActivity {
     public static final String EXTRA_ENTRY = "EXTRA_ENTRY";
     private EditText mQueryBox;
     private ListView mSearchResultList;
@@ -35,8 +34,7 @@ public class SearchActivity extends AppCompatActivity
     private CheckBox mTitleBox, mEntryBox, mUserBox;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUserScreenTheme();
         setContentView(R.layout.activity_search);
@@ -57,90 +55,66 @@ public class SearchActivity extends AppCompatActivity
 
         mSearchResultList = (ListView) findViewById(R.id.resultList);
         mQueryBox = (EditText) findViewById(R.id.queryBox);
-        mQueryBox.addTextChangedListener(new TextWatcher()
-        {
+        mQueryBox.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable text)
-            {
+            public void afterTextChanged(Editable text) {
                 search(text.toString());
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
         });
     }
 
-    private void search(final String query)
-    {
-        if (query.length() >= 3)
-        {
+    private void search(final String query) {
+        if (query.length() >= 3) {
             showResults(query);
-        }
-        else
-        {
+        } else {
             mSearchResultList.setAdapter(null);
         }
     }
 
-    private class CheckBoxListener implements CompoundButton.OnCheckedChangeListener
-    {
+    private class CheckBoxListener implements CompoundButton.OnCheckedChangeListener {
 
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-        {
-            if (!mUserBox.isChecked() && !mEntryBox.isChecked() && !mTitleBox.isChecked())
-            {
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (!mUserBox.isChecked() && !mEntryBox.isChecked() && !mTitleBox.isChecked()) {
                 mSearchResultList.setAdapter(null);
-            }
-            else
-            {
+            } else {
                 String query = mQueryBox.getText().toString();
                 search(query);
             }
         }
     }
 
-    private void showResults(String query)
-    {
+    private void showResults(String query) {
 
         StringBuilder sb = new StringBuilder();
-        if (mTitleBox.isChecked())
-        {
+        if (mTitleBox.isChecked()) {
             sb.append("1");
-        }
-        else
-        {
+        } else {
             sb.append("0");
         }
-        if (mEntryBox.isChecked())
-        {
+        if (mEntryBox.isChecked()) {
             sb.append("1");
-        }
-        else
-        {
+        } else {
             sb.append("0");
         }
-        if (mUserBox.isChecked())
-        {
+        if (mUserBox.isChecked()) {
             sb.append("1");
-        }
-        else
-        {
+        } else {
             sb.append("0");
         }
 
         final EntryList foundEntries = mEntryManager.searchSavedEntries(query, sb.toString());
 
-        if (foundEntries.size() == 0)
-        {
+        if (foundEntries.size() == 0) {
             mSearchResultList.setAdapter(null);
             return;
         }
@@ -152,11 +126,9 @@ public class SearchActivity extends AppCompatActivity
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, titles);
         mSearchResultList.setAdapter(adapter);
 
-        mSearchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        mSearchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = IntentHelper.createIntentWithType(SingleEntryActivity.class, Meta.singleEntryMeta(SearchActivity.this), SearchActivity.this);
                 intent.putExtra(EXTRA_ENTRY, foundEntries.get(position));
                 startActivity(intent);
@@ -164,12 +136,10 @@ public class SearchActivity extends AppCompatActivity
         });
     }
 
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == android.R.id.home)
-        {
+        if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -177,12 +147,10 @@ public class SearchActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void setUserScreenTheme()
-    {
+    private void setUserScreenTheme() {
         setTheme(R.style.SearchActivityTheme);
         // Status bar is painted to black
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.BLACK);

@@ -25,10 +25,8 @@ import java.net.URLConnection;
 /**
  * Created by mk on 24.08.2015.
  */
-public class NetworkManager
-{
-    private NetworkManager()
-    {
+public class NetworkManager {
+    private NetworkManager() {
         throw new IllegalAccessError("You are not welcome here!");
     }
 
@@ -41,27 +39,23 @@ public class NetworkManager
      * @param fullPath   Path to save the file
      * @throws IOException if page cannot be found, connected or read
      */
-    public static void downloadPage(String urlAddress, String fullPath) throws IOException
-    {
+    public static void downloadPage(String urlAddress, String fullPath) throws IOException {
         URL url = new URL(urlAddress);
         File tempFile = new File(fullPath);
         org.apache.commons.io.FileUtils.copyURLToFile(url, tempFile, 5000, 10000);
     }
 
-    public static boolean isOnline(final Context context)
-    {
+    public static boolean isOnline(final Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         return ni != null;
     }
 
-    public static void downloadPage(String urlAddress, String directory, String fileName, MultiFileDownloadCallback feedback) throws IOException
-    {
+    public static void downloadPage(String urlAddress, String directory, String fileName, MultiFileDownloadCallback feedback) throws IOException {
         int count;
         InputStream input = null;
         OutputStream output = null;
-        try
-        {
+        try {
             URL url = new URL(urlAddress);
             URLConnection connection = url.openConnection();
 
@@ -77,8 +71,7 @@ public class NetworkManager
 
             // get file length
             int lengthOfFile = connection.getContentLength();
-            if (lengthOfFile < 0)
-            {
+            if (lengthOfFile < 0) {
                 lengthOfFile = 250000; // average download size
             }
 
@@ -91,37 +84,29 @@ public class NetworkManager
 
             byte data[] = new byte[1024];
             long total = 0;
-            while ((count = input.read(data)) != -1)
-            {
+            while ((count = input.read(data)) != -1) {
                 total += count;
                 long progress = (total * 100) / lengthOfFile;
                 feedback.updateProgress((int) Math.floor(progress));
                 Log.d("_MK", progress + "");
                 output.write(data, 0, count);
 
-                if (feedback.isTaskCancelled())
-                {
+                if (feedback.isTaskCancelled()) {
                     FileUtils.deleteQuietly(new File(directory));
                     return;
                 }
             }
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 output.flush();
                 output.close();
                 input.close();
-            }
-            catch (Exception ignore)
-            {
+            } catch (Exception ignore) {
             }
         }
     }
 
-    public static void downloadPage(DownloadPack pack, String tag, SingleFileDownloadCallback callback)
-    {
+    public static void downloadPage(DownloadPack pack, String tag, SingleFileDownloadCallback callback) {
         ANRequest.DownloadBuilder downBuilder = AndroidNetworking.download(pack.urlAddress, pack.directory, pack.fileName);
         ANRequest request = downBuilder.setTag(tag).setPriority(Priority.MEDIUM).build();
         request.setDownloadProgressListener(callback);

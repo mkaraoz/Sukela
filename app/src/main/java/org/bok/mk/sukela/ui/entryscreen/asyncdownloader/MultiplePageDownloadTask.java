@@ -15,71 +15,55 @@ import java.util.List;
  * Created by mk on 10.01.2017.
  */
 
-public class MultiplePageDownloadTask extends BasePageDownloadTask implements MultiFileDownloadCallback
-{
+public class MultiplePageDownloadTask extends BasePageDownloadTask implements MultiFileDownloadCallback {
     protected MultiPageSource mMultiPageSource;
 
-    public MultiplePageDownloadTask(Activity a)
-    {
+    public MultiplePageDownloadTask(Activity a) {
         super(a);
     }
 
-    protected void init(MultiPageSource multiPageSource, Meta meta)
-    {
+    protected void init(MultiPageSource multiPageSource, Meta meta) {
         this.mMultiPageSource = multiPageSource;
         this.mMeta = meta;
     }
 
     @Override
-    protected void onPreExecute()
-    {
+    protected void onPreExecute() {
         super.onPreExecute();
     }
 
     @Override
-    public void displayFailMessage(int failCode)
-    {
-        if (failCode == ReturnCodes.ENTRY_LIST_DOWNLOAD_FAILED)
-        {
+    public void displayFailMessage(int failCode) {
+        if (failCode == ReturnCodes.ENTRY_LIST_DOWNLOAD_FAILED) {
             T.toast(mParentActivity, "Entry listesi indirilemedi.");
-        }
-        else if (failCode == ReturnCodes.ENTRY_DOWNLOAD_FAILED)
-        {
+        } else if (failCode == ReturnCodes.ENTRY_DOWNLOAD_FAILED) {
             T.toast(mParentActivity, "Entryler indirilemedi. Sözlüğe erişim engellenmiş olabilir.");
         }
     }
 
     @Override
-    protected Integer doInBackground(Void... voids)
-    {
+    protected Integer doInBackground(Void... voids) {
         // önce indirilecek entilerin numalarını bul
         updateProgressBarMessage("Yeni liste indiriliyor.");
         List<String> entryIds;
-        try
-        {
+        try {
             entryIds = mMultiPageSource.getEntryNumbersFromUrl(mMeta.getListUrl());
-            if (mIsAsyncTaskCancelled)
-            {
+            if (mIsAsyncTaskCancelled) {
                 return ReturnCodes.DOWNLOAD_CANCELLED;
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             return ReturnCodes.ENTRY_LIST_DOWNLOAD_FAILED;
         }
 
         mHorizontalProgressDialog.setMax(entryIds.size());
 
-        try
-        {
+        try {
             mDownloadedEntries = mMultiPageSource.downloadEntries(entryIds, this);
             publishProgress(entryIds.size());
             updateProgressBarMessage("Entriler kaydediliyor...");
             mSavedEntryCount = mMultiPageSource.saveEntriesToLocalStorage(mDownloadedEntries.unmodifiableList());
             return ReturnCodes.SUCCESS_DOWNLOAD;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             return ReturnCodes.ENTRY_DOWNLOAD_FAILED;
         }
     }

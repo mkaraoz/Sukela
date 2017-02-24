@@ -3,8 +3,7 @@ package org.bok.mk.sukela.helper;
 /**
  * Created by mk on 18.09.2016.
  */
-public class Contract
-{
+public class Contract {
     public static final String TAG = "TAG";
     public static final String META = "META";
     public static final String ENTRY = "ENTRY";

@@ -26,8 +26,7 @@ import static org.bok.mk.sukela.data.DatabaseContract.CONTENT_AUTHORITY;
  * Created by mk on 24.12.2016.
  */
 
-public class EntryProvider extends ContentProvider
-{
+public class EntryProvider extends ContentProvider {
     private EntryDbHelper mDbHelper;
     private static final UriMatcher uriMatcher;
 
@@ -39,8 +38,7 @@ public class EntryProvider extends ContentProvider
     private static final int URI_SINGLE_SAVED_GOOD = 5;
     private static final int URI_SEARCH = 6;
 
-    static
-    {
+    static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_SEARCH + "/*/*", URI_SEARCH);
         uriMatcher.addURI(CONTENT_AUTHORITY, DatabaseContract.EntryTable.TABLE_NAME + "/" + Contract.TAG_DELETE_SINGLE_LONG + "/#", URI_SINGLE_SAVED_LONG);
@@ -60,19 +58,16 @@ public class EntryProvider extends ContentProvider
     }
 
     @Override
-    public boolean onCreate()
-    {
+    public boolean onCreate() {
         mDbHelper = new EntryDbHelper(getContext());
         return true;
     }
 
     @Nullable
     @Override
-    public String getType(Uri uri)
-    {
+    public String getType(Uri uri) {
         int uri_code = uriMatcher.match(uri);
-        switch (uri_code)
-        {
+        switch (uri_code) {
             case 0:
                 return DatabaseContract.EntryTable.ITEM_SINGLE;
             default:
@@ -82,16 +77,13 @@ public class EntryProvider extends ContentProvider
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
-    {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Cursor cursor;
 
         int uriCode = uriMatcher.match(uri);
-        switch (uriCode)
-        {
-            case URI_ENTRY_TAG:
-            {
+        switch (uriCode) {
+            case URI_ENTRY_TAG: {
                 SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
                 String tag = uri.getLastPathSegment();
                 selection = COLUMN_TAG + " = ?";
@@ -101,8 +93,7 @@ public class EntryProvider extends ContentProvider
                 cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
-            case URI_USER_LIST_TAG:
-            {
+            case URI_USER_LIST_TAG: {
                 boolean distinct = true;
                 projection = new String[]{COLUMN_USER};
                 selection = COLUMN_TAG + " = ?";
@@ -114,8 +105,7 @@ public class EntryProvider extends ContentProvider
                 cursor = db.query(distinct, DatabaseContract.EntryTable.TABLE_NAME, projection, selection, selectionArgs, groupBy, having, sortOrder, limit);
                 break;
             }
-            case URI_USER_ENTRY_TAG:
-            {
+            case URI_USER_ENTRY_TAG: {
                 SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
                 String userName = uri.getLastPathSegment();
                 selection = COLUMN_TAG + " = ? and " + COLUMN_USER + " = ?";
@@ -125,8 +115,7 @@ public class EntryProvider extends ContentProvider
                 cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
-            case URI_SEARCH:
-            {
+            case URI_SEARCH: {
                 List<String> paths = uri.getPathSegments();
                 int size = paths.size();
                 String query = paths.get(size - 2);
@@ -141,18 +130,15 @@ public class EntryProvider extends ContentProvider
                 char body = c[1];
                 char user = c[2];
                 int count = 0;
-                if (title == '1')
-                {
+                if (title == '1') {
                     sb.append("OR " + COLUMN_TITLE + " LIKE ? ");
                     count++;
                 }
-                if (body == '1')
-                {
+                if (body == '1') {
                     sb.append("OR " + COLUMN_ENTRY_BODY + " LIKE ? ");
                     count++;
                 }
-                if (user == '1')
-                {
+                if (user == '1') {
                     sb.append("OR " + COLUMN_USER + " LIKE ? ");
                     count++;
                 }
@@ -185,8 +171,7 @@ public class EntryProvider extends ContentProvider
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues)
-    {
+    public Uri insert(Uri uri, ContentValues contentValues) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         String tableName = uri.getLastPathSegment();
         long rowId = db.insertOrThrow(tableName, null, contentValues);
@@ -195,14 +180,12 @@ public class EntryProvider extends ContentProvider
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs)
-    {
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int uriCode = uriMatcher.match(uri);
         int deletionCount = 0;
 
-        switch (uriCode)
-        {
+        switch (uriCode) {
             case URI_ENTRY_TAG: // bu tagle ilişkili ne varsa sil
             {
                 String tag = uri.getLastPathSegment();
@@ -211,31 +194,27 @@ public class EntryProvider extends ContentProvider
                 deletionCount = db.delete(DatabaseContract.EntryTable.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case URI_USER_ENTRY_TAG:
-            {
+            case URI_USER_ENTRY_TAG: {
                 String userName = uri.getLastPathSegment();
                 selection = COLUMN_TAG + " = ? and " + COLUMN_USER + " = ?";
                 selectionArgs = new String[]{Contract.TAG_USER, userName};
                 deletionCount = db.delete(DatabaseContract.EntryTable.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case URI_ALL_SAVED_ENTRIES:
-            {
+            case URI_ALL_SAVED_ENTRIES: {
                 selection = COLUMN_TAG + " = ? or " + COLUMN_TAG + " = ?";
                 selectionArgs = new String[]{Contract.TAG_SAVE_FOR_GOOD, Contract.TAG_SAVE_FOR_LATER};
                 deletionCount = db.delete(DatabaseContract.EntryTable.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case URI_SINGLE_SAVED_LONG:
-            {
+            case URI_SINGLE_SAVED_LONG: {
                 selection = COLUMN_TAG + " = ? and " + COLUMN_ENTRY_NO + " = ?";
                 String entryNo = uri.getLastPathSegment();
                 String[] args = new String[]{Contract.TAG_SAVE_FOR_LATER, entryNo};
                 deletionCount = db.delete(DatabaseContract.EntryTable.TABLE_NAME, selection, args);
                 break;
             }
-            case URI_SINGLE_SAVED_GOOD:
-            {
+            case URI_SINGLE_SAVED_GOOD: {
                 selection = COLUMN_TAG + " = ? and " + COLUMN_ENTRY_NO + " = ?";
                 String entryNo = uri.getLastPathSegment();
                 String[] args = new String[]{Contract.TAG_SAVE_FOR_GOOD, entryNo};
@@ -250,8 +229,7 @@ public class EntryProvider extends ContentProvider
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings)
-    {
+    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
 }

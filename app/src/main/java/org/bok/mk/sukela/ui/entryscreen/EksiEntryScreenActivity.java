@@ -10,69 +10,53 @@ import org.bok.mk.sukela.source.EksiSozluk;
 import org.bok.mk.sukela.ui.entryscreen.asyncdownloader.MultiplePageDownloadTask;
 import org.bok.mk.sukela.ui.entryscreen.asyncdownloader.SinglePageDownloadTask;
 
-public class EksiEntryScreenActivity extends EntryScreenActivity
-{
+public class EksiEntryScreenActivity extends EntryScreenActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void getEntriesFromInternet()
-    {
-        if (META.getTag().equals(Contract.TAG_EKSI_DEBE))
-        {
+    protected void getEntriesFromInternet() {
+        if (META.getTag().equals(Contract.TAG_EKSI_DEBE)) {
             SozlockDebeFiller debeTask = new SozlockDebeFiller(this);
             debeTask.execute();
-        }
-        else
-        {
+        } else {
             EksiEntryFiller asyncTask = new EksiEntryFiller(this);
             asyncTask.execute();
         }
     }
 
-    protected class SozlockDebeFiller extends SinglePageDownloadTask
-    {
+    protected class SozlockDebeFiller extends SinglePageDownloadTask {
         private EksiSozluk sozluk = new EksiSozluk(EksiEntryScreenActivity.this, META);
 
-        SozlockDebeFiller(Activity a)
-        {
+        SozlockDebeFiller(Activity a) {
             super(a);
             super.init(sozluk, META);
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Integer doInBackground(Void... args)
-        {
+        protected Integer doInBackground(Void... args) {
             return super.doInBackground(args);
         }
 
         @Override
-        protected void onPostExecute(Integer result)
-        {
+        protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
 
-            if (result == ReturnCodes.SUCCESS_DOWNLOAD)
-            {
+            if (result == ReturnCodes.SUCCESS_DOWNLOAD) {
                 mCurrentIndex = 0;
                 mEntryList = mDownloadedEntries;
                 updateViewPager();
                 T.toast(EksiEntryScreenActivity.this, mSavedEntryCount + " adet entry kaydedildi.");
-            }
-            else if (result == ReturnCodes.PAGE_DOWNLOAD_FAILED)
-            {
+            } else if (result == ReturnCodes.PAGE_DOWNLOAD_FAILED) {
                 T.toastLong(mParentActivity, "Sunucuya bağlanamadı. Sözlüğe'a erişebildiğinizden emin olup tekrar deneyin.");
-            }
-            else
-            {
+            } else {
                 displayFailMessage(result);
             }
 
@@ -80,49 +64,39 @@ public class EksiEntryScreenActivity extends EntryScreenActivity
         }
     }
 
-    protected class EksiEntryFiller extends MultiplePageDownloadTask
-    {
+    protected class EksiEntryFiller extends MultiplePageDownloadTask {
         private EksiSozluk sozluk = new EksiSozluk(EksiEntryScreenActivity.this, META);
 
-        public EksiEntryFiller(Activity a)
-        {
+        public EksiEntryFiller(Activity a) {
             super(a);
             super.init(sozluk, META);
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Integer doInBackground(Void... args)
-        {
+        protected Integer doInBackground(Void... args) {
             return super.doInBackground(args);
         }
 
         @Override
-        protected void onPostExecute(Integer result)
-        {
+        protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
 
-            if (mIsAsyncTaskCancelled)
-            {
+            if (mIsAsyncTaskCancelled) {
                 mCurrentIndex = 0;
                 mEntryList = mDownloadedEntries;
                 updateViewPager();
                 T.toast(EksiEntryScreenActivity.this, mSavedEntryCount + " adet entry kaydedildi ve işlem iptal edildi.");
-            }
-            else if (result == ReturnCodes.SUCCESS_DOWNLOAD)
-            {
+            } else if (result == ReturnCodes.SUCCESS_DOWNLOAD) {
                 mCurrentIndex = 0;
                 mEntryList = mDownloadedEntries;
                 updateViewPager();
                 T.toast(EksiEntryScreenActivity.this, mSavedEntryCount + " adet entry kaydedildi.");
-            }
-            else
-            {
+            } else {
                 displayFailMessage(result);
             }
 

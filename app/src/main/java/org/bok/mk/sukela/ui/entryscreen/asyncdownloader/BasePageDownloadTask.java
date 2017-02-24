@@ -13,8 +13,7 @@ import org.bok.mk.sukela.helper.callbacks.ProgressDialogCancelButtonListener;
  * Created by mk on 10.01.2017.
  */
 
-public abstract class BasePageDownloadTask extends AsyncTask<Void, Integer, Integer> implements ProgressDialogCancelButtonListener
-{
+public abstract class BasePageDownloadTask extends AsyncTask<Void, Integer, Integer> implements ProgressDialogCancelButtonListener {
     protected ProgressDialog mHorizontalProgressDialog;
     protected Activity mParentActivity;
     protected volatile boolean mIsAsyncTaskCancelled = false;
@@ -22,32 +21,26 @@ public abstract class BasePageDownloadTask extends AsyncTask<Void, Integer, Inte
     protected Meta mMeta;
     protected int mSavedEntryCount;
 
-    public BasePageDownloadTask(Activity a)
-    {
+    public BasePageDownloadTask(Activity a) {
         mParentActivity = a;
     }
 
-    protected void updateProgressBarMessage(final String message)
-    {
-        mParentActivity.runOnUiThread(new Runnable()
-        {
+    protected void updateProgressBarMessage(final String message) {
+        mParentActivity.runOnUiThread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 mHorizontalProgressDialog.setMessage(message);
             }
         });
     }
 
     @Override
-    public void cancelButtonClicked()
-    {
+    public void cancelButtonClicked() {
         mIsAsyncTaskCancelled = true;
     }
 
     @Override
-    protected void onPreExecute()
-    {
+    protected void onPreExecute() {
         super.onPreExecute();
         mHorizontalProgressDialog = new ProgressDialog(mParentActivity);
         mHorizontalProgressDialog.setCancelable(false);
@@ -56,11 +49,9 @@ public abstract class BasePageDownloadTask extends AsyncTask<Void, Integer, Inte
         mHorizontalProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mHorizontalProgressDialog.setIndeterminate(false);
         mHorizontalProgressDialog.setMax(100);
-        mHorizontalProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener()
-        {
+        mHorizontalProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 BasePageDownloadTask.this.cancelButtonClicked();
                 dialog.dismiss();
             }
@@ -69,8 +60,7 @@ public abstract class BasePageDownloadTask extends AsyncTask<Void, Integer, Inte
     }
 
     @Override // async task metodu
-    protected void onProgressUpdate(Integer... progress)
-    {
+    protected void onProgressUpdate(Integer... progress) {
         mHorizontalProgressDialog.setProgress(progress[0]);
     }
 

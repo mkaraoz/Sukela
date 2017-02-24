@@ -12,18 +12,15 @@ import org.bok.mk.sukela.entry.Entry;
 
 import static org.bok.mk.sukela.ui.SearchActivity.EXTRA_ENTRY;
 
-public class SingleEntryActivity extends EntryScreenActivity
-{
+public class SingleEntryActivity extends EntryScreenActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createShareFabMenu();
     }
 
-    private void createShareFabMenu()
-    {
+    private void createShareFabMenu() {
         mFabMenu.setVisibility(View.GONE);
         FloatingActionButton shareButton = (FloatingActionButton) findViewById(R.id.fab_share_for_single_entry_screen);
         shareButton.setVisibility(View.VISIBLE);
@@ -33,13 +30,10 @@ public class SingleEntryActivity extends EntryScreenActivity
         shareButton.setColorNormal(normalColorResID);
         shareButton.setColorPressed(pressedColorResID);
         shareButton.setColorRipple(rippleColorResID);
-        shareButton.setOnClickListener(new View.OnClickListener()
-        {
+        shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                if (mEntryList.size() > 0)
-                {
+            public void onClick(View view) {
+                if (mEntryList.size() > 0) {
                     Entry e = mEntryList.get(mCurrentIndex);
                     shareEntry(e);
                 }
@@ -48,14 +42,12 @@ public class SingleEntryActivity extends EntryScreenActivity
     }
 
     @Override
-    protected void getEntriesFromInternet()
-    {
+    protected void getEntriesFromInternet() {
         return;
     }
 
     @Override
-    protected void fillEntryList()
-    {
+    protected void fillEntryList() {
         Entry e = (Entry) getIntent().getExtras().getSerializable(EXTRA_ENTRY);
         mEntryList.clear();
         mEntryList.add(e);
@@ -63,14 +55,12 @@ public class SingleEntryActivity extends EntryScreenActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu)
-    {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         return true;
     }
 }

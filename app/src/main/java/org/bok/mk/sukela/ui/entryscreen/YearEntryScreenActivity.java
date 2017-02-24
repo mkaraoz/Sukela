@@ -8,61 +8,48 @@ import org.bok.mk.sukela.helper.T;
 import org.bok.mk.sukela.source.EksiSozluk;
 import org.bok.mk.sukela.ui.entryscreen.asyncdownloader.SinglePageDownloadTask;
 
-public class YearEntryScreenActivity extends EntryScreenActivity
-{
+public class YearEntryScreenActivity extends EntryScreenActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void getEntriesFromInternet()
-    {
+    protected void getEntriesFromInternet() {
         YearEntryFiller asyncTask = new YearEntryFiller(this);
         asyncTask.execute();
     }
 
-    protected class YearEntryFiller extends SinglePageDownloadTask
-    {
+    protected class YearEntryFiller extends SinglePageDownloadTask {
         private EksiSozluk sozluk = new EksiSozluk(YearEntryScreenActivity.this, META);
 
-        YearEntryFiller(Activity a)
-        {
+        YearEntryFiller(Activity a) {
             super(a);
             super.init(sozluk, META);
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Integer doInBackground(Void... args)
-        {
+        protected Integer doInBackground(Void... args) {
             return super.doInBackground(args);
         }
 
         @Override
-        protected void onPostExecute(Integer result)
-        {
+        protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
 
-            if (result == ReturnCodes.SUCCESS_DOWNLOAD)
-            {
+            if (result == ReturnCodes.SUCCESS_DOWNLOAD) {
                 mCurrentIndex = 0;
                 mEntryList = mDownloadedEntries;
                 updateViewPager();
                 T.toast(YearEntryScreenActivity.this, mSavedEntryCount + " adet entry kaydedildi.");
-            }
-            else if (result == ReturnCodes.PAGE_DOWNLOAD_FAILED)
-            {
+            } else if (result == ReturnCodes.PAGE_DOWNLOAD_FAILED) {
                 T.toastLong(mParentActivity, "Sunucuya bağlanamadı. Dropbox'a erişebildiğinizden emin olup tekrar deneyin.");
-            }
-            else
-            {
+            } else {
                 displayFailMessage(result);
             }
 

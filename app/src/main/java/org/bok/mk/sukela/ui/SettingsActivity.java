@@ -18,24 +18,18 @@ import android.view.MenuItem;
 
 import org.bok.mk.sukela.R;
 
-public class SettingsActivity extends PreferenceActivity
-{
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener()
-    {
+public class SettingsActivity extends PreferenceActivity {
+    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
-        public boolean onPreferenceChange(Preference preference, Object value)
-        {
+        public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
-            if (preference instanceof ListPreference)
-            {
+            if (preference instanceof ListPreference) {
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
                 preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
 
-            }
-            else
-            {
+            } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
@@ -53,8 +47,7 @@ public class SettingsActivity extends PreferenceActivity
      *
      * @see #sBindPreferenceSummaryToValueListener
      */
-    private static void bindPreferenceSummaryToValue(Preference preference)
-    {
+    private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
@@ -64,8 +57,7 @@ public class SettingsActivity extends PreferenceActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
         getFragmentManager().beginTransaction().replace(android.R.id.content, new GeneralPreferenceFragment()).commit();
@@ -80,11 +72,9 @@ public class SettingsActivity extends PreferenceActivity
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
-    private void setupActionBar()
-    {
+    private void setupActionBar() {
         ActionBar actionBar = AppCompatDelegate.create(this, null).getSupportActionBar();
-        if (actionBar != null)
-        {
+        if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -94,8 +84,7 @@ public class SettingsActivity extends PreferenceActivity
      * {@inheritDoc}
      */
     @Override
-    public boolean onIsMultiPane()
-    {
+    public boolean onIsMultiPane() {
         return isXLargeTablet(this);
     }
 
@@ -103,8 +92,7 @@ public class SettingsActivity extends PreferenceActivity
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
      */
-    private static boolean isXLargeTablet(Context context)
-    {
+    private static boolean isXLargeTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
 
@@ -112,8 +100,7 @@ public class SettingsActivity extends PreferenceActivity
      * This method stops fragment injection in malicious applications.
      * Make sure to deny any unknown fragments here.
      */
-    protected boolean isValidFragment(String fragmentName)
-    {
+    protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName) || GeneralPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -122,11 +109,9 @@ public class SettingsActivity extends PreferenceActivity
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment
-    {
+    public static class GeneralPreferenceFragment extends PreferenceFragment {
         @Override
-        public void onCreate(Bundle savedInstanceState)
-        {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
@@ -141,11 +126,9 @@ public class SettingsActivity extends PreferenceActivity
         }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item)
-        {
+        public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
-            if (id == android.R.id.home)
-            {
+            if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }
@@ -154,15 +137,13 @@ public class SettingsActivity extends PreferenceActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == android.R.id.home)
-        {
+        if (id == android.R.id.home) {
             // This might be ugly but it is the best I could think.
             // This guy might be started from 10 different places.
             finish();

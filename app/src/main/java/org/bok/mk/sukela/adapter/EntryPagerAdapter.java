@@ -14,41 +14,34 @@ import org.bok.mk.sukela.ui.entryscreen.EntryScreenFragment;
 /**
  * Created by mk on 13.06.2015.
  */
-public class EntryPagerAdapter extends FragmentStatePagerAdapter
-{
+public class EntryPagerAdapter extends FragmentStatePagerAdapter {
     private Meta meta;
     private EntryList mEntryList;
 
-    public EntryPagerAdapter(FragmentManager fm, Meta meta)
-    {
+    public EntryPagerAdapter(FragmentManager fm, Meta meta) {
         super(fm);
         this.meta = meta;
     }
 
-    public void setData(EntryList list)
-    {
+    public void setData(EntryList list) {
         this.mEntryList = list;
     }
 
     @Override
-    public int getItemPosition(Object object)
-    {
+    public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return mEntryList.size();
     }
 
     @Override
-    public Fragment getItem(int position)
-    {
+    public Fragment getItem(int position) {
         Fragment fragment = new EntryScreenFragment();
 
-        if (mEntryList.size() > 0)
-        {
+        if (mEntryList.size() > 0) {
             Bundle args = new Bundle();
             args.putSerializable(Contract.ENTRY, mEntryList.get(position));
             args.putSerializable(Contract.META, meta);
@@ -57,8 +50,7 @@ public class EntryPagerAdapter extends FragmentStatePagerAdapter
         return fragment;
     }
 
-    public Entry getEntry(final int position)
-    {
+    public Entry getEntry(final int position) {
         return mEntryList.get(position);
     }
 }

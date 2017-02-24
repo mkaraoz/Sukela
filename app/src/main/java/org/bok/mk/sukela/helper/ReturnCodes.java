@@ -4,8 +4,7 @@ package org.bok.mk.sukela.helper;
  * Created by mk on 23.12.2016.
  */
 
-public class ReturnCodes
-{
+public class ReturnCodes {
     public static final int SUCCESS_LOCAL_STORAGE = 0;
     public static final int SUCCESS_DOWNLOAD = 1;
     public static final int OFFLINE = 2;//"İnternet bağlantısı yok";

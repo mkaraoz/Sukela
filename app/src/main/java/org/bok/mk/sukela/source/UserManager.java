@@ -20,20 +20,17 @@ import java.util.List;
  * Created by mk on 05.01.2017.
  */
 
-public class UserManager
-{
-    public static List<String> getSavedUsers(final Context c, final Uri uri)
-    {
+public class UserManager {
+    public static List<String> getSavedUsers(final Context c, final Uri uri) {
         LocalDbManager manager = new LocalDbManager(c);
         List<String> users = manager.getSavedUsers(uri);
         Collections.sort(users);
         return (users);
     }
 
-    public static List<String> getEntryNumbersFromUserPage(Meta META, String userName) throws IOException
-    {
+    public static List<String> getEntryNumbersFromUserPage(Meta META, String userName) throws IOException {
         List<String> entryIds = new ArrayList<>();
-        String url = META.getListUrl()+userName.trim().replaceAll(" ", "-")+"/en-begenilenleri";
+        String url = META.getListUrl() + userName.trim().replaceAll(" ", "-") + "/en-begenilenleri";
         Source source = new Source(new URL(url));
         Element content = source.getElementById("content");
 
@@ -43,8 +40,7 @@ public class UserManager
             return entryIds;
 
         Element ul = ulElems.get(0);
-        for (Element li : ul.getAllElements(HTMLElementName.LI))
-        {
+        for (Element li : ul.getAllElements(HTMLElementName.LI)) {
             String entryID = li.getAllElementsByClass("detail with-parentheses").get(0).getRenderer().toString().substring(1);
             entryIds.add(entryID);
         }

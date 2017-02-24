@@ -15,35 +15,29 @@ import java.util.List;
  * Created by mk on 20.12.2016.
  */
 
-public abstract class Sozluk
-{
+public abstract class Sozluk {
     protected Context mContext;
     protected EntryManager entryManager;
 
     public abstract Entry getEntryFromUrl(String url, String id) throws IOException;
 
-    public int countEntries(Uri dataUri)
-    {
+    public int countEntries(Uri dataUri) {
         return entryManager.countEntries(dataUri);
     }
 
-    public EntryList getEntriesFromDb(final Uri uri)
-    {
+    public EntryList getEntriesFromDb(final Uri uri) {
         return entryManager.getStoredEntries(uri);
     }
 
-    public int saveEntriesToLocalStorage(List<Entry> entries)
-    {
+    public int saveEntriesToLocalStorage(List<Entry> entries) {
         return entryManager.insertEntriesToDb(entries);
     }
 
-    public static String getEntryLink(Entry e)
-    {
+    public static String getEntryLink(Entry e) {
         String entryNo = String.valueOf(e.getEntryNo());
         SozlukEnum sozlukenum = e.getSozluk();
         String url;
-        switch (sozlukenum)
-        {
+        switch (sozlukenum) {
             case EKSI:
                 url = EksiSozluk.BASE_ENTRY_PATH + entryNo;
                 break;
@@ -66,11 +60,9 @@ public abstract class Sozluk
         return url;
     }
 
-    public static String getTitleLink(final Entry e)
-    {
+    public static String getTitleLink(final Entry e) {
         SozlukEnum sozlukenum = e.getSozluk();
-        switch (sozlukenum)
-        {
+        switch (sozlukenum) {
             case EKSI:
                 return EksiSozluk.getTitleLink(e);
             case INSTELA:
