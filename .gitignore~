@@ -72,7 +72,7 @@ com_crashlytics_export_strings.xml
 
 # User-specific configurations
 .idea/libraries/
-.idea/workspace.xml
+.idea/workspace.xml/Users/mk/Desktop/strings.xml
 .idea/tasks.xml
 .idea/.name
 .idea/compiler.xml
