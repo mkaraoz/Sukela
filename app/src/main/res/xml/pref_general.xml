@@ -33,7 +33,7 @@
     </Preference>
 
     <ListPreference
-        android:defaultValue="http://debeoku.com"
+        android:defaultValue="debeoku"
         android:entries="@array/pref_debe_sources"
         android:entryValues="@array/pref_debe_values"
         android:key="@string/key_debe"

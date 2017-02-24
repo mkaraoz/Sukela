@@ -31,6 +31,8 @@ import java.util.List;
 public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSource {
     public static final String BASE_ENTRY_PATH = "https://eksisozluk.com/entry/";
     public static final String EKSI_BASE_URL = "https://eksisozluk.com/";
+    public static final String SOZLOCK_BASE_URL = "http://sozlock.com/";
+    public static final String DEBE_OKU_BASE_URL = "http://debeoku.com/";
 
     private Meta META;
 
@@ -85,6 +87,10 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
             return getGundemEntryNumbers();
         }
 
+        if (url.equals(DEBE_OKU_BASE_URL)) {
+            return debeOkuComEntryNumbers();
+        }
+
         List<String> entryIds = new ArrayList<>();
         Source source = new Source(new URL(url));
 
@@ -106,36 +112,27 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
         return entryIds;
     }
 
-    @Override
-    public EntryList downloadEntries(List<String> entryIds, MultiFileDownloadCallback feedback) throws IOException {
-        if (META.getTag().equals(Contract.TAG_EKSI_GNDM)) {
-            return downloadGundemEntries(entryIds, feedback);
-        }
+    private List<String> debeOkuComEntryNumbers() throws IOException {
+        List<String> entryIds = new ArrayList<>();
+        Source source = new Source(new URL(DEBE_OKU_BASE_URL));
 
-        EntryList entryList = new EntryList();
-        for (int i = 0; i < entryIds.size(); i++) {
-            if (feedback.isTaskCancelled()) {
-                break;
-            }
-
-            String id = entryIds.get(i);
-            feedback.updateProgress(i);
-            String url = BASE_ENTRY_PATH + id;
+        List<Element> aElements = source.getFirstElement(HTMLElementName.UL).getAllElements(HTMLElementName.A);
+        for (Element a : aElements) {
             try {
-                Entry entry = getEntryFromUrl(url, id);
-                entryList.add(entry);
-            } catch (IOException e) {
-                Log.d("_MK", e.getMessage(), e);
+                if (a.getAttributeValue("target") != null) {
+                    String link = a.getAttributeValue("href");
+                    String number = link.substring(link.lastIndexOf('/') + 1);
+                    entryIds.add(number);
+                }
+            } catch (java.lang.NullPointerException npe) {
+                Log.d("_MK", "reklamlar: " + npe.getMessage());
             }
         }
-
-        if (entryList.size() == 0) {
-            throw new IOException("Ekşi sözlüğe bağlanılamadı.");
-        }
-        return entryList;
+        return entryIds;
     }
 
-    private EntryList downloadGundemEntries(List<String> entryIds, MultiFileDownloadCallback feedback) throws IOException {
+    @Override
+    public EntryList downloadEntries(List<String> entryIds, MultiFileDownloadCallback feedback) throws IOException {
         EntryList entryList = new EntryList();
         for (int i = 0; i < entryIds.size(); i++) {
             if (feedback.isTaskCancelled()) {
@@ -144,7 +141,11 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
 
             String id = entryIds.get(i);
             feedback.updateProgress(i);
-            String url = EKSI_BASE_URL + id;
+            String url;
+            if (META.getTag().equals(Contract.TAG_EKSI_GNDM)) {
+                url = EKSI_BASE_URL + id;
+            } else
+                url = BASE_ENTRY_PATH + id;
             try {
                 Entry entry = getEntryFromUrl(url, id);
                 entryList.add(entry);
@@ -270,7 +271,7 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
                 link = link + "dailynice";
                 entryIds.add(link);
             } catch (java.lang.NullPointerException npe) {
-                Log.d("_MK", "reklamlar: " + npe.getMessage());
+                Log.e("_MK", "Eksi Gündem: " + npe.getMessage());
             }
         }
         return entryIds;

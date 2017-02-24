@@ -62,8 +62,8 @@
         <item>sozlock.com</item>
     </string-array>
     <string-array name="pref_debe_values">
-        <item>http://debeoku.com</item>
-        <item>http://sozlock.com/</item>
+        <item>debeoku</item>
+        <item>sozlock</item>
     </string-array>
 
 </resources>

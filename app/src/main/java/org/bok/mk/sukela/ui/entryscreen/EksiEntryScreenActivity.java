@@ -3,6 +3,7 @@ package org.bok.mk.sukela.ui.entryscreen;
 import android.app.Activity;
 import android.os.Bundle;
 
+import org.bok.mk.sukela.R;
 import org.bok.mk.sukela.helper.Contract;
 import org.bok.mk.sukela.helper.ReturnCodes;
 import org.bok.mk.sukela.helper.T;
@@ -19,9 +20,17 @@ public class EksiEntryScreenActivity extends EntryScreenActivity {
     @Override
     protected void getEntriesFromInternet() {
         if (META.getTag().equals(Contract.TAG_EKSI_DEBE)) {
-            SozlockDebeFiller debeTask = new SozlockDebeFiller(this);
-            debeTask.execute();
-        } else {
+            String source = sukelaPrefs.getString(getString(R.string.key_debe), "debeoku");
+            if (source.equals("debeoku")) {
+                META.setListUrl(EksiSozluk.DEBE_OKU_BASE_URL);
+                EksiEntryFiller asyncTask = new EksiEntryFiller(this);
+                asyncTask.execute();
+            } else {
+                META.setListUrl(EksiSozluk.SOZLOCK_BASE_URL);
+                SozlockDebeFiller debeTask = new SozlockDebeFiller(this);
+                debeTask.execute();
+            }
+        } else { // haftanın en beğenilenleri ve ekşi gündem
             EksiEntryFiller asyncTask = new EksiEntryFiller(this);
             asyncTask.execute();
         }

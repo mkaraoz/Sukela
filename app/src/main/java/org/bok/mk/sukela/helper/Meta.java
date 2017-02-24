@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 
 import org.bok.mk.sukela.R;
 import org.bok.mk.sukela.data.DatabaseContract;
+import org.bok.mk.sukela.source.EksiSozluk;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -163,7 +164,7 @@ public final class Meta implements Serializable {
         meta.tag = TAG_EKSI_DEBE;
         meta.themeId = R.style.EksiTheme;
         // meta.listUrl = "https://eksisozluk.com/istatistik/dunun-en-begenilen-entryleri";
-        meta.listUrl = "http://sozlock.com/";
+        meta.listUrl = EksiSozluk.SOZLOCK_BASE_URL;
         meta.bottomBarColorId = R.color.green_600;
         meta.dataUri = Uri.withAppendedPath(DatabaseContract.EntryTable.CONTENT_URI, meta.tag).toString();
         meta.floatingColors = getEksiFloatingColors(ctx);
@@ -408,5 +409,9 @@ public final class Meta implements Serializable {
 
     public void setSozluk(SozlukEnum sozluk) {
         this.sozluk = sozluk;
+    }
+
+    public void setListUrl(String url) {
+        this.listUrl = url;
     }
 }
