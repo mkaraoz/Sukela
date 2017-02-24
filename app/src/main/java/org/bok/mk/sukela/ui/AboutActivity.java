@@ -1,5 +1,6 @@
 package org.bok.mk.sukela.ui;
 
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,10 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AboutActivityTheme);
         setContentView(R.layout.activity_about);
         setTitle("Hakkında");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

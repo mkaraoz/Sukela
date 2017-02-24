@@ -44,7 +44,7 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
 
     public static String getTitleLink(final Entry e) {
         StringBuilder sb = new StringBuilder();
-        sb.append("http://eksisozluk.com/");
+        sb.append(EKSI_BASE_URL);
 
         String title = e.getTitle().replaceAll("&amp;", "&");
         title = TextOperations.removeTurkishChars(title);
@@ -259,9 +259,9 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
         return entryList;
     }
 
-    public List<String> getGundemEntryNumbers() throws IOException {
+    private List<String> getGundemEntryNumbers() throws IOException {
         List<String> entryIds = new ArrayList<>();
-        Source source = new Source(new URL("https://eksisozluk.com/"));
+        Source source = new Source(new URL(EKSI_BASE_URL));
 
         List<Element> liElements = source.getFirstElementByClass("topic-list partial").getAllElements(HTMLElementName.LI);
         for (Element e : liElements) {

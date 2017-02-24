@@ -124,4 +124,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSearch</item>
     </style>
 
+    <style name="AboutActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimarySearch</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSearch</item>
+    </style>
+
 </resources>
