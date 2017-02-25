@@ -112,6 +112,8 @@ public class EntryScreenFragment extends Fragment {
         mBodyWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         WebSettings settings = mBodyWebView.getSettings();
         settings.setJavaScriptEnabled(false);
+        settings.setAllowContentAccess(false);
+        settings.setAllowFileAccess(false);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mBodyWebView.getSettings().setSupportMultipleWindows(true);
         mBodyWebView.setWebChromeClient(new WebChromeClient() {

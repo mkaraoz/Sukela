@@ -61,4 +61,5 @@ public class Contract {
     public static final String TAG_SEARCHED_ENTRY = "TAG_SEARCHED_ENTRY";
 
     public static final String TAG_SEARCH = "TAG_SEARCH";
+    public static final String IS_FIRST_RUN_403 = "IS_FIRST_RUN_403";
 }

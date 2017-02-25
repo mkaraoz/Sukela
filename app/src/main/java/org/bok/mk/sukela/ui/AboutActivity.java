@@ -17,7 +17,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AboutActivityTheme);
         setContentView(R.layout.activity_about);
-        setTitle("Hakkında");
+        setTitle(getString(R.string.about));
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         try {

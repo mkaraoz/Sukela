@@ -1,5 +1,6 @@
 package org.bok.mk.sukela.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import org.bok.mk.sukela.R;
 import org.bok.mk.sukela.anim.AnimationListener;
+import org.bok.mk.sukela.helper.Contract;
 import org.bok.mk.sukela.helper.IntentHelper;
 import org.bok.mk.sukela.helper.Meta;
 import org.bok.mk.sukela.helper.SukelaPrefs;
@@ -35,6 +37,29 @@ public class MainActivity extends AppCompatActivity {
         prefs = SukelaPrefs.instance(this);
         createComponents();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        boolean isFirstRunOf403 = prefs.getBoolean(Contract.IS_FIRST_RUN_403, true);
+        if (isFirstRunOf403)
+        {
+            showDebeMessage();
+        }
+    }
+
+    private void showDebeMessage()
+    {
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("Uyarı");
+        builder.setMessage("Merhaba\nSozlock.com debe listesini her gün güncellemediği için debeoku.com'uda uygulamaya ekledim. Uygulama otomatik olarak debeoku.com'u kullanarak listeyi güncelliyor. Ayarlardan sozlock ve debeoku arasında geçiş yapabilirsiniz.");
+
+        builder.setPositiveButton("Tamam", new DialogInterface.OnClickListener()
+        {
+            public void onClick(final DialogInterface dialog, int which)
+            {
+                prefs.putBoolean(Contract.IS_FIRST_RUN_403, false);
+            }
+        });
+        android.app.AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void createComponents() {
