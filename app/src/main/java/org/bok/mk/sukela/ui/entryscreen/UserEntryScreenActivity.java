@@ -21,12 +21,12 @@ public class UserEntryScreenActivity extends EntryScreenActivity {
 
     @Override
     protected void saveLastPosition() {
-        sukelaPrefs.putInt(META.getTag() + " " + mUserName, mCurrentIndex);
+        sukelaPrefs.putInt(META.getTag() + "_" + mUserName, mCurrentIndex);
     }
 
     @Override
     protected int getLastIndex() {
-        String key = META.getTag() + "+" + mUserName;
+        String key = META.getTag() + "_" + mUserName;
 
         int lastIndex = sukelaPrefs.getInt(key, 0);
 
@@ -76,6 +76,7 @@ public class UserEntryScreenActivity extends EntryScreenActivity {
         protected Integer doInBackground(Void... voids) {
             Uri uri = Uri.withAppendedPath(META.getDataUri(), mUserName);
             mEntryList = mSozluk.getEntriesFromDb(uri);
+            mCurrentIndex = getLastIndex();
             return mCurrentIndex;
         }
 

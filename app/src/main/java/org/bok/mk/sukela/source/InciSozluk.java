@@ -100,6 +100,12 @@ public class InciSozluk extends Sozluk implements MultiPageSource {
         }
 
         String body = source.getAllElementsByClass("entry-text-wrap").get(0).getContent().toString().trim();
+        // görsel var mı bakıyoruz
+        Element img = source.getFirstElementByClass("entry-link");
+        if (img != null)
+        {
+            body = img.toString() + body;
+        }
         String user = source.getAllElementsByClass("username").get(0).getContent().toString().trim();
         String entryNo = id;
         String date = source.getAllElementsByClass("entry-tarih").get(0).getRenderer().toString().trim();
