@@ -4,7 +4,6 @@
     <string name="inci">İnci</string>
     <string name="uludag">Uludağ</string>
     <string name="instela">Instela</string>
-    <string name="arsiv">Arşiv</string>
     <string name="save">Sakla</string>
 
     <string name="a2016">2016</string>
@@ -41,9 +40,6 @@
     <string name="best_of_week">Haftanın en beğenilenleri</string>
     <string name="best_of_month">Ayın en beğenilenleri</string>
     <string name="inci_yesterday">Dünün beğenilen başlıkları</string>
-    <string name="inci_popular">Dünün en popüler başlıkları</string>
-    <string name="ulu_yesterday">Dünün iyileri</string>
-    <string name="ulu_week">Geçen hafta</string>
     <string name="top20">Top 20</string>
     <string name="yazarlar">Yazarlar</string>
     <string name="save_for_later">Çok uzun sonra okurum</string>
@@ -60,7 +56,6 @@
     <string name="backup">Entrileri yedekle</string>
     <string name="restore">Yedekten geri yükle</string>
     <string name="search_hint">Ara: Sakla</string>
-    <string name="title_activity_search_results">Arama Sonuçları</string>
 
     <string name="no_entry_here">Burada hiç entry yok.</string>
     <string name="shall_delete_all_saved_entries">Sakladığın tüm entriler silinsin mi?</string>

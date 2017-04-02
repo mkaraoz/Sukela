@@ -1,10 +1,8 @@
 <resources>
-    <string name="title_activity_settings">Ayarlar</string>
 
     <string name="key_color">key_color_pref</string>
     <string name="key_text_size">key_text_size_pref</string>
     <string name="key_night_mode">key_night_mode_pref</string>
-    <string name="key_pavyon_mode">key_pavyon_mode</string>
     <string name="key_delete_all_saved_entries">delete_all_saved_entries</string>
     <string name="key_debe">key_debe</string>
 
@@ -16,8 +14,6 @@
     <string name="pref_night_mode">Gece modu</string>
 
     <!--Pavyon Mode-->
-    <string name="pref_pavyon_mode">Pavyon Modu</string>
-    <string name="pavyon_summary">Uygulamayı rengarenk yapar.</string>
 
     <!--Link Color Options-->
     <string name="pref_colors">Link Rengi</string>

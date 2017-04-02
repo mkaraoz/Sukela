@@ -7,8 +7,8 @@ android {
         applicationId "org.bok.mk.sukela"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 404
-        versionName '4.0.4'
+        versionCode 405
+        versionName '4.0.5'
     }
     buildTypes {
         release {
