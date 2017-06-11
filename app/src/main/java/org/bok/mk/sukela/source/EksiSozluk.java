@@ -237,6 +237,9 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
                 title = title.substring(title.indexOf('.') + 1).trim();
 
                 String body = li.getFirstElementByClass("entrytxt").getContent().toString();
+                // sozlock entry numarası ile verilen entry linklerini olduğu gibi alıyor, kendiside
+                // bizde sözlüğe gidemiyoruz tıklayınca. Başına ekşi sözlüğü eklemek gerekli
+                body = body.replace("href=\"/entry/", "href=\"https://www.eksisozluk.com/entry/");
 
                 String entryNo = li.getFirstElementByClass("basliklogo").getFirstElement(HTMLElementName.A).getAttributeValue("href");
                 entryNo = entryNo.substring(entryNo.lastIndexOf('/') + 1);
