@@ -95,12 +95,12 @@ public class UludagSozluk extends Sozluk implements MultiPageSource {
         e.setSozluk(SozlukEnum.ULUDAG);
 
         Source source = new Source(new URL(url));
-        Element bodyDiv = source.getElementById("li" + id);
-        if (bodyDiv == null) {
+        Element entryDiv = source.getElementById("li_" + id);
+        if (entryDiv == null) {
             return null;
         }
 
-        String body = bodyDiv.getAllElementsByClass("ent").get(0).getContent().toString().trim();
+        String body = entryDiv.getAllElementsByClass("entry-p").get(0).getContent().toString().trim();
         if (!body.startsWith("http")) {
             body = body.replaceAll("href=\"/k/", "href=\"http://www.uludagsozluk.com/k/");
             body = body.replaceAll("href=\"/e/", "href=\"http://www.uludagsozluk.com/e/");
@@ -111,8 +111,8 @@ public class UludagSozluk extends Sozluk implements MultiPageSource {
         body = TextOperations.restoreTurkishChars(body);
 
         String title = source.getAllElements(HTMLElementName.H1).get(0).getRenderer().toString().trim();
-        String user = source.getAllElementsByClass("kuladi").get(0).getRenderer().toString().trim();
-        String date = source.getAllElementsByClass("tarih").get(0).getRenderer().toString().trim();
+        String user = source.getAllElementsByClass("alt-u yazar").get(0).getRenderer().toString().trim();
+        String date = source.getAllElementsByClass("date-u").get(0).getRenderer().toString().trim();
         if (date.contains("-")) {
             date = date.substring(date.indexOf('-') + 1);
         }
