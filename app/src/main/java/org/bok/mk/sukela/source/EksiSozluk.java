@@ -166,9 +166,7 @@ public class EksiSozluk extends Sozluk implements MultiPageSource, SinglePageSou
         e.setSozluk(SozlukEnum.EKSI);
         Source source = new Source(new URL(url));
 
-        Element ul = source.getElementById("entry-list");
-
-
+        Element ul = source.getElementById("entry-item-list");
         Element contentEle = ul.getAllElementsByClass("content").get(0);
 
         String body = contentEle.getContent().toString().trim();
