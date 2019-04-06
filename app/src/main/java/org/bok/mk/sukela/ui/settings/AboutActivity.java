@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import org.bok.mk.sukela.BuildConfig;
 import org.bok.mk.sukela.R;
 
 public class AboutActivity extends AppCompatActivity
@@ -17,6 +19,9 @@ public class AboutActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.activity_about);
+
+        TextView tvVersion = findViewById(R.id.version);
+        tvVersion.setText("v"+BuildConfig.VERSION_NAME);
     }
 
     @Override
