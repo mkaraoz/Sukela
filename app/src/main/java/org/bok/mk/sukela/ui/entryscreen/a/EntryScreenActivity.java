@@ -112,8 +112,6 @@ public class EntryScreenActivity extends AppCompatActivity implements EntryScree
         mMessageView = findViewById(R.id.message);
 
         mPresenter.uiLoadCompleted();
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     @Override
