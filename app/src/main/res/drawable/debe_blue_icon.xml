@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--No idea why but left right params make the dot smaller-->
+    <!--width is only supported after api 24 so I'll go with this.-->
+    <item android:left="50dp" android:right="50dp">
+        <bitmap
+            android:gravity="center_horizontal"
+            android:tint="@android:color/holo_blue_dark"
+            android:src="@drawable/ic_dot"/>
+    </item>
+</layer-list>

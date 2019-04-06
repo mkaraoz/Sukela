@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.main.MainActivity">
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/background">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--Eksi Button-->
+            <LinearLayout
+                android:id="@+id/eksi_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/eksi">
+
+                <ImageView
+                    android:id="@+id/eksi_logo"
+                    android:layout_width="52dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/cd_eksi_logo"
+                    android:src="@drawable/logo_eksi"/>
+
+                <TextView
+                    android:id="@+id/eksi_label"
+                    style="@style/sozluk_label"
+                    android:tag="E"
+                    android:text="@string/eksi"/>
+            </LinearLayout>
+
+            <!--Eksi BOX-->
+            <RelativeLayout
+                android:id="@+id/eksi_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <!--Eksi Box LEFT + RIGHT + BOTTOM-->
+                <TextView
+                    android:id="@+id/eksi_left_side"
+                    style="@style/box_left_side"
+                    android:layout_above="@+id/eksi_bottom_line"
+                    android:background="@color/eksi"/>
+
+                <TextView
+                    android:id="@+id/eksi_right_side"
+                    style="@style/box_right_side"
+                    android:layout_alignBottom="@+id/eksi_left_side"
+                    android:background="@color/eksi"/>
+
+                <TextView
+                    android:id="@+id/eksi_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignBottom="@+id/eksi_list_items"
+                    android:background="@color/eksi"/>
+
+                <!--EKŞİ List Items-->
+                <LinearLayout
+                    android:id="@+id/eksi_list_items"
+                    style="@style/sakla_list_items"
+                    android:layout_toStartOf="@+id/eksi_right_side">
+
+                    <TextView
+                        android:id="@+id/eksi_year"
+                        style="@style/list_item"
+                        android:text="@string/best_of_year"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/eksi_yesterday"
+                        style="@style/list_item"
+                        android:text="@string/debe"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/eksi_week"
+                        style="@style/list_item"
+                        android:text="@string/hebe"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/eksi_yazar"
+                            style="@style/list_item"
+                            android:layout_weight="1"
+                            android:text="@string/yazarlar"/>
+
+                        <TextView
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="2dp"
+                            android:background="@color/white"/>
+
+                        <TextView
+                            android:id="@+id/eksi_gundem"
+                            style="@style/list_item"
+                            android:layout_weight="1"
+                            android:text="@string/eksi_gundem"/>
+
+                        <TextView
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="2dp"
+                            android:background="@color/white"/>
+
+                        <TextView
+                            android:id="@+id/eksi_archive"
+                            style="@style/list_item"
+                            android:layout_weight="1"
+                            android:text="@string/arsiv"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </RelativeLayout> <!--Eksi Item List-->
+
+            <!--Instela Button-->
+            <LinearLayout
+                android:id="@+id/instela_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/instela">
+
+                <ImageView
+                    android:id="@+id/instela_logo"
+                    android:layout_width="52dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/cd_instela_logo"
+                    android:src="@drawable/logo_instela"/>
+
+                <TextView
+                    android:id="@+id/instela_label"
+                    style="@style/sozluk_label"
+                    android:tag="I"
+                    android:text="@string/instela"/>
+            </LinearLayout> <!--Instela Button-->
+
+            <!--Instela BOX-->
+            <RelativeLayout
+                android:id="@+id/instela_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <!--Instela Box LEFT + RIGHT + BOTTOM-->
+                <TextView
+                    android:id="@+id/instela_left_side"
+                    style="@style/box_left_side"
+                    android:layout_above="@+id/instela_bottom_line"
+                    android:background="@color/instela"/>
+
+                <TextView
+                    android:id="@+id/instela_right_side"
+                    style="@style/box_right_side"
+                    android:layout_alignBottom="@+id/instela_left_side"
+                    android:background="@color/instela"/>
+
+                <TextView
+                    android:id="@+id/instela_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignBottom="@+id/instela_list_items"
+                    android:background="@color/instela"/>
+
+                <!--Instela List Items-->
+                <LinearLayout
+                    android:id="@+id/instela_list_items"
+                    style="@style/sakla_list_items"
+                    android:layout_toStartOf="@+id/instela_right_side">
+
+                    <TextView
+                        android:id="@+id/instela_month"
+                        style="@style/list_item"
+                        android:text="@string/best_of_month"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/instela_week"
+                        style="@style/list_item"
+                        android:text="@string/hebe"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/instela_yesterday"
+                        style="@style/list_item"
+                        android:text="@string/debe"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/instela_t20"
+                        style="@style/list_item"
+                        android:text="@string/top20"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--Uludağ-->
+            <LinearLayout
+                android:id="@+id/uludag_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/uludag">
+
+                <ImageView
+                    android:id="@+id/ulu_logo"
+                    android:layout_width="52dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/cd_ulu_logo"
+                    android:src="@drawable/logo_uludag"/>
+
+                <TextView
+                    android:id="@+id/uludag_label"
+                    style="@style/sozluk_label"
+                    android:tag="U"
+                    android:text="@string/uludag"/>
+            </LinearLayout>
+
+            <!--Uludağ BOX-->
+            <RelativeLayout
+                android:id="@+id/uludag_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <!--Uludag Box LEFT + RIGHT + BOTTOM-->
+                <TextView
+                    android:id="@+id/uludag_left_side"
+                    style="@style/box_left_side"
+                    android:layout_above="@+id/uludag_bottom_line"
+                    android:background="@color/uludag"/>
+
+                <TextView
+                    android:id="@+id/uludag_right_side"
+                    style="@style/box_right_side"
+                    android:layout_alignBottom="@+id/uludag_left_side"
+                    android:background="@color/uludag"/>
+
+                <TextView
+                    android:id="@+id/uludag_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignBottom="@+id/uludag_list_items"
+                    android:background="@color/uludag"/>
+
+                <!--Uludağ List Items-->
+                <LinearLayout
+                    android:id="@+id/uludag_list_items"
+                    style="@style/sakla_list_items"
+                    android:layout_toEndOf="@+id/uludag_left_side"
+                    android:layout_toStartOf="@+id/uludag_right_side">
+
+                    <TextView
+                        android:id="@+id/uludag_week"
+                        style="@style/list_item"
+                        android:text="@string/hebe"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/uludag_yesterday"
+                        style="@style/list_item"
+                        android:text="@string/debe"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--Sakla-->
+            <LinearLayout
+                android:id="@+id/sakla_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/save">
+
+                <ImageView
+                    android:id="@+id/save_logo"
+                    android:layout_width="52dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/cd_save_icon"
+                    android:padding="5dp"
+                    android:src="@drawable/logo_sakla"/>
+
+                <TextView
+                    android:id="@+id/save_label"
+                    style="@style/sozluk_label"
+                    android:tag="S"
+                    android:text="@string/save"/>
+            </LinearLayout> <!--Uludağ-->
+
+            <!--Sakla BOX-->
+            <RelativeLayout
+                android:id="@+id/save_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <!--SAKLA Box LEFT + RIGHT + BOTTOM-->
+                <TextView
+                    android:id="@+id/save_left_side"
+                    style="@style/box_left_side"
+                    android:layout_above="@+id/save_bottom_line"
+                    android:background="@color/save"/>
+
+                <TextView
+                    android:id="@+id/save_right_side"
+                    style="@style/box_right_side"
+                    android:layout_alignBottom="@+id/save_left_side"
+                    android:background="@color/save"/>
+
+                <TextView
+                    android:id="@+id/save_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignBottom="@+id/save_list_container"
+                    android:background="@color/save"/>
+
+                <!--Sakla List Items-->
+                <LinearLayout
+                    android:id="@+id/save_list_container"
+                    style="@style/sakla_list_items"
+                    android:layout_toEndOf="@+id/save_left_side"
+                    android:layout_toStartOf="@+id/save_right_side">
+
+                    <TextView
+                        android:id="@+id/save_good"
+                        style="@style/list_item"
+                        android:text="@string/save_for_good"/>
+
+                    <TextView style="@style/list_item_separator"/>
+
+                    <TextView
+                        android:id="@+id/save_long"
+                        style="@style/list_item"
+                        android:text="@string/save_for_later"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

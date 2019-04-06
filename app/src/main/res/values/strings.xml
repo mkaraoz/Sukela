@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Sukela</string>
+    <string name="eksi">Ekşi</string>
+    <string name="uludag">Uludağ</string>
+    <string name="instela">Instela</string>
+    <string name="save">Sakla</string>
+    <string name="debe">Dünün en beğenilenleri</string>
+    <string name="hebe">Haftanın en beğenilenleri</string>
+    <string name="yazarlar">Yazarlar</string>
+    <string name="eksi_gundem">Gündem</string>
+    <string name="best_of_month">Ayın en beğenilenleri</string>
+    <string name="top20">Top 20</string>
+    <string name="save_for_later">Çok uzun sonra okurum</string>
+    <string name="save_for_good">Çok güzel kenarda dursun</string>
+    <string name="best_of_year">Yılların efsane entrileri</string>
+    <string name="best_of_2016">2016\'nın en beğenilenleri</string>
+    <string name="best_of_2015">2015\'in en beğenilenleri</string>
+    <string name="best_of_2014">2014\'ün en beğenilenleri</string>
+    <string name="best_of_2013">2013\'ün en beğenilenleri</string>
+    <string name="best_of_2012">2012\'nin en beğenilenleri</string>
+    <string name="best_of_2011">2011\'in en beğenilenleri</string>
+    <string name="best_of_2010">2010\'un en beğenilenleri</string>
+    <string name="best_of_2009">2009\'un en beğenilenleri</string>
+    <string name="best_of_2008">2008\'in en beğenilenleri</string>
+    <string name="best_of_2007">2007\'nin en beğenilenleri</string>
+    <string name="best_of_2006">2006\'nın en beğenilenleri</string>
+    <string name="best_of_2005">2005\'in en beğenilenleri</string>
+    <string name="best_of_2004">2004\'ün en beğenilenleri</string>
+    <string name="cd_save_icon">Sakla</string>
+    <string name="cd_ulu_logo">Uludağ Sözlük Logo</string>
+    <string name="cd_instela_logo">Instela logo</string>
+    <string name="cd_eksi_logo">Ekşi Sözlük Logo</string>
+    <string name="cd_zodiac_icon">Chinese Zodiac Icon</string>
+    <string name="delete_all_saved_entries">Sakladığın tüm entriler silinsin mi?</string>
+    <string name="saved">Entry Saklandı</string>
+    <string name="a2016">2016</string>
+    <string name="a2015">2015</string>
+    <string name="a2014">2014</string>
+    <string name="a2013">2013</string>
+    <string name="a2012">2012</string>
+    <string name="a2011">2011</string>
+    <string name="a2010">2010</string>
+    <string name="a2009">2009</string>
+    <string name="a2008">2008</string>
+    <string name="a2007">2007</string>
+    <string name="a2006">2006</string>
+    <string name="a2005">2005</string>
+    <string name="a2004">2004</string>
+    <string name="arsiv">Arşiv</string>
+    <string name="find">Bul</string>
+    <string name="search_hint">Ara: Sakla</string>
+    <string name="no_entry_here">Burada hiç entry yok.</string>
+    <string name="reading_entries">\"Entriler okunuyor…\"</string>
+    <string name="reading_users">\"Kayıtlı yazarlar okunuyor…\"</string>
+    <string name="searching_user">Kullanıcı aranıyor.</string>
+    <string name="unpopular_user">Laf aramızda bu yazar pek sevilmiyor.</string>
+    <string name="material_calendar_monday">Pzt</string>
+    <string name="material_calendar_tuesday">Sal</string>
+    <string name="material_calendar_wednesday">Çar</string>
+    <string name="material_calendar_thursday">Per</string>
+    <string name="material_calendar_friday">Cum</string>
+    <string name="material_calendar_saturday">Cmt</string>
+    <string name="material_calendar_sunday">Pzr</string>
+    <array name="material_calendar_months_array">
+        <item>Ocak</item>
+        <item>Şubat</item>
+        <item>Mart</item>
+        <item>Nisan</item>
+        <item>Mayıs</item>
+        <item>Haziran</item>
+        <item>Temmuz</item>
+        <item>Ağustos</item>
+        <item>Eylül</item>
+        <item>Ekim</item>
+        <item>Kasım</item>
+        <item>Aralık</item>
+    </array>
+    <string name="material_calendar_today_button">Bugün</string>
+    <string name="material_calendar_positive_button">Tamam</string>
+    <string name="material_calendar_negative_button">İptal</string>
+
+    <!--Ads-->
+    <string name="ADMOB_APP_ID">ca-app-pub-1267800463127818~5714788287</string>
+    <string name="eksi_banner_ad_unit_id">ca-app-pub-1267800463127818/7191521485</string>
+    <string name="ad_entry_screen_interstitial">ca-app-pub-1267800463127818/8668254686</string>
+
+</resources>
