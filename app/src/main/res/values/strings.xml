@@ -83,5 +83,6 @@
     <string name="ADMOB_APP_ID">ca-app-pub-1267800463127818~5714788287</string>
     <string name="eksi_banner_ad_unit_id">ca-app-pub-1267800463127818/7191521485</string>
     <string name="ad_entry_screen_interstitial">ca-app-pub-1267800463127818/8668254686</string>
+    <string name="email">duvarapps@gmail.com</string>
 
 </resources>
