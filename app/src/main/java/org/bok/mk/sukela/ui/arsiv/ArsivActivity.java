@@ -38,11 +38,17 @@ public class ArsivActivity extends AppCompatActivity implements ArsivActivityCon
         mPresenter.attachView(this);
 
         mCalendarView = findViewById(R.id.calendarView);
+        // bu listener default kütüphanede yok. Ben 1.5.1 sürümünü indirip kendim ekledim.
+        // https://github.com/Applandeo/Material-Calendar-View
         mCalendarView.setOnHeaderClickListener(() -> mPresenter.headerClicked());
 
         FloatingActionButton fab = findViewById(R.id.fab_item_hebe);
         fab.setOnClickListener(view -> mPresenter.fabClicked());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPresenter.uiLoadCompleted();
     }
 
@@ -50,7 +56,6 @@ public class ArsivActivity extends AppCompatActivity implements ArsivActivityCon
     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
         mPresenter.datePicked(y, m, d);
     }
-
 
     @Override
     public void setMaxDate(Calendar maxDate) {

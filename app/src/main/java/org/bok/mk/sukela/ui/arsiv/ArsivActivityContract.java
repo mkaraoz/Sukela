@@ -35,6 +35,5 @@ interface ArsivActivityContract
         void uiLoadCompleted();
 
         void datePicked(int y, int m, int d);
-
     }
 }
