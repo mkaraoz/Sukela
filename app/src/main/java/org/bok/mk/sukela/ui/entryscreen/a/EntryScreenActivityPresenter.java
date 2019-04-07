@@ -609,6 +609,7 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
     @Override
     public void onError(String error) {
         mView.toast("Bir sorunla karşılaşıldı.");
+        mView.dismissProgressDialog();
         Log.e(LOG_TAG, error);
     }
 

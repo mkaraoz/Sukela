@@ -14,7 +14,7 @@ public interface EksiSozluk
      * @return
      * @throws IOException
      */
-    EksiEntry getEntryByNumber(final int entryNo) throws IOException;
+    EksiEntry getEntryByNumber(final int entryNo);
 
     EksiEntry getBestOfPage(final String title) throws IOException;
 

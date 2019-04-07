@@ -81,6 +81,7 @@ public class RemoteEntryRepository implements EntryDataSource
                 EksiSozluk eksi = EksiFactory.getInstance();
                 new DummyProgressUpdater(callbackMap.get(tag)).start();
                 EksiEntry entry = eksi.getEntryByNumber(entryNo);
+                isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
                 callbackMap.get(tag).onProgressUpdate(70);
                 List<EksiEntry> list = new ArrayList<>();
                 list.add(entry);
@@ -92,6 +93,7 @@ public class RemoteEntryRepository implements EntryDataSource
                 Instela instela = InstelaFactory.getInstance();
                 new DummyProgressUpdater(callbackMap.get(tag)).start();
                 InstelaEntry entry = instela.getEntryByNumber(entryNo);
+                isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
                 callbackMap.get(tag).onProgressUpdate(70);
                 List<InstelaEntry> list = new ArrayList<>();
                 list.add(entry);
@@ -103,6 +105,7 @@ public class RemoteEntryRepository implements EntryDataSource
                 Uludag uludag = UludagFactory.getInstance();
                 new DummyProgressUpdater(callbackMap.get(tag)).start();
                 UludagEntry entry = uludag.getEntryByNumber(entryNo);
+                isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
                 callbackMap.get(tag).onProgressUpdate(70);
                 List<UludagEntry> list = new ArrayList<>();
                 list.add(entry);
@@ -214,7 +217,7 @@ public class RemoteEntryRepository implements EntryDataSource
         List<UludagEntry> debeList = new ArrayList<>();
         for (int i = 0; i < debeIds.size(); i++) {
             UludagEntry e = uludag.getEntryByNumber(debeIds.get(i));
-            debeList.add(e);
+            if (e != null) { debeList.add(e); }
             callbackMap.get(tag).onProgressUpdate(5 + (3 * (i + 2)));
             callbackMap.get(tag).onMessageUpdate(
                     "Entryler indiriliyor: " + (i + 1) + "/" + debeIds.size());
@@ -269,6 +272,7 @@ public class RemoteEntryRepository implements EntryDataSource
             default:
                 throw new RuntimeException("Unknown tag");
         }
+        isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
         callbackMap.get(tag).onProgressUpdate(70);
         EntryList entries = EntryList.fromInstelaList(instelaEntryList, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -306,6 +310,7 @@ public class RemoteEntryRepository implements EntryDataSource
             debe = sozlock.getDebeByDate(ArsivPack.getDateFromTag(tag));
         }
         else { throw new RuntimeException("Unknown tag"); }
+        isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
         callbackMap.get(tag).onProgressUpdate(70);
         EntryList entries = EntryList.fromSozlockList(debe, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -328,6 +333,7 @@ public class RemoteEntryRepository implements EntryDataSource
         new DummyProgressUpdater(callbackMap.get(tag)).start();
         String year = tag.substring(tag.lastIndexOf('_') + 1);
         List<EksiEntry> bestOfYear = eksi.getBestOfYear(Integer.parseInt(year));
+        isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
         callbackMap.get(tag).onProgressUpdate(70);
         EntryList entries = EntryList.fromEksiList(bestOfYear, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -344,7 +350,7 @@ public class RemoteEntryRepository implements EntryDataSource
         List<EksiEntry> hebeList = new ArrayList<>();
         for (int i = 0; i < hebeIds.size(); i++) {
             EksiEntry e = eksi.getEntryByNumber(hebeIds.get(i));
-            hebeList.add(e);
+            if (e != null) { hebeList.add(e); }
             callbackMap.get(tag).onProgressUpdate(5 * (i + 2));
             callbackMap.get(tag).onMessageUpdate(
                     "Entryler indiriliyor: " + (i + 1) + "/" + hebeIds.size());
@@ -366,7 +372,7 @@ public class RemoteEntryRepository implements EntryDataSource
         List<String> gundemTitles = eksi.getGundemTitles();
         for (int i = 0; i < gundemTitles.size(); i++) {
             EksiEntry e = eksi.getBestOfPage(gundemTitles.get(i));
-            gundemList.add(e);
+            if (e != null) { gundemList.add(e); }
             callbackMap.get(tag).onProgressUpdate(2 * (i + 2));
             callbackMap.get(tag).onMessageUpdate(
                     "Entryler indiriliyor: " + (i + 1) + "/" + gundemTitles.size());
@@ -395,7 +401,7 @@ public class RemoteEntryRepository implements EntryDataSource
         List<EksiEntry> usersBestEntryList = new ArrayList<>();
         for (int i = 0; i < entryNumbers.size(); i++) {
             EksiEntry e = eksi.getEntryByNumber(entryNumbers.get(i));
-            usersBestEntryList.add(e);
+            if (e != null) { usersBestEntryList.add(e); }
             callbackMap.get(tag).onProgressUpdate(2 * (i + 2));
             callbackMap.get(tag).onMessageUpdate(
                     "Entryler indiriliyor: " + (i + 1) + "/" + entryNumbers.size());

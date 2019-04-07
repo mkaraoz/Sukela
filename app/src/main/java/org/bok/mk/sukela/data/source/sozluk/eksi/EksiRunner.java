@@ -23,7 +23,7 @@ import static org.bok.mk.sukela.data.source.sozluk.eksi.data.EksiContract.EKSI_H
 class EksiRunner implements EksiSozluk
 {
     @Override
-    public EksiEntry getEntryByNumber(int entryNo) throws IOException {
+    public EksiEntry getEntryByNumber(int entryNo) {
         String url = EKSI_ENTRY_BASE_PATH + entryNo;
         return getFirstEntryOnPage(url);
     }
@@ -172,47 +172,53 @@ class EksiRunner implements EksiSozluk
         return sb.toString();
     }
 
-    private EksiEntry getFirstEntryOnPage(final String url) throws IOException {
-        Source source = new Source(new URL(url));
-        Element ul = source.getElementById("entry-item-list");
-        Element contentEle = ul.getAllElementsByClass("content").get(0);
+    private EksiEntry getFirstEntryOnPage(final String url){
+        try {
+            Source source = new Source(new URL(url));
+            Element ul = source.getElementById("entry-item-list");
+            Element contentEle = ul.getAllElementsByClass("content").get(0);
 
-        String body = contentEle.getContent().toString().trim();
-        if (!body.startsWith("http")) {
-            body = body.replaceAll("href=\"/\\?q=", "href=\"https://eksisozluk.com/?q=");
-            body = body.replaceAll("href=\"/entry/", "href=\"https://eksisozluk.com/entry/");
-        }
-        body = body.replace("www.eksisozluk.com", "eksisozluk.com");
-
-        List<Element> sups = contentEle.getAllElements(HTMLElementName.SUP);
-        if (sups.size() > 0) {
-            for (Element sup : sups) {
-                String supTitle = sup.getFirstElement(HTMLElementName.A).getAttributeValue(
-                        "title").trim();
-                supTitle = "(" + supTitle.substring(supTitle.indexOf(":") + 1);
-                body = body.replaceFirst(">\\*<", ">*" + supTitle + "<");
+            String body = contentEle.getContent().toString().trim();
+            if (!body.startsWith("http")) {
+                body = body.replaceAll("href=\"/\\?q=", "href=\"https://eksisozluk.com/?q=");
+                body = body.replaceAll("href=\"/entry/", "href=\"https://eksisozluk.com/entry/");
             }
+            body = body.replace("www.eksisozluk.com", "eksisozluk.com");
+
+            List<Element> sups = contentEle.getAllElements(HTMLElementName.SUP);
+            if (sups.size() > 0) {
+                for (Element sup : sups) {
+                    String supTitle = sup.getFirstElement(HTMLElementName.A).getAttributeValue(
+                            "title").trim();
+                    supTitle = "(" + supTitle.substring(supTitle.indexOf(":") + 1);
+                    body = body.replaceFirst(">\\*<", ">*" + supTitle + "<");
+                }
+            }
+
+            String user = ul.getAllElementsByClass("entry-author").get(
+                    0).getRenderer().toString().trim();
+            String entryNo = ul.getAllElements(HTMLElementName.LI).get(0).getAttributeValue(
+                    "data-id").trim();
+            String date = ul.getAllElementsByClass("entry-date").get(0).getRenderer().toString().trim();
+            Element h1 = source.getElementById("title");
+            String title = h1.getRenderer().toString().trim();
+            String titleID = h1.getAttributeValue("data-id").trim();
+
+            EksiEntry e = new EksiEntry();
+            e.setBody(body);
+            e.setUser(user);
+            e.setEntryNo(Integer.parseInt(entryNo));
+            e.setDateTime(date);
+            e.setTitle(title);
+            e.setTitleID(Integer.parseInt(titleID));
+            e.setEntryUrl(EksiContract.EKSI_BASE_URL + "entry/" + entryNo);
+
+            return e;
         }
-
-        String user = ul.getAllElementsByClass("entry-author").get(
-                0).getRenderer().toString().trim();
-        String entryNo = ul.getAllElements(HTMLElementName.LI).get(0).getAttributeValue(
-                "data-id").trim();
-        String date = ul.getAllElementsByClass("entry-date").get(0).getRenderer().toString().trim();
-        Element h1 = source.getElementById("title");
-        String title = h1.getRenderer().toString().trim();
-        String titleID = h1.getAttributeValue("data-id").trim();
-
-        EksiEntry e = new EksiEntry();
-        e.setBody(body);
-        e.setUser(user);
-        e.setEntryNo(Integer.parseInt(entryNo));
-        e.setDateTime(date);
-        e.setTitle(title);
-        e.setTitleID(Integer.parseInt(titleID));
-        e.setEntryUrl(EksiContract.EKSI_BASE_URL + "entry/" + entryNo);
-
-        return e;
+        catch (Exception ex) {
+            Log.e("_MK", ex.getMessage(), ex);
+            return null;
+        }
     }
 
 }
