@@ -6,6 +6,9 @@ import android.content.pm.ActivityInfo;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import org.bok.mk.sukela.data.model.pack.uludag.UludagDebePack;
 import org.bok.mk.sukela.data.model.pack.uludag.UludagHebePack;
 import org.bok.mk.sukela.ui.arsiv.ArsivActivity;
 import org.bok.mk.sukela.ui.entryscreen.a.EntryScreenActivity;
+import org.bok.mk.sukela.ui.settings.SettingsActivity;
 import org.bok.mk.sukela.ui.user.UserListActivity;
 import org.bok.mk.sukela.ui.year.YearListActivity;
 import org.bok.mk.sukela.util.SharedPrefsHelper;
@@ -145,5 +149,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
         mPresenter.saveAnimState(expand);
         mPresenter.detachView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
