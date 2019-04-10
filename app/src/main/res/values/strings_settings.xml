@@ -7,10 +7,12 @@
     <string name="key_delete_all_saved_entries">delete_all_saved_entries</string>
     <string name="key_debe">key_debe</string>
     <string name="key_about">key_about</string>
+    <string name="key_privacy">key_privacy</string>
 
     <string name="pref_delete_all_saved_entries">Sakladığım tüm entrileri sil</string>
     <string name="pref_delete_all_saved_entries_summary">Atom fiziğine de profesörlüğe de lanet olsun.</string>
     <string name="pref_about">Hakkında</string>
+    <string name="pref_privacy">Gizlilik Politikası</string>
 
     <!--Night Mode-->
     <string name="pref_night_mode">Gece modu</string>

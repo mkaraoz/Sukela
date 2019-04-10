@@ -55,4 +55,14 @@
             android:targetClass="org.bok.mk.sukela.ui.settings.AboutActivity"
             android:targetPackage="org.bok.mk.sukela"/>
     </android.support.v7.preference.Preference>
+
+    <android.support.v7.preference.Preference
+        android:key="@string/key_privacy"
+        android:title="@string/pref_privacy"
+        app:iconSpaceReserved="false">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/mkaraoz/Sukela/blob/master/PrivacyPolicy.md" />
+    </android.support.v7.preference.Preference>
+
 </PreferenceScreen>
