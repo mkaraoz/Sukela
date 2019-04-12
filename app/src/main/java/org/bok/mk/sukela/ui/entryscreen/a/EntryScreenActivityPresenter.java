@@ -595,6 +595,7 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
         mView.updateAdapterData(entries);
         mCurrentIndex = getLastIndex();
         mView.moveToPage(mCurrentIndex);
+        if (isRemoteOp) { mView.toast(entries.size() + " adet entry kaydedildi."); }
         mView.dismissProgressDialog();
     }
 
@@ -608,7 +609,7 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
 
     @Override
     public void onError(String error) {
-        mView.toast("Bir sorunla karşılaşıldı.");
+        mView.toast(error);
         mView.dismissProgressDialog();
         Log.e(LOG_TAG, error);
     }
@@ -623,12 +624,16 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
         mView.updateProgressMessage(message);
     }
 
+    private boolean isRemoteOp = false;
+
     @Override
     public void onDataLoadStart(boolean fromLocal) {
         if (fromLocal) {
+            isRemoteOp = false;
             mView.showSpinnerProgressDialog("\"Entriler okunuyor...\"");
         }
         else {
+            isRemoteOp = true;
             mView.showHorizontalProgressDialog(R.string.reading_entries);
         }
     }

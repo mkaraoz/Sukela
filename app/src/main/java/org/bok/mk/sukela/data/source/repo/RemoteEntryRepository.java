@@ -128,7 +128,7 @@ public class RemoteEntryRepository implements EntryDataSource
             Crashlytics.logException(fne);
         }
         catch (IOException e) {
-            callbackMap.get(tag).onError(e.getMessage());
+            callbackMap.get(tag).onError("Beklenmedik bir hata oluştu.");
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, e.getMessage(), e);
@@ -201,7 +201,7 @@ public class RemoteEntryRepository implements EntryDataSource
             Crashlytics.logException(fne);
         }
         catch (IOException e) {
-            callbackMap.get(tag).onError(e.getMessage());
+            callbackMap.get(tag).onError("Beklenmedik bir hata oluştu.");
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, e.getMessage(), e);
@@ -224,12 +224,12 @@ public class RemoteEntryRepository implements EntryDataSource
         for (int i = 0; i < debeIds.size(); i++) {
             UludagEntry e = uludag.getEntryByNumber(debeIds.get(i));
             if (e != null) { debeList.add(e); }
-            callbackMap.get(tag).onProgressUpdate(5 + (3 * (i + 2)));
-            callbackMap.get(tag).onMessageUpdate(
-                    "Entryler indiriliyor: " + (i + 1) + "/" + debeIds.size());
             if (tagCancelled) {
                 break;
             }
+            callbackMap.get(tag).onProgressUpdate(5 + (3 * (i + 2)));
+            callbackMap.get(tag).onMessageUpdate(
+                    "Entryler indiriliyor: " + (i + 1) + "/" + debeIds.size());
         }
         EntryList entries = EntryList.fromUludagList(debeList, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -245,13 +245,13 @@ public class RemoteEntryRepository implements EntryDataSource
         List<UludagEntry> hebeList = new ArrayList<>();
         for (int i = 0; i < hebeIds.size(); i++) {
             UludagEntry e = uludag.getEntryByNumber(hebeIds.get(i));
-            hebeList.add(e);
-            callbackMap.get(tag).onProgressUpdate(10 + (2 * (i + 2)));
-            callbackMap.get(tag).onMessageUpdate(
-                    "Entryler indiriliyor: " + (i + 1) + "/" + hebeIds.size());
+            if (e != null) { hebeList.add(e); }
             if (tagCancelled) {
                 break;
             }
+            callbackMap.get(tag).onProgressUpdate(10 + (2 * (i + 2)));
+            callbackMap.get(tag).onMessageUpdate(
+                    "Entryler indiriliyor: " + (i + 1) + "/" + hebeIds.size());
         }
         EntryList entries = EntryList.fromUludagList(hebeList, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -357,12 +357,12 @@ public class RemoteEntryRepository implements EntryDataSource
         for (int i = 0; i < hebeIds.size(); i++) {
             EksiEntry e = eksi.getEntryByNumber(hebeIds.get(i));
             if (e != null) { hebeList.add(e); }
-            callbackMap.get(tag).onProgressUpdate(5 * (i + 2));
-            callbackMap.get(tag).onMessageUpdate(
-                    "Entryler indiriliyor: " + (i + 1) + "/" + hebeIds.size());
             if (tagCancelled) {
                 break;
             }
+            callbackMap.get(tag).onProgressUpdate(5 * (i + 2));
+            callbackMap.get(tag).onMessageUpdate(
+                    "Entryler indiriliyor: " + (i + 1) + "/" + hebeIds.size());
         }
         EntryList entries = EntryList.fromEksiList(hebeList, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -379,12 +379,12 @@ public class RemoteEntryRepository implements EntryDataSource
         for (int i = 0; i < gundemTitles.size(); i++) {
             EksiEntry e = eksi.getBestOfPage(gundemTitles.get(i));
             if (e != null) { gundemList.add(e); }
-            callbackMap.get(tag).onProgressUpdate(2 * (i + 2));
-            callbackMap.get(tag).onMessageUpdate(
-                    "Entryler indiriliyor: " + (i + 1) + "/" + gundemTitles.size());
             if (tagCancelled) {
                 break;
             }
+            callbackMap.get(tag).onProgressUpdate(2 * (i + 2));
+            callbackMap.get(tag).onMessageUpdate(
+                    "Entryler indiriliyor: " + (i + 1) + "/" + gundemTitles.size());
         }
         EntryList entries = EntryList.fromEksiList(gundemList, tag);
         callbackMap.get(tag).onEntriesLoaded(entries);
@@ -408,12 +408,12 @@ public class RemoteEntryRepository implements EntryDataSource
         for (int i = 0; i < entryNumbers.size(); i++) {
             EksiEntry e = eksi.getEntryByNumber(entryNumbers.get(i));
             if (e != null) { usersBestEntryList.add(e); }
-            callbackMap.get(tag).onProgressUpdate(2 * (i + 2));
-            callbackMap.get(tag).onMessageUpdate(
-                    "Entryler indiriliyor: " + (i + 1) + "/" + entryNumbers.size());
             if (tagCancelled) {
                 break;
             }
+            callbackMap.get(tag).onProgressUpdate(2 * (i + 2));
+            callbackMap.get(tag).onMessageUpdate(
+                    "Entryler indiriliyor: " + (i + 1) + "/" + entryNumbers.size());
         }
 
         EntryList entries = EntryList.fromEksiList(usersBestEntryList, tag);
@@ -439,7 +439,10 @@ public class RemoteEntryRepository implements EntryDataSource
                 Contract.TAG_ULUDAG_HAFTA)) {
             tagCancelled = true;
         }
-        else { callbackMap.put(tag, emptyCallback); }
+        else {
+            callbackMap.get(tag).onError("İşlem iptal edildi.");
+            callbackMap.put(tag, emptyCallback);
+        }
     }
 
     private class DummyProgressUpdater extends Thread

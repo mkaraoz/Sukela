@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -514,8 +515,10 @@ public class EntryScreenActivity extends AppCompatActivity implements EntryScree
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setMax(100);
             mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel",
-                    (dialog, which) -> mPresenter.progressDialogCancelButtonClicked());
+                    (DialogInterface.OnClickListener) null);
             mProgressDialog.show();
+            Button cancelButton  = mProgressDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            cancelButton.setOnClickListener(view -> mPresenter.progressDialogCancelButtonClicked());
         });
     }
 
