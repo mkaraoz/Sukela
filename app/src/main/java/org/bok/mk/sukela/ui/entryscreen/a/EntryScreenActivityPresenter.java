@@ -318,7 +318,7 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
 
     @Override
     public void progressDialogCancelButtonClicked() {
-        mView.dismissProgressDialog();
+        // mView.dismissProgressDialog();
         mEntryRepo.cancel(mPack.getTag());
     }
 

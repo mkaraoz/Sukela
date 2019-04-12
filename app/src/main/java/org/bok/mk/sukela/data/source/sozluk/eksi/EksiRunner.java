@@ -2,6 +2,8 @@ package org.bok.mk.sukela.data.source.sozluk.eksi;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
@@ -105,6 +107,7 @@ class EksiRunner implements EksiSozluk
             }
             catch (java.lang.NullPointerException npe) {
                 Log.e("_MK", "Eksi Gündem: " + npe.getMessage());
+                Crashlytics.logException(npe);
             }
         }
         return gundemTitles;
@@ -217,6 +220,7 @@ class EksiRunner implements EksiSozluk
         }
         catch (Exception ex) {
             Log.e("_MK", ex.getMessage(), ex);
+            Crashlytics.logException(ex);
             return null;
         }
     }

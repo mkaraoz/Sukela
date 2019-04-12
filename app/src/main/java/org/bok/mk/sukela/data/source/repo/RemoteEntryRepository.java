@@ -3,6 +3,8 @@ package org.bok.mk.sukela.data.source.repo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.bok.mk.sukela.data.model.Contract;
 import org.bok.mk.sukela.data.model.Entry;
 import org.bok.mk.sukela.data.model.EntryList;
@@ -123,12 +125,14 @@ public class RemoteEntryRepository implements EntryDataSource
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, fne.getMessage(), fne);
+            Crashlytics.logException(fne);
         }
         catch (IOException e) {
             callbackMap.get(tag).onError(e.getMessage());
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, e.getMessage(), e);
+            Crashlytics.logException(e);
         }
     }
 
@@ -194,12 +198,14 @@ public class RemoteEntryRepository implements EntryDataSource
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, fne.getMessage(), fne);
+            Crashlytics.logException(fne);
         }
         catch (IOException e) {
             callbackMap.get(tag).onError(e.getMessage());
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, e.getMessage(), e);
+            Crashlytics.logException(e);
         }
     }
 
@@ -424,6 +430,8 @@ public class RemoteEntryRepository implements EntryDataSource
 
     @Override
     public void cancel(String tag) {
+        callbackMap.get(tag).onMessageUpdate("İşlem iptal ediliyor...");
+
         // multipage downloads must be included in here to support cancel feature
         if (tag.equals(Contract.TAG_EKSI_GUNDEM) || tag.equals(
                 Contract.TAG_EKSI_WEEK) || tag.equals(

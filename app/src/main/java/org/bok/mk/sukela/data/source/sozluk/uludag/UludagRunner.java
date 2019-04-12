@@ -89,5 +89,4 @@ class UludagRunner implements Uludag
 
         return entryIds;
     }
-
 }

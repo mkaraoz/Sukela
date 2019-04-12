@@ -285,7 +285,9 @@
                         style="@style/list_item"
                         android:text="@string/hebe"/>
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView
+                        style="@style/list_item_separator"
+                        android:layout_marginStart="-1dp"/>
 
                     <TextView
                         android:id="@+id/uludag_yesterday"
@@ -358,7 +360,9 @@
                         style="@style/list_item"
                         android:text="@string/save_for_good"/>
 
-                    <TextView style="@style/list_item_separator"/>
+                    <TextView
+                        style="@style/list_item_separator"
+                        android:layout_marginStart="-1dp"/>
 
                     <TextView
                         android:id="@+id/save_long"
