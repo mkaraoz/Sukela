@@ -190,7 +190,10 @@ public class RemoteEntryRepository implements EntryDataSource
             }
             else {
                 // unknown tag
-                throw new RuntimeException("Unknown tag");
+                Exception exception = new Exception("Unknown tag: " + tag);
+                Crashlytics.logException(exception);
+                callbackMap.get(tag).onError("Aranan kişiye şu anda ulaşılamıyor.");
+                callbackMap.put(tag, emptyCallback);
             }
         }
         catch (FileNotFoundException fne) {
