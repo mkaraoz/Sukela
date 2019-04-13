@@ -288,8 +288,8 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
                     }
 
                     @Override
-                    public void onDataLoadStart(boolean fromLocal) {
-                        EntryScreenActivityPresenter.this.onDataLoadStart(fromLocal);
+                    public void onDataLoadStart(EntryDataSource.Provider provider) {
+                        EntryScreenActivityPresenter.this.onDataLoadStart(provider);
                     }
 
                     @Override
@@ -595,7 +595,9 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
         mView.updateAdapterData(entries);
         mCurrentIndex = getLastIndex();
         mView.moveToPage(mCurrentIndex);
-        if (isRemoteOp) { mView.toast(entries.size() + " adet entry kaydedildi."); }
+        if (mProvider == EntryDataSource.Provider.REMOTE) {
+            mView.toast(entries.size() + " adet entry kaydedildi.");
+        }
         mView.dismissProgressDialog();
     }
 
@@ -624,16 +626,16 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
         mView.updateProgressMessage(message);
     }
 
-    private boolean isRemoteOp = false;
+    private EntryDataSource.Provider mProvider = EntryDataSource.Provider.LOCAL;
 
     @Override
-    public void onDataLoadStart(boolean fromLocal) {
-        if (fromLocal) {
-            isRemoteOp = false;
+    public void onDataLoadStart(EntryDataSource.Provider provider) {
+        if (provider == EntryDataSource.Provider.LOCAL) {
+            mProvider = EntryDataSource.Provider.LOCAL;
             mView.showSpinnerProgressDialog("\"Entriler okunuyor...\"");
         }
         else {
-            isRemoteOp = true;
+            mProvider = EntryDataSource.Provider.REMOTE;
             mView.showHorizontalProgressDialog(R.string.reading_entries);
         }
     }

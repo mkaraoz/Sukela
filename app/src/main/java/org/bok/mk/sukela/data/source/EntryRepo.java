@@ -83,8 +83,8 @@ public class EntryRepo implements EntryDataSource
             }
 
             @Override
-            public void onDataLoadStart(boolean fromLocal) {
-                callback.onDataLoadStart(fromLocal);
+            public void onDataLoadStart(Provider provider) {
+                callback.onDataLoadStart(provider);
             }
 
             @Override
@@ -127,8 +127,8 @@ public class EntryRepo implements EntryDataSource
             }
 
             @Override
-            public void onDataLoadStart(boolean fromLocal) {
-                cb.onDataLoadStart(fromLocal);
+            public void onDataLoadStart(Provider provider) {
+                cb.onDataLoadStart(provider);
             }
 
             @Override
@@ -169,8 +169,8 @@ public class EntryRepo implements EntryDataSource
             }
 
             @Override
-            public void onDataLoadStart(boolean fromLocal) {
-                cb.onDataLoadStart(fromLocal);
+            public void onDataLoadStart(Provider provider) {
+                cb.onDataLoadStart(provider);
             }
 
             @Override
@@ -235,8 +235,8 @@ public class EntryRepo implements EntryDataSource
             }
 
             @Override
-            public void onDataLoadStart(boolean fromLocal) {
-                callback.onDataLoadStart(fromLocal);
+            public void onDataLoadStart(Provider provider) {
+                callback.onDataLoadStart(provider);
             }
 
             @Override

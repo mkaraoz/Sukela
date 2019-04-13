@@ -73,7 +73,7 @@ public class UserRepo implements UserDataSource
             }
 
             @Override
-            public void onDataLoadStart(boolean fromLocal) {
+            public void onDataLoadStart(EntryDataSource.Provider provider) {
                 callback.onUserDownloadLoadStart(username);
             }
 

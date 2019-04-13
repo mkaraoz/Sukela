@@ -76,7 +76,7 @@ public class RemoteEntryRepository implements EntryDataSource
         String tag = Contract.TAG_SAVE_FOR_GOOD;
         mProgressSet.add(tag);
         callbackMap.put(tag, callback);
-        callback.onDataLoadStart(false);
+        callback.onDataLoadStart(Provider.REMOTE);
 
         try {
             if (sozlukEnum == SozlukEnum.EKSI) {
@@ -148,7 +148,7 @@ public class RemoteEntryRepository implements EntryDataSource
         // if this op is already running do not restart, use the existing one
         if (mProgressSet.contains(tag)) {
             callbackMap.put(tag, callback);
-            callback.onDataLoadStart(false);
+            callback.onDataLoadStart(Provider.REMOTE);
             return;
         }
 
@@ -156,7 +156,7 @@ public class RemoteEntryRepository implements EntryDataSource
         mProgressSet.add(tag);
         callbackMap.put(tag, callback);
 
-        callback.onDataLoadStart(false);
+        callback.onDataLoadStart(Provider.REMOTE);
 
         try {
             if (tag.equals(Contract.TAG_EKSI_DEBE)) {
@@ -504,7 +504,7 @@ public class RemoteEntryRepository implements EntryDataSource
         }
 
         @Override
-        public void onDataLoadStart(boolean fromLocal) {
+        public void onDataLoadStart(Provider provider) {
 
         }
 

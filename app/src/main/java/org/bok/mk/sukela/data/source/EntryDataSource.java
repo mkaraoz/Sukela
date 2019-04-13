@@ -8,11 +8,11 @@ import org.bok.mk.sukela.data.model.SozlukEnum;
 
 public interface EntryDataSource
 {
-    int deleteTag(String tag);
-
-    void saveEntries(EntryList entries);
-
-    void deleteEntry(Entry e);
+    enum Provider
+    {
+        LOCAL,
+        REMOTE
+    }
 
     interface LoadEntryListCallback
     {
@@ -24,12 +24,18 @@ public interface EntryDataSource
 
         void onMessageUpdate(String message);
 
-        void onDataLoadStart(boolean fromLocal);
+        void onDataLoadStart(Provider provider);
 
         void onError(String error);
 
         boolean checkIfOnline();
     }
+
+    int deleteTag(String tag);
+
+    void saveEntries(EntryList entries);
+
+    void deleteEntry(Entry e);
 
     void getEntries(final String tag, @NonNull LoadEntryListCallback callback);
 

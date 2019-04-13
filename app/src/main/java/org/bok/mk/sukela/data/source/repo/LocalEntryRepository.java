@@ -53,7 +53,7 @@ public class LocalEntryRepository implements EntryDataSource
             callback.onDataNotAvailable();
             return;
         }
-        else { callback.onDataLoadStart(true); }
+        else { callback.onDataLoadStart(Provider.LOCAL); }
         List<Entry> entries = mEntryDao.getEntries(tag);
         callback.onEntriesLoaded(EntryList.fromList(entries));
     }
@@ -92,7 +92,7 @@ public class LocalEntryRepository implements EntryDataSource
             callback.onDataNotAvailable();
             return;
         }
-        else { callback.onDataLoadStart(true); }
+        else { callback.onDataLoadStart(Provider.LOCAL); }
         callback.onEntriesLoaded(EntryList.fromList(new ArrayList<>(entries)));
     }
 }

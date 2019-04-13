@@ -59,7 +59,7 @@ public class SearchActivityPresenter extends BasePresenter<SearchActivityContrac
             }
 
             @Override
-            public void onDataLoadStart(boolean fromLocal) {
+            public void onDataLoadStart(EntryDataSource.Provider provider) {
 
             }
 
