@@ -31,7 +31,7 @@ class EksiRunner implements EksiSozluk
     }
 
     @Override
-    public EksiEntry getBestOfPage(final String url) throws IOException {
+    public EksiEntry getBestOfPage(final String url) {
         return getFirstEntryOnPage(EksiContract.EKSI_BASE_URL + url);
     }
 

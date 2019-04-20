@@ -5,7 +5,6 @@ public class SozlockEntry
     private String title;
     private String body;
     private String user;
-    private String eksiLink;
     private String date;
     private String titleUrl;
     private int entryNo;
@@ -41,14 +40,6 @@ public class SozlockEntry
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public String getEksiLink() {
-        return eksiLink;
-    }
-
-    public void setEksiLink(String eksiLink) {
-        this.eksiLink = eksiLink;
     }
 
     public String getDate() {

@@ -7,16 +7,9 @@ import java.util.List;
 
 public interface EksiSozluk
 {
-    /**
-     * Numarası verilen entriyi ekşi sözlükten indirir
-     *
-     * @param entryNo
-     * @return
-     * @throws IOException
-     */
     EksiEntry getEntryByNumber(final int entryNo);
 
-    EksiEntry getBestOfPage(final String title) throws IOException;
+    EksiEntry getBestOfPage(final String title);
 
     List<Integer> getHebeIds() throws IOException;
 

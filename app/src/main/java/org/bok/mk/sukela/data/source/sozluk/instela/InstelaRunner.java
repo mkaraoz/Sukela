@@ -115,6 +115,7 @@ class InstelaRunner implements Instela
             e.setDateTime(date);
             e.setUser(user);
             e.setEntryNo(Integer.parseInt(entryNo));
+            e.setEntryUrl(INSTELA_ENTRY_BASE_PATH + entryNo);
 
             entryList.add(e);
         }

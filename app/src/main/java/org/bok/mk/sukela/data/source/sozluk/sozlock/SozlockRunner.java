@@ -69,9 +69,8 @@ class SozlockRunner implements Sozlock
                 e.setUser(user);
                 e.setDate(dateTime);
                 e.setEntryNo(Integer.parseInt(entryNo));
-                e.setEksiLink(EKSI_ENTRY_BASE_PATH + entryNo);
                 e.setTitleUrl(EKSI_BASE_URL + title);
-                e.setEntryUrl(EKSI_BASE_URL + entryNo);
+                e.setEntryUrl(EKSI_ENTRY_BASE_PATH + entryNo);
                 entryList.add(e);
             }
         }

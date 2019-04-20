@@ -21,8 +21,8 @@ android {
         applicationId "org.bok.mk.sukela"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 417
-        versionName "4.2.1"
+        versionCode 419
+        versionName "4.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
