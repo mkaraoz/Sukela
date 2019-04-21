@@ -258,6 +258,15 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
         // bunun kendi callbacki var sınıfın callback metotlarını kullanmıyor çünkü onEntryLoaded
         // metodunun farklı davranması gerekiyor. sınıfın metodu tagi silip yeni gelenleri yazarken
         // bu sadece sonuna ek yapıyor. diğer metotlar ortak.
+
+        try {
+            Integer.parseInt(entryNo);
+        }
+        catch (java.lang.NumberFormatException ex) {
+            EntryScreenActivityPresenter.this.onError("Çok büyük bu numara.");
+            return;
+        }
+
         e.execute(() -> mEntryRepo.getEntry(sozlukEnum, Integer.parseInt(entryNo),
                 new EntryDataSource.LoadEntryListCallback()
                 {
@@ -607,6 +616,7 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
                 Contract.TAG_SAVE_FOR_LATER)) {
             mView.displayNoEntryErrorMessage(R.string.no_entry_here);
         }
+        mView.dismissProgressDialog();
     }
 
     @Override

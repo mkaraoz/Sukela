@@ -85,10 +85,15 @@ public class RemoteEntryRepository implements EntryDataSource
                 EksiEntry entry = eksi.getEntryByNumber(entryNo);
                 isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
                 callbackMap.get(tag).onProgressUpdate(70);
-                List<EksiEntry> list = new ArrayList<>();
-                list.add(entry);
-                EntryList entries = EntryList.fromEksiList(list, Contract.TAG_SAVE_FOR_GOOD);
-                callbackMap.get(tag).onEntriesLoaded(entries);
+                if (entry == null) {
+                    callbackMap.get(tag).onError("Aranan entry silinmiş olabilir.");
+                }
+                else {
+                    List<EksiEntry> list = new ArrayList<>();
+                    list.add(entry);
+                    EntryList entries = EntryList.fromEksiList(list, Contract.TAG_SAVE_FOR_GOOD);
+                    callbackMap.get(tag).onEntriesLoaded(entries);
+                }
                 cleanUp(tag);
             }
             else if (sozlukEnum == SozlukEnum.INSTELA) {
@@ -97,10 +102,15 @@ public class RemoteEntryRepository implements EntryDataSource
                 InstelaEntry entry = instela.getEntryByNumber(entryNo);
                 isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
                 callbackMap.get(tag).onProgressUpdate(70);
-                List<InstelaEntry> list = new ArrayList<>();
-                list.add(entry);
-                EntryList entries = EntryList.fromInstelaList(list, Contract.TAG_SAVE_FOR_GOOD);
-                callbackMap.get(tag).onEntriesLoaded(entries);
+                if (entry == null) {
+                    callbackMap.get(tag).onError("Aranan entry silinmiş olabilir.");
+                }
+                else {
+                    List<InstelaEntry> list = new ArrayList<>();
+                    list.add(entry);
+                    EntryList entries = EntryList.fromInstelaList(list, Contract.TAG_SAVE_FOR_GOOD);
+                    callbackMap.get(tag).onEntriesLoaded(entries);
+                }
                 cleanUp(tag);
             }
             else if (sozlukEnum == SozlukEnum.ULUDAG) {
@@ -109,10 +119,15 @@ public class RemoteEntryRepository implements EntryDataSource
                 UludagEntry entry = uludag.getEntryByNumber(entryNo);
                 isRunning = false; // yavaş telefonlarda progres tekrar dummy tarafından güncellenmesin diye
                 callbackMap.get(tag).onProgressUpdate(70);
-                List<UludagEntry> list = new ArrayList<>();
-                list.add(entry);
-                EntryList entries = EntryList.fromUludagList(list, Contract.TAG_SAVE_FOR_GOOD);
-                callbackMap.get(tag).onEntriesLoaded(entries);
+                if (entry == null) {
+                    callbackMap.get(tag).onError("Aranan entry silinmiş olabilir.");
+                }
+                else {
+                    List<UludagEntry> list = new ArrayList<>();
+                    list.add(entry);
+                    EntryList entries = EntryList.fromUludagList(list, Contract.TAG_SAVE_FOR_GOOD);
+                    callbackMap.get(tag).onEntriesLoaded(entries);
+                }
                 cleanUp(tag);
             }
             else {
@@ -121,7 +136,7 @@ public class RemoteEntryRepository implements EntryDataSource
             }
         }
         catch (FileNotFoundException fne) {
-            callbackMap.get(tag).onError("Laf aramızda bu yazar pek sevilmiyor.");
+            callbackMap.get(tag).onError("Aranan entry silinmiş olabilir.");
             callbackMap.put(tag, emptyCallback);
             mProgressSet.remove(tag);
             Log.e(LOG_TAG, fne.getMessage(), fne);
