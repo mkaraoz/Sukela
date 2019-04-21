@@ -260,7 +260,11 @@ public class EntryScreenActivityPresenter extends BasePresenter<EntryScreenActiv
         // bu sadece sonuna ek yapıyor. diğer metotlar ortak.
 
         try {
-            Integer.parseInt(entryNo);
+            int no = Integer.parseInt(entryNo);
+            if (no == 0) {
+                EntryScreenActivityPresenter.this.onError("Entry numaraları 1'den başlıyor.");
+                return;
+            }
         }
         catch (java.lang.NumberFormatException ex) {
             EntryScreenActivityPresenter.this.onError("Çok büyük bu numara.");
