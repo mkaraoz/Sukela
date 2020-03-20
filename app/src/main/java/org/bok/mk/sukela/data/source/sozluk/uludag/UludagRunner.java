@@ -41,8 +41,16 @@ class UludagRunner implements Uludag
 
         String title = source.getAllElements(HTMLElementName.H1).get(
                 0).getRenderer().toString().trim();
-        String user = source.getAllElementsByClass("alt-u yazar").get(
-                0).getRenderer().toString().trim();
+
+        String user="";
+        List<Element> list = source.getAllElements(HTMLElementName.A);
+        for (Element es : list) {
+            if (es.toString().contains("profilini görüntüle")) {
+                user = es.getRenderer().toString();
+                break;
+            }
+        }
+
         String date = source.getAllElementsByClass("date-u").get(0).getRenderer().toString().trim();
         if (date.contains("-")) {
             date = date.substring(date.indexOf('-') + 1);
